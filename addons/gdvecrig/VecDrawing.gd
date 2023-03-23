@@ -7,6 +7,9 @@ class_name VecDrawing
 @export var fill: Color = Color.WHITE
 @export_range(1, 256) var steps: int = 10
 
+@export var outline_color: Color = Color.BLACK
+@export var outline_base_width: float = 2.5
+
 func get_waypoint(index):
 	return get_children()[index]
 	
@@ -131,6 +134,8 @@ func _draw():
 				computed_points.push_back(compute(p0, p1, p2, p3, t))
 			
 	draw_colored_polygon(computed_points, fill)
+	
+	draw_polyline(computed_points, outline_color, outline_base_width)
 	
 	if Engine.is_editor_hint():
 		var radius = 5 / zoom()

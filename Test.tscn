@@ -73,7 +73,7 @@ steps = 32
 
 [node name="VecWaypoint" type="Node" parent="VecDrawing"]
 script = ExtResource("2_ukuny")
-value = Vector2(49.2472, 7.54016)
+value = Vector2(62.3285, -1.37889)
 
 [node name="VecWaypoint2" type="Node" parent="VecDrawing"]
 script = ExtResource("2_ukuny")

@@ -27,13 +27,21 @@ func _forward_canvas_gui_input(event: InputEvent) -> bool:
 func _make_visible(visible):
 	pass
 
+
+var button_test
+
 func _enter_tree():
 	Engine.register_singleton("GDVecRig", self)
+	
+	button_test = Button.new()
+	button_test.text = "Test"
+	add_control_to_container(CONTAINER_CANVAS_EDITOR_MENU, button_test)
 	# Initialization of the plugin goes here.
 	pass
 
 
 func _exit_tree():
 	Engine.unregister_singleton("GDVecRig")
+	remove_control_from_container(CONTAINER_CANVAS_EDITOR_MENU, button_test)
 	# Clean-up of the plugin goes here.
 	pass

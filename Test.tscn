@@ -6,8 +6,8 @@
 
 [node name="VecDrawing" type="Node2D" parent="."]
 script = ExtResource("1_cjag6")
-point_centers = PackedVector2Array(52.4671, 14.2306, 16.836, -7.42872, 53.3102, -12.681)
+fill = Color(0.105882, 0.282353, 0.0901961, 1)
+point_centers = PackedVector2Array(-5.04311, -46.7717, 32.3924, -39.6021, 65.0175, -23.9732, 40.3576, 26.699, -2.47485, 24.572, 25.4559, 77.2515, -9.19239, 92.2774, -49.851, 67.8823, -82.378, 56.5685)
 
 [node name="Camera2D" type="Camera2D" parent="."]
-visible = false
-position = Vector2(139, 31)
+position = Vector2(68, 32)

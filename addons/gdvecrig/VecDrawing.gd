@@ -58,10 +58,11 @@ func edit_input(plugin: GDVecRig, event: InputEvent) -> bool:
 		if event.button_index == MOUSE_BUTTON_LEFT:
 			if event.pressed:
 				try_starting_editing(plugin)
+				return true
 			else:
 				stop_editing(plugin)
 				
-	return true
+	return false
 
 func _ready():
 	pass # Replace with function body.
@@ -72,6 +73,14 @@ func _ready():
 #	if Engine.is_editor_hint():
 #		print("e")
 #		queue_redraw()
+	
+func compute(p0, p1, p2, p3, t):
+	var zt = 1 - t
+	return \
+		(zt * zt * zt * p0) + \
+		(3 * zt * zt * t * p1) + \
+		(3 * zt * t * t * p2) + \
+		(t * t * t * p3);
 	
 func _draw():
 	if Engine.is_editor_hint():
@@ -86,10 +95,24 @@ func _draw():
 				i += 1
 	
 	var computed_points: PackedVector2Array = PackedVector2Array()
-	for center in point_centers:
-		computed_points.push_back(center)
-	
-#	for i in range(0, 20):
-#		computed_points.push_back(Vector2(i * 10.0, sqrt(i * t) * 10.0))
-#
+
+	# < - > < - >
+	# 0 1 2 3 4 5
+	#   0 1 2 3
+	# (i + 3) <= length -> gives us two handles + two control points
+
+	var i = 1
+	while (i + 3) <= point_centers.size():
+		var p0 = point_centers[i]
+		var p1 = point_centers[i + 1]
+		var p2 = point_centers[i + 2]
+		var p3 = point_centers[i + 3]
+		
+		for j in range(0, 10):
+			var t = j / 9.0
+			computed_points.push_back(compute(p0, p1, p2, p3, t))
+		i += 3
+			
+	computed_points.push_back(point_centers[1])
+			
 	draw_colored_polygon(computed_points, fill)

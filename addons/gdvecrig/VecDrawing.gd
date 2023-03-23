@@ -5,8 +5,13 @@ class_name VecDrawing
 @export var cyclic: bool = false
 
 @export var fill: Color = Color.WHITE
+@export_range(1, 256) var steps: int = 10
 
-@export var point_centers: PackedVector2Array
+func get_waypoint(index):
+	return get_children()[index]
+	
+func waypoint_count():
+	return get_child_count()
 
 func get_plugin() -> GDVecRig:
 	return Engine.get_singleton("GDVecRig")
@@ -16,9 +21,9 @@ func is_currently_edited():
 	return vr.current_vecdrawing == self
 	
 func edit_point(index: int, offset: Vector2):
-	if index < 0 or index >= point_centers.size():
+	if index < 0 or index >= waypoint_count():
 		return
-	point_centers[index] += offset
+	get_waypoint(index).value += offset
 	
 func try_starting_editing(plugin: GDVecRig):
 	if plugin.point_highlight >= 0:
@@ -46,12 +51,11 @@ func edit_input(plugin: GDVecRig, event: InputEvent) -> bool:
 			var radius = 5 / zoom()
 			plugin.point_highlight = -1
 			
-			var i = 0
-			for center in point_centers:
+			for i in range(0, waypoint_count()):
+				var center = get_waypoint(i).value
 				if (get_local_mouse_position() - center).length_squared() <= (radius * radius):
 					plugin.point_highlight = i
 					break
-				i += 1
 				
 			if previous_highlight != plugin.point_highlight:
 				pass
@@ -104,29 +108,27 @@ func _draw():
 	# (i + 3) <= length -> gives us two handles + two control points
 
 	var i = 1
-	while (i + 3) <= point_centers.size():
-		var p0 = point_centers[i]
-		var p1 = point_centers[i + 1]
-		var p2 = point_centers[i + 2]
-		var p3 = point_centers[i + 3]
+	while (i + 3) <= waypoint_count():
+		var p0 = get_waypoint(i).value
+		var p1 = get_waypoint(i + 1).value
+		var p2 = get_waypoint(i + 2).value
+		var p3 = get_waypoint(i + 3).value
 		
-		for j in range(0, 10):
-			var t = j / 9.0
+		for j in range(0, steps):
+			var t = j / float(steps - 1)
 			computed_points.push_back(compute(p0, p1, p2, p3, t))
 		i += 3
 		
 	if cyclic:
-		if point_centers.size() >= 6:
-			var end = point_centers.size() - 2
-			var p0 = point_centers[end + 0]
-			var p1 = point_centers[end + 1]
-			var p2 = point_centers[0]
-			var p3 = point_centers[1]
-			for j in range(0, 10):
-				var t = j / 9.0
+		if waypoint_count() >= 6:
+			var end = waypoint_count() - 2
+			var p0 = get_waypoint(end + 0).value
+			var p1 = get_waypoint(end + 1).value
+			var p2 = get_waypoint(0).value
+			var p3 = get_waypoint(1).value
+			for j in range(0, steps):
+				var t = j / float(steps - 1)
 				computed_points.push_back(compute(p0, p1, p2, p3, t))
-			
-	computed_points.push_back(point_centers[1])
 			
 	draw_colored_polygon(computed_points, fill)
 	
@@ -136,10 +138,10 @@ func _draw():
 	
 		if is_currently_edited():
 			i = 0
-			while (i + 2) <= point_centers.size():
-				var p0 = point_centers[i]
-				var p1 = point_centers[i + 1]
-				var p2 = point_centers[i + 2]
+			while (i + 2) <= waypoint_count():
+				var p0 = get_waypoint(i).value
+				var p1 = get_waypoint(i + 1).value
+				var p2 = get_waypoint(i + 2).value
 				draw_editor_handle(radius, p0, p1, p2)
 				
 				i += 3

@@ -1,13 +1,106 @@
-[gd_scene load_steps=2 format=3 uid="uid://bcuh5ccdr1cqc"]
+[gd_scene load_steps=6 format=3 uid="uid://bcuh5ccdr1cqc"]
 
 [ext_resource type="Script" path="res://addons/gdvecrig/VecDrawing.gd" id="1_cjag6"]
+[ext_resource type="Script" path="res://addons/gdvecrig/VecWaypoint.gd" id="2_ukuny"]
+
+[sub_resource type="Animation" id="Animation_2c1uf"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("VecDrawing/VecWaypoint2:value")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(38.4185, 29.8597)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("VecDrawing/VecWaypoint5:value")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-21.517, 12.1568)]
+}
+
+[sub_resource type="Animation" id="Animation_aa01w"]
+resource_name = "Test"
+loop_mode = 2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("VecDrawing/VecWaypoint2:value")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(38.4185, 29.8597), Vector2(25.91, 29.86)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("VecDrawing/VecWaypoint5:value")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(-21.517, 12.1568), Vector2(4.47668, 24.0623)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_weu04"]
+_data = {
+"RESET": SubResource("Animation_2c1uf"),
+"Test": SubResource("Animation_aa01w")
+}
 
 [node name="Test" type="Node2D"]
 
 [node name="VecDrawing" type="Node2D" parent="."]
 script = ExtResource("1_cjag6")
 fill = Color(0.105882, 0.282353, 0.0901961, 1)
-point_centers = PackedVector2Array(-40.2931, -25.5217, 7.27065, -32.021, 42.1253, -19.5137, 37.6819, 16.888, 1.68738, 30.5181, 13.8611, 60.8999, -27.0851, 92.821, -58.351, 61.3823, -83.628, 34.3185)
+steps = 32
+
+[node name="VecWaypoint" type="Node" parent="VecDrawing"]
+script = ExtResource("2_ukuny")
+value = Vector2(49.2472, 7.54016)
+
+[node name="VecWaypoint2" type="Node" parent="VecDrawing"]
+script = ExtResource("2_ukuny")
+value = Vector2(38.4185, 29.8597)
+
+[node name="VecWaypoint3" type="Node" parent="VecDrawing"]
+script = ExtResource("2_ukuny")
+value = Vector2(20.5773, 65.4679)
+
+[node name="VecWaypoint4" type="Node" parent="VecDrawing"]
+script = ExtResource("2_ukuny")
+value = Vector2(-37.9148, 32.9646)
+
+[node name="VecWaypoint5" type="Node" parent="VecDrawing"]
+script = ExtResource("2_ukuny")
+value = Vector2(-21.517, 12.1568)
+
+[node name="VecWaypoint6" type="Node" parent="VecDrawing"]
+script = ExtResource("2_ukuny")
+value = Vector2(-4.9466, -8.88113)
 
 [node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(68, 32)
+position = Vector2(7, 33)
+zoom = Vector2(4.136, 4.136)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "Test"
+libraries = {
+"": SubResource("AnimationLibrary_weu04")
+}

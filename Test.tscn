@@ -6,7 +6,7 @@
 
 [node name="VecDrawing" type="Node2D" parent="."]
 script = ExtResource("1_cjag6")
-point_centers = PackedVector2Array(0, 0, 30, 30)
+point_centers = PackedVector2Array(52.4671, 14.2306, 16.836, -7.42872, 53.3102, -12.681)
 
 [node name="Camera2D" type="Camera2D" parent="."]
 visible = false

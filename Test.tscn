@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=3 uid="uid://bcuh5ccdr1cqc"]
+
+[ext_resource type="Script" path="res://addons/gdvecrig/VecDrawing.gd" id="1_cjag6"]
+
+[node name="Test" type="Node2D"]
+
+[node name="VecDrawing" type="Node2D" parent="."]
+script = ExtResource("1_cjag6")
+point_centers = PackedVector2Array(0, 0, 30, 30)
+
+[node name="Camera2D" type="Camera2D" parent="."]
+visible = false
+position = Vector2(139, 31)

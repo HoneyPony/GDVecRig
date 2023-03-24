@@ -92,7 +92,7 @@ func edit_input(plugin: GDVecRig, event: InputEvent) -> bool:
 		else:
 			var previous_highlight = plugin.point_highlight
 			
-			var radius = 5 / zoom()
+			var radius = 7 / zoom()
 			plugin.point_highlight = -1
 			
 			for i in range(0, waypoint_count()):

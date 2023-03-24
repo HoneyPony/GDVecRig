@@ -11,6 +11,9 @@ func compute_value():
 	if not bone.is_empty():
 		#var test: Bone2D = get_node(bone)
 		var bone2d: Bone2D = get_node(bone)
+		
+		# TODO: Godot does not currently cache affine_inverse,
+		# we probably want to do it ourselves.
 		computed_value = bone2d.rest.affine_inverse() * bone2d.transform * value
 	else:
 		computed_value = value

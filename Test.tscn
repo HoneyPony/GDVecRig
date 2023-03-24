@@ -10,58 +10,10 @@ point_count = 3
 
 [sub_resource type="Animation" id="Animation_2c1uf"]
 length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("VecDrawing/VecWaypoint2:value")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(38.4185, 29.8597)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("VecDrawing/VecWaypoint5:value")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(-21.517, 12.1568)]
-}
 
 [sub_resource type="Animation" id="Animation_aa01w"]
 resource_name = "Test"
 loop_mode = 2
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("VecDrawing/VecWaypoint2:value")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 1),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector2(38.4185, 29.8597), Vector2(25.91, 29.86)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("VecDrawing/VecWaypoint5:value")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 1),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector2(-21.517, 12.1568), Vector2(4.47668, 24.0623)]
-}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_weu04"]
 _data = {
@@ -80,30 +32,43 @@ outline_base_width = 1.232
 
 [node name="VecWaypoint" type="Node" parent="VecDrawing"]
 script = ExtResource("2_ukuny")
-value = Vector2(52.381, 11.0183)
+value = Vector2(38.5801, 25.9098)
 
 [node name="VecWaypoint2" type="Node" parent="VecDrawing"]
 script = ExtResource("2_ukuny")
-value = Vector2(38.4185, 29.8597)
+value = Vector2(32.1734, 49.243)
 
 [node name="VecWaypoint3" type="Node" parent="VecDrawing"]
 script = ExtResource("2_ukuny")
-value = Vector2(13.6953, 59.8074)
+value = Vector2(24.5629, 77.4415)
 
 [node name="VecWaypoint4" type="Node" parent="VecDrawing"]
 script = ExtResource("2_ukuny")
-value = Vector2(-59.6403, 49.446)
+value = Vector2(-45.7654, 60.3777)
 
 [node name="VecWaypoint5" type="Node" parent="VecDrawing"]
 script = ExtResource("2_ukuny")
-value = Vector2(-21.517, 12.1568)
+value = Vector2(-44.5047, 39.0683)
 
 [node name="VecWaypoint6" type="Node" parent="VecDrawing"]
 script = ExtResource("2_ukuny")
-value = Vector2(3.38726, -19.0008)
+value = Vector2(-36.9758, 8.74879)
+
+[node name="VecWaypoint7" type="Node" parent="VecDrawing"]
+script = ExtResource("2_ukuny")
+value = Vector2(-30.758, -4.5388)
+
+[node name="VecWaypoint8" type="Node" parent="VecDrawing"]
+script = ExtResource("2_ukuny")
+value = Vector2(-1.81949, 7.72733)
+
+[node name="VecWaypoint9" type="Node" parent="VecDrawing"]
+script = ExtResource("2_ukuny")
+value = Vector2(30.4216, 13.1967)
 
 [node name="VecStroke" type="Line2D" parent="VecDrawing"]
-points = PackedVector2Array(38.4185, 29.8597, 35.8796, 32.6325, 33.0693, 35.1563, 30.0201, 37.4338, 26.764, 39.4678, 23.3334, 41.2608, 19.7605, 42.8157, 16.0775, 44.135, 12.3167, 45.2216, 8.51021, 46.078, 4.69041, 46.707, 0.889484, 47.1114, -2.86033, 47.2936, -6.52678, 47.2566, -10.0776, 47.0029, -13.4807, 46.5353, -16.7036, 45.8564, -19.7143, 44.969, -22.4804, 43.8757, -24.9697, 42.5793, -27.15, 41.0824, -28.989, 39.3878, -30.4545, 37.498, -31.5143, 35.4159, -32.136, 33.1441, -32.2876, 30.6853, -31.9367, 28.0423, -31.0511, 25.2176, -29.5986, 22.214, -27.5469, 19.0342, -24.8638, 15.6809, -21.517, 12.1568)
+visible = false
+points = PackedVector2Array(32.1734, 49.243, 31.2456, 51.8319, 29.9533, 54.1466, 28.3235, 56.1951, 26.3833, 57.9859, 24.1597, 59.5271, 21.6798, 60.827, 18.9706, 61.8939, 16.0591, 62.736, 12.9725, 63.3616, 9.73777, 63.7789, 6.38195, 63.9963, 2.93209, 64.0219, -0.584745, 63.8641, -4.14151, 63.5311, -7.71116, 63.0311, -11.2666, 62.3725, -14.7809, 61.5634, -18.2269, 60.6122, -21.5776, 59.527, -24.8059, 58.3163, -27.8848, 56.9881, -30.7872, 55.5509, -33.4861, 54.0127, -35.9544, 52.382, -38.1651, 50.667, -40.0912, 48.8759, -41.7055, 47.0169, -42.9811, 45.0985, -43.8909, 43.1287, -44.4077, 41.1159, -44.5047, 39.0683, -44.5047, 39.0683, -43.7794, 36.1876, -43.0574, 33.415, -42.334, 30.7521, -41.6042, 28.2008, -40.8632, 25.7626, -40.1062, 23.4393, -39.3284, 21.2327, -38.5248, 19.1444, -37.6907, 17.1762, -36.8213, 15.3298, -35.9116, 13.6069, -34.9569, 12.0092, -33.9523, 10.5385, -32.893, 9.19638, -31.774, 7.98465, -30.5907, 6.90499, -29.3381, 5.95914, -28.0114, 5.14881, -26.6058, 4.4757, -25.1164, 3.94155, -23.5384, 3.54806, -21.8669, 3.29695, -20.0971, 3.18994, -18.2242, 3.22874, -16.2433, 3.41508, -14.1496, 3.75066, -11.9383, 4.2372, -9.60443, 4.87642, -7.14324, 5.67004, -4.54987, 6.61977, -1.81949, 7.72733)
 width = 2.321
 width_curve = SubResource("Curve_syim4")
 script = ExtResource("3_2kylr")

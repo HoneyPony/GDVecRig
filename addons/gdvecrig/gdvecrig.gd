@@ -5,6 +5,7 @@ class_name GDVecRig
 var current_vecdrawing = null
 
 var point_highlight = 0
+var point_selection = []
 var point_edited = false
 
 func _handles(node):
@@ -15,6 +16,9 @@ func _handles(node):
 func _edit(object):
 	if object is VecDrawing:
 		current_vecdrawing = object
+		point_highlight = 0
+		point_selection = []
+		point_edited = false
 	else:
 		current_vecdrawing = null
 	return

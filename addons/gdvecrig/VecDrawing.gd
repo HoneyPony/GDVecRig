@@ -44,9 +44,28 @@ func edit_point(index: int, offset: Vector2):
 func try_starting_editing(plugin: GDVecRig):
 	if plugin.point_highlight >= 0:
 		plugin.point_edited = true
+		if not plugin.point_selection.has(plugin.point_highlight):
+			# Clear the selection we we're selecitng a new point
+			plugin.point_selection.clear()
+			add_to_select(plugin, plugin.point_highlight)
 	
 func stop_editing(plugin: GDVecRig):
 	plugin.point_edited = false
+	
+func add_to_select(plugin: GDVecRig, point: int):
+	if not plugin.point_selection.has(point):
+		plugin.point_selection.push_back(point)
+	
+func add_to_select_from_target(plugin: GDVecRig, target: Vector2):
+	var radius = 5 / zoom()
+	
+	for i in range(0, waypoint_count()):
+		var center = get_waypoint(i).value
+		if (target - center).length_squared() <= (radius * radius):
+			add_to_select(plugin, i)
+	
+func is_selected(index):
+	return get_plugin().point_selection.has(index)
 	
 func zoom():
 	#print(get_viewport().get_screen_transform())
@@ -57,8 +76,9 @@ func zoom():
 func edit_input(plugin: GDVecRig, event: InputEvent) -> bool:
 	if event is InputEventMouseMotion:
 		if plugin.point_edited:
+			for point in plugin.point_selection:
 			#print(event.relative / zoom())
-			edit_point(plugin.point_highlight, event.relative / zoom())
+				edit_point(point, event.relative / zoom())
 			#queue_redraw()
 			return true
 		else:
@@ -80,8 +100,12 @@ func edit_input(plugin: GDVecRig, event: InputEvent) -> bool:
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_LEFT:
 			if event.pressed:
-				try_starting_editing(plugin)
-				return true
+				if event.get_modifiers_mask() & KEY_MASK_SHIFT:
+					add_to_select_from_target(plugin, get_local_mouse_position())
+					return true
+				else:
+					try_starting_editing(plugin)
+					return true
 			else:
 				stop_editing(plugin)
 				
@@ -109,13 +133,13 @@ func compute(p0, p1, p2, p3, t):
 		(3 * zt * t * t * p2) + \
 		(t * t * t * p3);
 	
-func draw_editor_handle(radius, left, mid, right):
+func draw_editor_handle(radius, left, mid, right, ls, ms, rs):
 	draw_line(left, mid, Color.WHITE)
 	draw_line(mid, right, Color.WHITE)
 	
-	draw_circle(left, radius * 0.9, Color.WHITE)
-	draw_circle(mid, radius, Color.GRAY)
-	draw_circle(right, radius * 0.9, Color.WHITE)
+	draw_circle(left, radius * 0.9, Color.BLUE if ls else Color.WHITE)
+	draw_circle(mid, radius, Color.BLUE if ms else Color.GRAY)
+	draw_circle(right, radius * 0.9, Color.BLUE if rs else Color.WHITE)
 	
 	
 func draw_line_width(points: PackedVector2Array, width: PackedVector2Array):
@@ -164,9 +188,12 @@ func _draw():
 			i = 0
 			while (i + 2) <= waypoint_count():
 				var p0 = get_waypoint(i).value
+				var p0s = is_selected(i)
 				var p1 = get_waypoint(i + 1).value
+				var p1s = is_selected(i + 1)
 				var p2 = get_waypoint(i + 2).value
-				draw_editor_handle(radius, p0, p1, p2)
+				var p2s = is_selected(i + 2)
+				draw_editor_handle(radius, p0, p1, p2, p0s, p1s, p2s)
 				
 				i += 3
 						

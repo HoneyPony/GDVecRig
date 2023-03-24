@@ -1,7 +1,12 @@
-[gd_scene load_steps=6 format=3 uid="uid://bcuh5ccdr1cqc"]
+[gd_scene load_steps=8 format=3 uid="uid://bcuh5ccdr1cqc"]
 
 [ext_resource type="Script" path="res://addons/gdvecrig/VecDrawing.gd" id="1_cjag6"]
 [ext_resource type="Script" path="res://addons/gdvecrig/VecWaypoint.gd" id="2_ukuny"]
+[ext_resource type="Script" path="res://addons/gdvecrig/VecStroke.gd" id="3_2kylr"]
+
+[sub_resource type="Curve" id="Curve_syim4"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.676218, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
 
 [sub_resource type="Animation" id="Animation_2c1uf"]
 length = 0.001
@@ -70,10 +75,12 @@ _data = {
 script = ExtResource("1_cjag6")
 fill = Color(0.105882, 0.282353, 0.0901961, 1)
 steps = 32
+outline_color = Color(0.0117647, 0.105882, 0, 1)
+outline_base_width = 1.232
 
 [node name="VecWaypoint" type="Node" parent="VecDrawing"]
 script = ExtResource("2_ukuny")
-value = Vector2(62.3285, -1.37889)
+value = Vector2(52.381, 11.0183)
 
 [node name="VecWaypoint2" type="Node" parent="VecDrawing"]
 script = ExtResource("2_ukuny")
@@ -81,11 +88,11 @@ value = Vector2(38.4185, 29.8597)
 
 [node name="VecWaypoint3" type="Node" parent="VecDrawing"]
 script = ExtResource("2_ukuny")
-value = Vector2(20.5773, 65.4679)
+value = Vector2(13.6953, 59.8074)
 
 [node name="VecWaypoint4" type="Node" parent="VecDrawing"]
 script = ExtResource("2_ukuny")
-value = Vector2(-37.9148, 32.9646)
+value = Vector2(-59.6403, 49.446)
 
 [node name="VecWaypoint5" type="Node" parent="VecDrawing"]
 script = ExtResource("2_ukuny")
@@ -93,7 +100,13 @@ value = Vector2(-21.517, 12.1568)
 
 [node name="VecWaypoint6" type="Node" parent="VecDrawing"]
 script = ExtResource("2_ukuny")
-value = Vector2(-4.9466, -8.88113)
+value = Vector2(3.38726, -19.0008)
+
+[node name="VecStroke" type="Line2D" parent="VecDrawing"]
+points = PackedVector2Array(38.4185, 29.8597, 35.8796, 32.6325, 33.0693, 35.1563, 30.0201, 37.4338, 26.764, 39.4678, 23.3334, 41.2608, 19.7605, 42.8157, 16.0775, 44.135, 12.3167, 45.2216, 8.51021, 46.078, 4.69041, 46.707, 0.889484, 47.1114, -2.86033, 47.2936, -6.52678, 47.2566, -10.0776, 47.0029, -13.4807, 46.5353, -16.7036, 45.8564, -19.7143, 44.969, -22.4804, 43.8757, -24.9697, 42.5793, -27.15, 41.0824, -28.989, 39.3878, -30.4545, 37.498, -31.5143, 35.4159, -32.136, 33.1441, -32.2876, 30.6853, -31.9367, 28.0423, -31.0511, 25.2176, -29.5986, 22.214, -27.5469, 19.0342, -24.8638, 15.6809, -21.517, 12.1568)
+width = 2.321
+width_curve = SubResource("Curve_syim4")
+script = ExtResource("3_2kylr")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(7, 33)

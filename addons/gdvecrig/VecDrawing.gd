@@ -10,11 +10,24 @@ class_name VecDrawing
 @export var outline_color: Color = Color.BLACK
 @export var outline_base_width: float = 2.5
 
+var waypoints = [VecWaypoint]
+var strokes = [VecStroke]
+
+func collect_children():
+	waypoints.clear()
+	strokes.clear()
+	for child in get_children():
+		if child is VecWaypoint:
+			waypoints.push_back(child)
+		if child is VecStroke:
+			strokes.push_back(child)
+	
+
 func get_waypoint(index):
-	return get_children()[index]
+	return waypoints[index]
 	
 func waypoint_count():
-	return get_child_count()
+	return waypoints.size()
 
 func get_plugin() -> GDVecRig:
 	return Engine.get_singleton("GDVecRig")
@@ -75,10 +88,14 @@ func edit_input(plugin: GDVecRig, event: InputEvent) -> bool:
 	return false
 
 func _ready():
+	collect_children()
 	pass # Replace with function body.
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
+	if Engine.is_editor_hint():
+		# Always collect waypoints while being edited.
+		collect_children()
 	queue_redraw()	
 #	if Engine.is_editor_hint():
 #		print("e")
@@ -101,6 +118,8 @@ func draw_editor_handle(radius, left, mid, right):
 	draw_circle(right, radius * 0.9, Color.WHITE)
 	
 	
+func draw_line_width(points: PackedVector2Array, width: PackedVector2Array):
+	pass
 	
 func _draw():
 	var computed_points: PackedVector2Array = PackedVector2Array()
@@ -134,8 +153,8 @@ func _draw():
 				computed_points.push_back(compute(p0, p1, p2, p3, t))
 			
 	draw_colored_polygon(computed_points, fill)
-	
-	draw_polyline(computed_points, outline_color, outline_base_width)
+	for stroke in strokes:
+		stroke.points = computed_points
 	
 	if Engine.is_editor_hint():
 		var radius = 5 / zoom()

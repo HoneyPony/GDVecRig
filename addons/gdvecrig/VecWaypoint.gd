@@ -9,7 +9,9 @@ var computed_value: Vector2 = Vector2.ZERO
 
 func compute_value():
 	if not bone.is_empty():
-		computed_value = get_node(bone).transform * value
+		#var test: Bone2D = get_node(bone)
+		var bone2d: Bone2D = get_node(bone)
+		computed_value = bone2d.rest.affine_inverse() * bone2d.transform * value
 	else:
 		computed_value = value
 

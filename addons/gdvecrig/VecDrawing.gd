@@ -7,8 +7,7 @@ class_name VecDrawing
 @export var fill: Color = Color.WHITE
 @export_range(1, 256) var steps: int = 10
 
-@export var outline_color: Color = Color.BLACK
-@export var outline_base_width: float = 2.5
+@export var show_rest: bool = true
 
 var waypoints = [VecWaypoint]
 var strokes = [VecStroke]
@@ -25,6 +24,12 @@ func collect_children():
 
 func get_waypoint(index):
 	return waypoints[index]
+	
+func get_waypoint_place(index):
+	if show_rest:
+		return waypoints[index].value
+	else:
+		return waypoints[index].computed_value
 	
 func waypoint_count():
 	return waypoints.size()
@@ -63,13 +68,13 @@ func add_to_select_from_target(plugin: GDVecRig, target: Vector2):
 	var radius = 5 / zoom()
 	
 	for i in range(0, waypoint_count()):
-		var center = get_waypoint(i).value
+		var center = get_waypoint_place(i)
 		if (target - center).length_squared() <= (radius * radius):
 			add_to_select(plugin, i)
 			
 func select_in_lasso(plugin: GDVecRig):
 	for i in range(0, waypoint_count()):
-		var p = get_waypoint(i).value
+		var p = get_waypoint_place(i)
 		if Geometry2D.is_point_in_polygon(p, plugin.lasso_points):
 			add_to_select(plugin, i)
 	
@@ -96,7 +101,7 @@ func edit_input(plugin: GDVecRig, event: InputEvent) -> bool:
 			plugin.point_highlight = -1
 			
 			for i in range(0, waypoint_count()):
-				var center = get_waypoint(i).value
+				var center = get_waypoint_place(i)
 				if (get_local_mouse_position() - center).length_squared() <= (radius * radius):
 					plugin.point_highlight = i
 					break
@@ -185,10 +190,10 @@ func _draw():
 
 	var i = 1
 	while (i + 3) <= waypoint_count():
-		var p0 = get_waypoint(i).value
-		var p1 = get_waypoint(i + 1).value
-		var p2 = get_waypoint(i + 2).value
-		var p3 = get_waypoint(i + 3).value
+		var p0 = get_waypoint_place(i)
+		var p1 = get_waypoint_place(i + 1)
+		var p2 = get_waypoint_place(i + 2)
+		var p3 = get_waypoint_place(i + 3)
 		
 		for j in range(0, steps):
 			var t = j / float(steps - 1)
@@ -198,10 +203,10 @@ func _draw():
 	if cyclic:
 		if waypoint_count() >= 6:
 			var end = waypoint_count() - 2
-			var p0 = get_waypoint(end + 0).value
-			var p1 = get_waypoint(end + 1).value
-			var p2 = get_waypoint(0).value
-			var p3 = get_waypoint(1).value
+			var p0 = get_waypoint_place(end + 0)
+			var p1 = get_waypoint_place(end + 1)
+			var p2 = get_waypoint_place(0)
+			var p3 = get_waypoint_place(1)
 			for j in range(0, steps):
 				var t = j / float(steps - 1)
 				computed_points.push_back(compute(p0, p1, p2, p3, t))
@@ -217,11 +222,11 @@ func _draw():
 		if is_currently_edited():
 			i = 0
 			while (i + 2) <= waypoint_count():
-				var p0 = get_waypoint(i).value
+				var p0 = get_waypoint_place(i)
 				var p0s = is_selected(i)
-				var p1 = get_waypoint(i + 1).value
+				var p1 = get_waypoint_place(i + 1)
 				var p1s = is_selected(i + 1)
-				var p2 = get_waypoint(i + 2).value
+				var p2 = get_waypoint_place(i + 2)
 				var p2s = is_selected(i + 2)
 				draw_editor_handle(radius, p0, p1, p2, p0s, p1s, p2s)
 				

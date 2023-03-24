@@ -8,6 +8,9 @@ var point_highlight = 0
 var point_selection = []
 var point_edited = false
 
+var lasso_started = false
+var lasso_points: PackedVector2Array = PackedVector2Array()
+
 func _handles(node):
 	if node is VecDrawing:
 		return true
@@ -19,6 +22,8 @@ func _edit(object):
 		point_highlight = 0
 		point_selection = []
 		point_edited = false
+		lasso_started = false
+		lasso_points.clear()
 	else:
 		current_vecdrawing = null
 	return

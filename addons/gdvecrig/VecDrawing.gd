@@ -48,6 +48,9 @@ func try_starting_editing(plugin: GDVecRig):
 			# Clear the selection we we're selecitng a new point
 			plugin.point_selection.clear()
 			add_to_select(plugin, plugin.point_highlight)
+		return true
+	
+	return false
 	
 func stop_editing(plugin: GDVecRig):
 	plugin.point_edited = false
@@ -63,19 +66,24 @@ func add_to_select_from_target(plugin: GDVecRig, target: Vector2):
 		var center = get_waypoint(i).value
 		if (target - center).length_squared() <= (radius * radius):
 			add_to_select(plugin, i)
+			
+func select_in_lasso(plugin: GDVecRig):
+	for i in range(0, waypoint_count()):
+		var p = get_waypoint(i).value
+		if Geometry2D.is_point_in_polygon(p, plugin.lasso_points):
+			add_to_select(plugin, i)
 	
 func is_selected(index):
 	return get_plugin().point_selection.has(index)
 	
 func zoom():
-	#print(get_viewport().get_screen_transform())
-	#return 1.0
 	return get_viewport().get_screen_transform().get_scale().x
-	#return get_viewport().get_camera_2d().zoom.x
 
 func edit_input(plugin: GDVecRig, event: InputEvent) -> bool:
 	if event is InputEventMouseMotion:
-		if plugin.point_edited:
+		if plugin.lasso_started:
+			plugin.lasso_points.push_back(get_local_mouse_position())
+		elif plugin.point_edited:
 			for point in plugin.point_selection:
 			#print(event.relative / zoom())
 				edit_point(point, event.relative / zoom())
@@ -101,13 +109,29 @@ func edit_input(plugin: GDVecRig, event: InputEvent) -> bool:
 		if event.button_index == MOUSE_BUTTON_LEFT:
 			if event.pressed:
 				if event.get_modifiers_mask() & KEY_MASK_SHIFT:
-					add_to_select_from_target(plugin, get_local_mouse_position())
+					var selected = add_to_select_from_target(plugin, get_local_mouse_position())
+					if not selected:
+						plugin.lasso_started = true
 					return true
 				else:
-					try_starting_editing(plugin)
+					var editing = try_starting_editing(plugin)
+					if not editing:
+						plugin.lasso_started = true
+						
 					return true
 			else:
-				stop_editing(plugin)
+				if plugin.lasso_started:
+					if event.get_modifiers_mask() & KEY_MASK_SHIFT:
+						pass # Don't throw out old points
+					else:
+						# CLear selection
+						plugin.point_selection.clear()
+					select_in_lasso(plugin)
+					plugin.lasso_started = false
+					plugin.lasso_points.clear()
+				else:
+					stop_editing(plugin)
+		
 				
 	return false
 
@@ -144,6 +168,12 @@ func draw_editor_handle(radius, left, mid, right, ls, ms, rs):
 	
 func draw_line_width(points: PackedVector2Array, width: PackedVector2Array):
 	pass
+	
+func draw_lasso(plugin: GDVecRig):
+	var radius = 1.0 / zoom()
+	if plugin.lasso_points.size() >= 2:
+		draw_polyline(plugin.lasso_points, Color.WHITE, radius)
+		draw_line(plugin.lasso_points[plugin.lasso_points.size() - 1], plugin.lasso_points[0], Color.GRAY, radius)
 	
 func _draw():
 	var computed_points: PackedVector2Array = PackedVector2Array()
@@ -196,5 +226,9 @@ func _draw():
 				draw_editor_handle(radius, p0, p1, p2, p0s, p1s, p2s)
 				
 				i += 3
+		
+		if plugin.lasso_started:
+			#print("Yo ", plugin.lasso_points.size())
+			draw_lasso(plugin)
 						
 		

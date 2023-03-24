@@ -12,6 +12,8 @@ class_name VecDrawing
 var waypoints = [VecWaypoint]
 var strokes = [VecStroke]
 
+@export var skeleton: Skeleton2D = null
+
 func collect_children():
 	waypoints.clear()
 	strokes.clear()
@@ -149,7 +151,8 @@ func _process(delta):
 	if Engine.is_editor_hint():
 		# Always collect waypoints while being edited.
 		collect_children()
-	queue_redraw()	
+	queue_redraw()
+	
 #	if Engine.is_editor_hint():
 #		print("e")
 #		queue_redraw()

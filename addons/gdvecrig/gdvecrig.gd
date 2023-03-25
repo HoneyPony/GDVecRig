@@ -11,10 +11,24 @@ var point_edited = false
 var lasso_started = false
 var lasso_points: PackedVector2Array = PackedVector2Array()
 
+var weight_painting_now = false
+
 func _handles(node):
 	if node is VecDrawing:
 		return true
 	return false
+	
+func load_bones(drawing: VecDrawing):
+	bone_list.clear()
+	
+	var skeleton: Skeleton2D = drawing.get_node_or_null(drawing.skeleton)
+	if skeleton == null:
+		return
+	
+	for i in range(0, skeleton.get_bone_count()):
+		var bone = skeleton.get_bone(i)
+		
+		bone_list.add_item(bone.name)
 	
 func _edit(object):
 	if object is VecDrawing:
@@ -24,6 +38,8 @@ func _edit(object):
 		point_edited = false
 		lasso_started = false
 		lasso_points.clear()
+		
+		load_bones(object)
 	else:
 		current_vecdrawing = null
 	return
@@ -42,6 +58,8 @@ var button_paint
 var button_group
 
 var dock
+
+var bone_list: ItemList
 
 func _enter_tree():
 	Engine.register_singleton("GDVecRig", self)
@@ -69,6 +87,7 @@ func _enter_tree():
 
 	# Add the loaded scene to the docks.
 	add_control_to_dock(DOCK_SLOT_LEFT_UL, dock)
+	bone_list = dock.get_node("TabContainer/Weight Painting/BoneList")
 	# Note that LEFT_UL means the left of the editor, upper-left dock.
 	# Initialization of the plugin goes here.
 	pass

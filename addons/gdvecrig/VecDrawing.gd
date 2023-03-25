@@ -12,7 +12,8 @@ class_name VecDrawing
 var waypoints = [VecWaypoint]
 var strokes = [VecStroke]
 
-@export var skeleton: Skeleton2D = null
+@export_node_path("Skeleton2D") var skeleton
+@onready var skeleton_node = get_node(skeleton)
 
 func collect_children():
 	waypoints.clear()
@@ -85,59 +86,95 @@ func is_selected(index):
 	
 func zoom():
 	return get_viewport().get_screen_transform().get_scale().x
+	
+func paint_from_target(plugin: GDVecRig, target: Vector2):
+	var radius = 10 / zoom()
+	
+	for i in range(0, waypoint_count()):
+		var center = get_waypoint_place(i)
+		if (target - center).length_squared() <= (radius * radius):
+			get_waypoint(i).add_weight(0, 1.0)
+
+func handle_editing_mouse_motion(plugin: GDVecRig, event: InputEventMouseMotion):
+	if plugin.lasso_started:
+		plugin.lasso_points.push_back(get_local_mouse_position())
+	elif plugin.point_edited:
+		for point in plugin.point_selection:
+		#print(event.relative / zoom())
+			edit_point(point, event.relative / zoom())
+		#queue_redraw()
+		return true
+	else:
+		var previous_highlight = plugin.point_highlight
+		
+		var radius = 7 / zoom()
+		plugin.point_highlight = -1
+		
+		for i in range(0, waypoint_count()):
+			var center = get_waypoint_place(i)
+			if (get_local_mouse_position() - center).length_squared() <= (radius * radius):
+				plugin.point_highlight = i
+				break
+			
+		if previous_highlight != plugin.point_highlight:
+			pass
+	return false
+
+func handle_editing_mouse_button(plugin: GDVecRig, event: InputEventMouseButton):
+	if event.button_index == MOUSE_BUTTON_LEFT:
+		if event.pressed:
+			if event.get_modifiers_mask() & KEY_MASK_SHIFT:
+				var selected = add_to_select_from_target(plugin, get_local_mouse_position())
+				if not selected:
+					plugin.lasso_started = true
+				return true
+			else:
+				var editing = try_starting_editing(plugin)
+				if not editing:
+					plugin.lasso_started = true
+					
+				return true
+		else:
+			if plugin.lasso_started:
+				if event.get_modifiers_mask() & KEY_MASK_SHIFT:
+					pass # Don't throw out old points
+				else:
+					# CLear selection
+					plugin.point_selection.clear()
+				select_in_lasso(plugin)
+				plugin.lasso_started = false
+				plugin.lasso_points.clear()
+			else:
+				stop_editing(plugin)
+	return false
+	
+func handle_weight_paint_mouse_motion(plugin: GDVecRig, event: InputEventMouseMotion):
+	if plugin.weight_painting_now:
+		paint_from_target(plugin, get_local_mouse_position())
+		return true
+	return false
+	
+func handle_weight_paint_mouse_button(plugin: GDVecRig, event: InputEventMouseButton):
+	if event.button_index == MOUSE_BUTTON_LEFT:
+		if event.pressed:
+			plugin.weight_painting_now = true
+		else:
+			plugin.weight_painting_now = false
+		return true
+	return false
 
 func edit_input(plugin: GDVecRig, event: InputEvent) -> bool:
 	if event is InputEventMouseMotion:
-		if plugin.lasso_started:
-			plugin.lasso_points.push_back(get_local_mouse_position())
-		elif plugin.point_edited:
-			for point in plugin.point_selection:
-			#print(event.relative / zoom())
-				edit_point(point, event.relative / zoom())
-			#queue_redraw()
-			return true
+		if true:
+			return handle_weight_paint_mouse_motion(plugin, event)
 		else:
-			var previous_highlight = plugin.point_highlight
-			
-			var radius = 7 / zoom()
-			plugin.point_highlight = -1
-			
-			for i in range(0, waypoint_count()):
-				var center = get_waypoint_place(i)
-				if (get_local_mouse_position() - center).length_squared() <= (radius * radius):
-					plugin.point_highlight = i
-					break
-				
-			if previous_highlight != plugin.point_highlight:
-				pass
-				#queue_redraw()
+			return handle_editing_mouse_motion(plugin, event)
 				
 	if event is InputEventMouseButton:
-		if event.button_index == MOUSE_BUTTON_LEFT:
-			if event.pressed:
-				if event.get_modifiers_mask() & KEY_MASK_SHIFT:
-					var selected = add_to_select_from_target(plugin, get_local_mouse_position())
-					if not selected:
-						plugin.lasso_started = true
-					return true
-				else:
-					var editing = try_starting_editing(plugin)
-					if not editing:
-						plugin.lasso_started = true
-						
-					return true
-			else:
-				if plugin.lasso_started:
-					if event.get_modifiers_mask() & KEY_MASK_SHIFT:
-						pass # Don't throw out old points
-					else:
-						# CLear selection
-						plugin.point_selection.clear()
-					select_in_lasso(plugin)
-					plugin.lasso_started = false
-					plugin.lasso_points.clear()
-				else:
-					stop_editing(plugin)
+		if true:
+			return handle_weight_paint_mouse_button(plugin, event)
+		else:
+			return handle_editing_mouse_button(plugin, event)
 		
 				
 	return false
@@ -152,6 +189,12 @@ func _process(delta):
 		# Always collect waypoints while being edited.
 		collect_children()
 	queue_redraw()
+	
+	for i in range(0, waypoint_count()):
+		var s = skeleton_node
+		if Engine.is_editor_hint():
+			s = get_node(skeleton)
+		get_waypoint(i).compute_value(s)
 	
 #	if Engine.is_editor_hint():
 #		print("e")
@@ -173,6 +216,13 @@ func draw_editor_handle(radius, left, mid, right, ls, ms, rs):
 	draw_circle(mid, radius, Color.BLUE if ms else Color.GRAY)
 	draw_circle(right, radius * 0.9, Color.BLUE if rs else Color.WHITE)
 	
+func draw_editor_weights(radius, left, mid, right, ls, ms, rs):
+	draw_line(left, mid, Color.WHITE)
+	draw_line(mid, right, Color.WHITE)
+	
+	draw_circle(left, radius * 0.9, Color(ls, ls, ls))
+	draw_circle(mid, radius, Color(ms, ms, ms))
+	draw_circle(right, radius * 0.9, Color(rs, rs, rs))
 	
 func draw_line_width(points: PackedVector2Array, width: PackedVector2Array):
 	pass
@@ -223,17 +273,31 @@ func _draw():
 		var plugin: GDVecRig = get_plugin()
 	
 		if is_currently_edited():
-			i = 0
-			while (i + 2) <= waypoint_count():
-				var p0 = get_waypoint_place(i)
-				var p0s = is_selected(i)
-				var p1 = get_waypoint_place(i + 1)
-				var p1s = is_selected(i + 1)
-				var p2 = get_waypoint_place(i + 2)
-				var p2s = is_selected(i + 2)
-				draw_editor_handle(radius, p0, p1, p2, p0s, p1s, p2s)
-				
-				i += 3
+			if true: # "In weight painting mode"
+				var bone = 0
+				i = 0
+				while (i + 2) <= waypoint_count():
+					var p0 = get_waypoint_place(i)
+					var p0s = get_waypoint(i).get_weight(bone)
+					var p1 = get_waypoint_place(i + 1)
+					var p1s = get_waypoint(i + 1).get_weight(bone)
+					var p2 = get_waypoint_place(i + 2)
+					var p2s = get_waypoint(i + 2).get_weight(bone)
+					draw_editor_weights(radius, p0, p1, p2, p0s, p1s, p2s)
+					
+					i += 3
+			else:
+				i = 0
+				while (i + 2) <= waypoint_count():
+					var p0 = get_waypoint_place(i)
+					var p0s = is_selected(i)
+					var p1 = get_waypoint_place(i + 1)
+					var p1s = is_selected(i + 1)
+					var p2 = get_waypoint_place(i + 2)
+					var p2s = is_selected(i + 2)
+					draw_editor_handle(radius, p0, p1, p2, p0s, p1s, p2s)
+					
+					i += 3
 		
 		if plugin.lasso_started:
 			#print("Yo ", plugin.lasso_points.size())

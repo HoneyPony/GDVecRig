@@ -93,7 +93,7 @@ func paint_from_target(plugin: GDVecRig, target: Vector2):
 	for i in range(0, waypoint_count()):
 		var center = get_waypoint_place(i)
 		if (target - center).length_squared() <= (radius * radius):
-			get_waypoint(i).add_weight(0, 1.0)
+			get_waypoint(i).add_weight(plugin.weight_painting_bone, 1.0)
 
 func handle_editing_mouse_motion(plugin: GDVecRig, event: InputEventMouseMotion):
 	if plugin.lasso_started:
@@ -278,11 +278,11 @@ func _draw():
 				i = 0
 				while (i + 2) <= waypoint_count():
 					var p0 = get_waypoint_place(i)
-					var p0s = get_waypoint(i).get_weight(bone)
+					var p0s = get_waypoint(i).get_weight(plugin.weight_painting_bone)
 					var p1 = get_waypoint_place(i + 1)
-					var p1s = get_waypoint(i + 1).get_weight(bone)
+					var p1s = get_waypoint(i + 1).get_weight(plugin.weight_painting_bone)
 					var p2 = get_waypoint_place(i + 2)
-					var p2s = get_waypoint(i + 2).get_weight(bone)
+					var p2s = get_waypoint(i + 2).get_weight(plugin.weight_painting_bone)
 					draw_editor_weights(radius, p0, p1, p2, p0s, p1s, p2s)
 					
 					i += 3

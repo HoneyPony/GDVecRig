@@ -12,6 +12,10 @@ var lasso_started = false
 var lasso_points: PackedVector2Array = PackedVector2Array()
 
 var weight_painting_now = false
+var weight_painting_bone: int = -1
+
+func _on_bone_list_selected(index: int):
+	weight_painting_bone = index
 
 func _handles(node):
 	if node is VecDrawing:
@@ -88,6 +92,7 @@ func _enter_tree():
 	# Add the loaded scene to the docks.
 	add_control_to_dock(DOCK_SLOT_LEFT_UL, dock)
 	bone_list = dock.get_node("TabContainer/Weight Painting/BoneList")
+	bone_list.connect("item_selected", _on_bone_list_selected)
 	# Note that LEFT_UL means the left of the editor, upper-left dock.
 	# Initialization of the plugin goes here.
 	pass

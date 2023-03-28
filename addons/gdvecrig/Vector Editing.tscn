@@ -27,7 +27,6 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="Drawing" type="Control" parent="TabContainer"]
-visible = false
 layout_mode = 2
 
 [node name="ToolSelector" type="HBoxContainer" parent="TabContainer/Drawing"]
@@ -54,54 +53,56 @@ button_group = SubResource("ButtonGroup_4unuk")
 text = "Knife"
 
 [node name="Weight Painting" type="Control" parent="TabContainer"]
+visible = false
 layout_mode = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="TabContainer/Weight Painting"]
+[node name="VBox" type="VBoxContainer" parent="TabContainer/Weight Painting"]
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="ToolSelector" type="HBoxContainer" parent="TabContainer/Weight Painting/VBoxContainer"]
+[node name="ToolSelector" type="HBoxContainer" parent="TabContainer/Weight Painting/VBox"]
 layout_mode = 2
 
-[node name="Add" type="Button" parent="TabContainer/Weight Painting/VBoxContainer/ToolSelector"]
+[node name="Add" type="Button" parent="TabContainer/Weight Painting/VBox/ToolSelector"]
 layout_mode = 2
 toggle_mode = true
 button_group = SubResource("ButtonGroup_tjpb0")
 text = "Add
 "
 
-[node name="Subtract" type="Button" parent="TabContainer/Weight Painting/VBoxContainer/ToolSelector"]
+[node name="Subtract" type="Button" parent="TabContainer/Weight Painting/VBox/ToolSelector"]
 layout_mode = 2
 toggle_mode = true
 button_group = SubResource("ButtonGroup_d54up")
 text = "Subtract
 "
 
-[node name="Mix" type="Button" parent="TabContainer/Weight Painting/VBoxContainer/ToolSelector"]
+[node name="Mix" type="Button" parent="TabContainer/Weight Painting/VBox/ToolSelector"]
 layout_mode = 2
 toggle_mode = true
 button_group = SubResource("ButtonGroup_fwnco")
 text = "Mix
 "
 
-[node name="Settings" type="HBoxContainer" parent="TabContainer/Weight Painting/VBoxContainer"]
+[node name="Settings" type="HBoxContainer" parent="TabContainer/Weight Painting/VBox"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="TabContainer/Weight Painting/VBoxContainer/Settings"]
+[node name="Label" type="Label" parent="TabContainer/Weight Painting/VBox/Settings"]
 layout_mode = 2
 text = "Value:"
 
-[node name="ValBox" type="SpinBox" parent="TabContainer/Weight Painting/VBoxContainer/Settings"]
+[node name="ValBox" type="SpinBox" parent="TabContainer/Weight Painting/VBox/Settings"]
 layout_mode = 2
 
-[node name="Strength" type="Label" parent="TabContainer/Weight Painting/VBoxContainer/Settings"]
+[node name="Strength" type="Label" parent="TabContainer/Weight Painting/VBox/Settings"]
 layout_mode = 2
 text = "Strength:"
 
-[node name="StrengthBox" type="SpinBox" parent="TabContainer/Weight Painting/VBoxContainer/Settings"]
+[node name="StrengthBox" type="SpinBox" parent="TabContainer/Weight Painting/VBox/Settings"]
 layout_mode = 2
 
-[node name="BoneList" type="ItemList" parent="TabContainer/Weight Painting/VBoxContainer"]
+[node name="BoneList" type="ItemList" parent="TabContainer/Weight Painting/VBox"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3

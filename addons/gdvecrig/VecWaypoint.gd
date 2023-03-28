@@ -5,7 +5,7 @@ class_name VecWaypoint
 @export var value: Vector2
 var computed_value: Vector2 = Vector2.ZERO
 
-var weights = {}
+@export var weights = {}
 
 #	if not bone.is_empty():
 #		#var test: Bone2D = get_node(bone)

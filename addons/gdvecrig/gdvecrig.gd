@@ -12,7 +12,7 @@ var lasso_started = false
 var lasso_points: PackedVector2Array = PackedVector2Array()
 
 var weight_painting_now = false
-var weight_painting_bone: int = -1
+var weight_painting_bone: int = 0
 
 func _on_bone_list_selected(index: int):
 	weight_painting_bone = index
@@ -59,6 +59,31 @@ func _make_visible(visible):
 var dock
 
 var bone_list: ItemList
+var weight_paint_value_box: SpinBox
+var weight_paint_strength_box: SpinBox
+
+# --- WEIGHT PAINT TOOLS ---
+var weight_paint_tool_add: Button
+var weight_paint_tool_sub: Button
+var weight_paint_tool_mix: Button
+var weight_paint_tool_group: ButtonGroup
+
+func paint_weight(input: float) -> float:
+	# Compute output based on selected painting style
+	var output = input + weight_paint_value_box.value
+	if weight_paint_tool_group.get_pressed_button() == weight_paint_tool_sub:
+		output = input - weight_paint_value_box.value
+	elif weight_paint_tool_group.get_pressed_button() == weight_paint_tool_mix:
+		# We mix in the lerp call below
+		output = weight_paint_value_box.value
+	
+	# Blend output
+	return lerp(input, output, weight_paint_strength_box.value)
+
+func setup_button(source_node: Node, path, group: ButtonGroup) -> Button:
+	var node: Button = source_node.get_node(path)
+	node.button_group = group
+	return node
 
 func _enter_tree():
 	Engine.register_singleton("GDVecRig", self)
@@ -68,8 +93,19 @@ func _enter_tree():
 
 	# Add the loaded scene to the docks.
 	add_control_to_dock(DOCK_SLOT_LEFT_UL, dock)
+	
 	bone_list = dock.get_node("%BoneList")
 	bone_list.connect("item_selected", _on_bone_list_selected)
+	
+	weight_paint_value_box = dock.get_node("%WeightPaintValBox")
+	weight_paint_strength_box = dock.get_node("%WeightPaintStrengthBox")
+	
+	var wp_tool = dock.get_node("TabContainer/Weight Painting/VBox/ToolSelector")
+	weight_paint_tool_group = ButtonGroup.new()
+	weight_paint_tool_add = setup_button(wp_tool, "Add", weight_paint_tool_group)
+	weight_paint_tool_sub = setup_button(wp_tool, "Subtract", weight_paint_tool_group)
+	weight_paint_tool_mix = setup_button(wp_tool, "Mix", weight_paint_tool_group)
+	weight_paint_tool_add.button_pressed = true
 	# Note that LEFT_UL means the left of the editor, upper-left dock.
 	# Initialization of the plugin goes here.
 	pass

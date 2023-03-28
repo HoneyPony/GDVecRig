@@ -23,6 +23,12 @@ var computed_value: Vector2 = Vector2.ZERO
 func get_weight(index):
 	return weights.get(index, 0)
 	
+func edit_weight(index, plugin: GDVecRig):
+	var w = get_weight(index)
+	w = plugin.paint_weight(w)
+	w = clamp(w, 0.0, 1.0)
+	weights[index] = w
+	
 func add_weight(index, weight):
 	var w = get_weight(index)
 	w += weight
@@ -37,6 +43,8 @@ func compute_value(skeleton: Skeleton2D):
 
 	var total_weight = 0
 	for i in weights:
+		if i == -1:
+			continue
 		var weight = weights[i]
 		var bone = skeleton.get_bone(i)
 		var tformed = bone.rest.affine_inverse() * bone.transform * value

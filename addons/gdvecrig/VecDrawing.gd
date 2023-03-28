@@ -165,13 +165,13 @@ func handle_weight_paint_mouse_button(plugin: GDVecRig, event: InputEventMouseBu
 
 func edit_input(plugin: GDVecRig, event: InputEvent) -> bool:
 	if event is InputEventMouseMotion:
-		if true:
+		if plugin.in_mode_weightpaint():
 			return handle_weight_paint_mouse_motion(plugin, event)
 		else:
 			return handle_editing_mouse_motion(plugin, event)
 				
 	if event is InputEventMouseButton:
-		if true:
+		if plugin.in_mode_weightpaint():
 			return handle_weight_paint_mouse_button(plugin, event)
 		else:
 			return handle_editing_mouse_button(plugin, event)
@@ -273,7 +273,7 @@ func _draw():
 		var plugin: GDVecRig = get_plugin()
 	
 		if is_currently_edited():
-			if true: # "In weight painting mode"
+			if plugin.in_mode_weightpaint(): # "In weight painting mode"
 				var bone = 0
 				i = 0
 				while (i + 2) <= waypoint_count():

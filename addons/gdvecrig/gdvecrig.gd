@@ -14,6 +14,12 @@ var lasso_points: PackedVector2Array = PackedVector2Array()
 var weight_painting_now = false
 var weight_painting_bone: int = 0
 
+func in_mode_drawing():
+	return dock_tabs.get_current_tab_control() == tab_drawing
+
+func in_mode_weightpaint():
+	return dock_tabs.get_current_tab_control() == tab_weightpaint
+
 func _on_bone_list_selected(index: int):
 	weight_painting_bone = index
 
@@ -58,15 +64,27 @@ func _make_visible(visible):
 
 var dock
 
-var bone_list: ItemList
-var weight_paint_value_box: SpinBox
-var weight_paint_strength_box: SpinBox
+var dock_tabs: TabContainer
+
+var tab_drawing: Control
+var tab_weightpaint: Control
+
+# --- DRAWING TOOLS ---
+var drawing_tool_edit: Button
+var drawing_tool_new: Button
+var drawing_tool_knife: Button
+var drawing_tool_group: ButtonGroup
 
 # --- WEIGHT PAINT TOOLS ---
 var weight_paint_tool_add: Button
 var weight_paint_tool_sub: Button
 var weight_paint_tool_mix: Button
 var weight_paint_tool_group: ButtonGroup
+
+# --- WEIGHT PAINT OPTIONS ---
+var bone_list: ItemList
+var weight_paint_value_box: SpinBox
+var weight_paint_strength_box: SpinBox
 
 func paint_weight(input: float) -> float:
 	# Compute output based on selected painting style
@@ -93,7 +111,20 @@ func _enter_tree():
 
 	# Add the loaded scene to the docks.
 	add_control_to_dock(DOCK_SLOT_LEFT_UL, dock)
+
+	dock_tabs = dock.get_node("TabContainer")
+	tab_drawing = dock_tabs.get_node("Drawing")
+	tab_weightpaint = dock_tabs.get_node("Weight Painting")
 	
+	# SETUP DRAWING UI
+	var d_tool = dock_tabs.get_node("Drawing/ToolSelector")
+	drawing_tool_group = ButtonGroup.new()
+	drawing_tool_edit = setup_button(d_tool, "ToolSelect", drawing_tool_group)
+	drawing_tool_new = setup_button(d_tool, "ToolNewPoint", drawing_tool_group)
+	drawing_tool_knife = setup_button(d_tool, "ToolKnife", drawing_tool_group)
+	drawing_tool_edit.button_pressed = true
+	
+	# SETUP WEIGHT PAINTING UI
 	bone_list = dock.get_node("%BoneList")
 	bone_list.connect("item_selected", _on_bone_list_selected)
 	

@@ -1,6 +1,4 @@
-[gd_scene load_steps=2 format=3 uid="uid://cwdqjn0wu1h6g"]
-
-[ext_resource type="ButtonGroup" uid="uid://2d37r1k8lfxn" path="res://addons/gdvecrig/button_groups/DrawingToolSelectorGroup.tres" id="1_alhu8"]
+[gd_scene format=3 uid="uid://cwdqjn0wu1h6g"]
 
 [node name="Vector Editing" type="Control"]
 layout_mode = 3
@@ -19,7 +17,6 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="Drawing" type="Control" parent="TabContainer"]
-visible = false
 layout_mode = 2
 
 [node name="ToolSelector" type="HBoxContainer" parent="TabContainer/Drawing"]
@@ -30,22 +27,20 @@ offset_bottom = 31.0
 [node name="ToolSelect" type="Button" parent="TabContainer/Drawing/ToolSelector"]
 layout_mode = 2
 toggle_mode = true
-button_group = ExtResource("1_alhu8")
 text = "Select"
 
 [node name="ToolNewPoint" type="Button" parent="TabContainer/Drawing/ToolSelector"]
 layout_mode = 2
 toggle_mode = true
-button_group = ExtResource("1_alhu8")
 text = "Add End Point"
 
 [node name="ToolKnife" type="Button" parent="TabContainer/Drawing/ToolSelector"]
 layout_mode = 2
 toggle_mode = true
-button_group = ExtResource("1_alhu8")
 text = "Knife"
 
 [node name="Weight Painting" type="Control" parent="TabContainer"]
+visible = false
 layout_mode = 2
 
 [node name="VBox" type="VBoxContainer" parent="TabContainer/Weight Painting"]

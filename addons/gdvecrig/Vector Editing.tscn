@@ -1,4 +1,14 @@
-[gd_scene format=3 uid="uid://cwdqjn0wu1h6g"]
+[gd_scene load_steps=6 format=3 uid="uid://cwdqjn0wu1h6g"]
+
+[sub_resource type="ButtonGroup" id="ButtonGroup_irbsx"]
+
+[sub_resource type="ButtonGroup" id="ButtonGroup_4unuk"]
+
+[sub_resource type="ButtonGroup" id="ButtonGroup_tjpb0"]
+
+[sub_resource type="ButtonGroup" id="ButtonGroup_d54up"]
+
+[sub_resource type="ButtonGroup" id="ButtonGroup_fwnco"]
 
 [node name="Vector Editing" type="Control"]
 layout_mode = 3
@@ -20,13 +30,78 @@ grow_vertical = 2
 visible = false
 layout_mode = 2
 
+[node name="ToolSelector" type="HBoxContainer" parent="TabContainer/Drawing"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="ToolSelect" type="Button" parent="TabContainer/Drawing/ToolSelector"]
+layout_mode = 2
+toggle_mode = true
+button_group = SubResource("ButtonGroup_irbsx")
+text = "Select"
+
+[node name="ToolNewPoint" type="Button" parent="TabContainer/Drawing/ToolSelector"]
+layout_mode = 2
+toggle_mode = true
+button_group = SubResource("ButtonGroup_4unuk")
+text = "Add End Point"
+
+[node name="ToolKnife" type="Button" parent="TabContainer/Drawing/ToolSelector"]
+layout_mode = 2
+toggle_mode = true
+button_group = SubResource("ButtonGroup_4unuk")
+text = "Knife"
+
 [node name="Weight Painting" type="Control" parent="TabContainer"]
 layout_mode = 2
 
-[node name="BoneList" type="ItemList" parent="TabContainer/Weight Painting"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+[node name="VBoxContainer" type="VBoxContainer" parent="TabContainer/Weight Painting"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="ToolSelector" type="HBoxContainer" parent="TabContainer/Weight Painting/VBoxContainer"]
+layout_mode = 2
+
+[node name="Add" type="Button" parent="TabContainer/Weight Painting/VBoxContainer/ToolSelector"]
+layout_mode = 2
+toggle_mode = true
+button_group = SubResource("ButtonGroup_tjpb0")
+text = "Add
+"
+
+[node name="Subtract" type="Button" parent="TabContainer/Weight Painting/VBoxContainer/ToolSelector"]
+layout_mode = 2
+toggle_mode = true
+button_group = SubResource("ButtonGroup_d54up")
+text = "Subtract
+"
+
+[node name="Mix" type="Button" parent="TabContainer/Weight Painting/VBoxContainer/ToolSelector"]
+layout_mode = 2
+toggle_mode = true
+button_group = SubResource("ButtonGroup_fwnco")
+text = "Mix
+"
+
+[node name="Settings" type="HBoxContainer" parent="TabContainer/Weight Painting/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="TabContainer/Weight Painting/VBoxContainer/Settings"]
+layout_mode = 2
+text = "Value:"
+
+[node name="ValBox" type="SpinBox" parent="TabContainer/Weight Painting/VBoxContainer/Settings"]
+layout_mode = 2
+
+[node name="Strength" type="Label" parent="TabContainer/Weight Painting/VBoxContainer/Settings"]
+layout_mode = 2
+text = "Strength:"
+
+[node name="StrengthBox" type="SpinBox" parent="TabContainer/Weight Painting/VBoxContainer/Settings"]
+layout_mode = 2
+
+[node name="BoneList" type="ItemList" parent="TabContainer/Weight Painting/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3

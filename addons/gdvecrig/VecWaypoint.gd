@@ -59,6 +59,8 @@ func compute_bone_transform(bone: Bone2D, cache: Dictionary) -> Transform2D:
 	# create that behavior by moving the rotation pivot.
 	if p_bone == null:
 		result = Transform2D(0, bone.rest.origin) * result * Transform2D(0, -bone.rest.origin)
+	else:
+		result = Transform2D(0, -bone.rest.origin) * result * Transform2D(0, bone.rest.origin)
 	
 	# Finally, apply the parent transform.
 	result = p_transform * result

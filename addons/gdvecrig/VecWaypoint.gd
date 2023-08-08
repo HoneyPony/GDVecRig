@@ -35,17 +35,21 @@ func add_weight(index, weight):
 	w = clamp(w, 0.0, 1.0)
 	weights[index] = w
 	
-func compute_bone_transform(bone: Bone2D):
+func compute_bone_transform(bone: Bone2D, cache: Dictionary) -> Transform2D:
+	var existing = cache.get(bone)
+	if existing != null:
+		return existing
+	
 	var p: Node = bone.get_parent()
 	var p_bone: Bone2D = p as Bone2D
-	var p_transform: Transform2D
+	var p_transform: Transform2D = Transform2D.IDENTITY
 	
 	if p_bone != null:
-		p_transform = compute_bone_transform(p_bone)
+		p_transform = compute_bone_transform(p_bone, cache)
 	elif p != null:
 		p_transform = p.transform
-	else:
-		p_transform = Transform2D.IDENTITY	
+	#else: # Already assigned above
+	#	p_transform = Transform2D.IDENTITY	
 		
 	# The basic transform is just the transform, but relative to the rest pose.
 	var result: Transform2D = bone.rest.affine_inverse() * bone.transform
@@ -58,9 +62,13 @@ func compute_bone_transform(bone: Bone2D):
 	
 	# Finally, apply the parent transform.
 	result = p_transform * result
+	
+	# Add this transform to the cache so future callers can skip the computation
+	cache[bone] = result
+	
 	return result
 
-func compute_value(skeleton: Skeleton2D):
+func compute_value(skeleton: Skeleton2D, transform_cache: Dictionary):
 	if weights.is_empty():
 		computed_value = value
 		return
@@ -74,7 +82,7 @@ func compute_value(skeleton: Skeleton2D):
 		var bone = skeleton.get_bone(i)
 		
 		#var tformed = bone.rest.affine_inverse() * bone.transform * value
-		var tformed = compute_bone_transform(bone) * value
+		var tformed = compute_bone_transform(bone, transform_cache) * value
 		computed_value += weight * tformed
 		
 		total_weight += weight

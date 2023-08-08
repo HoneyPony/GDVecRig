@@ -190,11 +190,13 @@ func _process(delta):
 		collect_children()
 	queue_redraw()
 	
+	# Cache used to speed up bone computations
+	var transform_cache = {}
 	for i in range(0, waypoint_count()):
 		var s = skeleton_node
 		if Engine.is_editor_hint():
 			s = get_node(skeleton)
-		get_waypoint(i).compute_value(s)
+		get_waypoint(i).compute_value(s, transform_cache)
 	
 #	if Engine.is_editor_hint():
 #		print("e")

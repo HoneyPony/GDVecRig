@@ -8,6 +8,7 @@ class_name VecDrawing
 @export_range(1, 256) var steps: int = 10
 
 @export var show_rest: bool = true
+@export var always_show_points: bool = false
 
 var waypoints = [VecWaypoint]
 var strokes = [VecStroke]
@@ -274,7 +275,7 @@ func _draw():
 		var radius = 5 / zoom()
 		var plugin: GDVecRig = get_plugin()
 	
-		if is_currently_edited():
+		if is_currently_edited() or always_show_points:
 			if plugin.in_mode_weightpaint(): # "In weight painting mode"
 				var bone = 0
 				i = 0

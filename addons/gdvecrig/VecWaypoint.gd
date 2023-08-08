@@ -37,26 +37,28 @@ func add_weight(index, weight):
 	
 func compute_bone_transform(bone: Bone2D):
 	var p: Node = bone.get_parent()
-	if p != null:
-		var p_bone: Bone2D = p as Bone2D
-		var p_transform: Transform2D
-		var own_inverse = bone.rest.affine_inverse()
-		if p_bone != null:
-			p_transform = compute_bone_transform(p_bone)
-		else:
-			p_transform = Transform2D.IDENTITY
-			#own_inverse.origin = bone.rest.origin
-			
-		var result = bone.transform
-		result = own_inverse * result
-		result = p_transform * result
-		
-		if p_bone == null:
-			result = Transform2D(0, bone.rest.origin) * result * Transform2D(0, -bone.rest.origin)
-			
-		return result
+	var p_bone: Bone2D = p as Bone2D
+	var p_transform: Transform2D
+	
+	if p_bone != null:
+		p_transform = compute_bone_transform(p_bone)
+	elif p != null:
+		p_transform = p.transform
 	else:
-		return bone.rest.affine_inverse() * bone.transform
+		p_transform = Transform2D.IDENTITY	
+		
+	# The basic transform is just the transform, but relative to the rest pose.
+	var result: Transform2D = bone.rest.affine_inverse() * bone.transform
+	
+	# Root bones have the special property that their origin IS the origin
+	# that the skeleton must rotate around. As such, we must manually
+	# create that behavior by moving the rotation pivot.
+	if p_bone == null:
+		result = Transform2D(0, bone.rest.origin) * result * Transform2D(0, -bone.rest.origin)
+	
+	# Finally, apply the parent transform.
+	result = p_transform * result
+	return result
 
 func compute_value(skeleton: Skeleton2D):
 	if weights.is_empty():

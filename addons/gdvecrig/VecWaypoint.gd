@@ -34,6 +34,29 @@ func add_weight(index, weight):
 	w += weight
 	w = clamp(w, 0.0, 1.0)
 	weights[index] = w
+	
+func compute_bone_transform(bone: Bone2D):
+	var p: Node = bone.get_parent()
+	if p != null:
+		var p_bone: Bone2D = p as Bone2D
+		var p_transform: Transform2D
+		var own_inverse = bone.rest.affine_inverse()
+		if p_bone != null:
+			p_transform = compute_bone_transform(p_bone)
+		else:
+			p_transform = Transform2D.IDENTITY
+			#own_inverse.origin = bone.rest.origin
+			
+		var result = bone.transform
+		result = own_inverse * result
+		result = p_transform * result
+		
+		if p_bone == null:
+			result = Transform2D(0, bone.rest.origin) * result * Transform2D(0, -bone.rest.origin)
+			
+		return result
+	else:
+		return bone.rest.affine_inverse() * bone.transform
 
 func compute_value(skeleton: Skeleton2D):
 	if weights.is_empty():
@@ -47,7 +70,9 @@ func compute_value(skeleton: Skeleton2D):
 			continue
 		var weight = weights[i]
 		var bone = skeleton.get_bone(i)
-		var tformed = bone.rest.affine_inverse() * bone.transform * value
+		
+		#var tformed = bone.rest.affine_inverse() * bone.transform * value
+		var tformed = compute_bone_transform(bone) * value
 		computed_value += weight * tformed
 		
 		total_weight += weight

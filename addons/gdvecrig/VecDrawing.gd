@@ -16,6 +16,58 @@ var strokes = [VecStroke]
 @export_node_path("Skeleton2D") var skeleton
 @onready var skeleton_node = get_skeleton_from_tree()
 
+enum ConstraintType {
+	NONE,
+	SAME_ANGLE,
+	SAME_ANGLE_AND_LENGTH
+}
+
+var constraints = []
+
+func constrain_waypoint_in_editing(target: VecWaypoint, effector: VecWaypoint, center: VecWaypoint, constraint: ConstraintType):
+	if constraint == ConstraintType.NONE:
+		return
+		
+	if constraint == ConstraintType.SAME_ANGLE:
+		var vec1 = target.value - center.value
+		var vec2 = effector.value - center.value
+		
+		# Use the direction from the effector, normalized, but
+		# use our original length.
+		vec1 = vec2.normalized() * vec1.length() * -1
+		target.value = center.value + vec1
+		return
+		
+	if constraint == ConstraintType.SAME_ANGLE_AND_LENGTH:
+		var vec2 = effector.value - center.value
+		
+		# Literally use the flipped vec2 for the new direction.
+		target.value = center.value - vec2
+		return
+
+func update_edit_constraint(index, plugin: GDVecRig):
+	var left = waypoints[index * 3]
+	var center = waypoints[index * 3 + 1]
+	var right = waypoints[index * 3 + 2]
+	
+	var left_edited = (index * 3) in plugin.point_selection
+	#var center_edited = (index * 3 + 1) in plugin.point_selection
+	var right_edited = (index * 3 + 2) in plugin.point_selection
+	
+	# If both sides are edited, our transformations should *generally*
+	# preserve constraints. TODO: Maybe add a second pass to even
+	# correct those that don't work..?
+	#
+	# Also, it doesn't seem like whether the center is edited can really
+	# matter.
+	if left_edited and right_edited:
+		return
+			
+	if left_edited:
+		constrain_waypoint_in_editing(right, left, center, constraints[index])
+	
+	if right_edited:
+		constrain_waypoint_in_editing(left, right, center, constraints[index])
 # Gets the associated Skeleton2D from the 'skeleton' NodePath variable, OR
 # returns null if the path is either null or invalid. This is because
 # get_node_or_null unfortunately does not like it when the NodePath is null.
@@ -31,6 +83,12 @@ func collect_children():
 		if child is VecStroke:
 			strokes.push_back(child)
 	
+	var needed_constraints = center_waypoint_count()
+	while constraints.size() < needed_constraints:
+		constraints.push_back(ConstraintType.SAME_ANGLE)
+	if constraints.size() > needed_constraints:
+		constraints.pop_back()
+	
 
 func get_waypoint(index):
 	return waypoints[index]
@@ -43,6 +101,9 @@ func get_waypoint_place(index):
 	
 func waypoint_count():
 	return waypoints.size()
+	
+func center_waypoint_count():
+	return waypoint_count() / 3
 
 func get_plugin() -> GDVecRig:
 	return Engine.get_singleton("GDVecRig")
@@ -109,6 +170,8 @@ func handle_editing_mouse_motion(plugin: GDVecRig, event: InputEventMouseMotion)
 		for point in plugin.point_selection:
 		#print(event.relative / zoom())
 			edit_point(point, event.relative / zoom())
+		for i in range(0, center_waypoint_count()):
+			update_edit_constraint(i, plugin)
 		#queue_redraw()
 		return true
 	else:

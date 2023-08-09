@@ -131,6 +131,62 @@ func update_edit_constraint(index, plugin: GDVecRig, cache: Dictionary):
 			return
 
 
+# This function updates waypoint.value so that all waypoints are obeying their
+# current constraint. This does not affect computed_value.
+#
+# It does not take editing information into consideration; it just averages
+# things out.
+func compute_constraint_on_value_lossy(index: int):
+	var c = constraints[index]
+	if c == ConstraintType.NONE:
+		return
+	
+	var left_index = index * 3
+	var center_index = index * 3 + 1
+	var right_index = index * 3 + 2
+	
+	var left = waypoints[left_index]
+	var center = waypoints[center_index]
+	var right = waypoints[right_index]
+	
+	# Weird case where one point is on the same spot as the center.
+	# In that case, all we can do is clamp both that way, if
+	# we need SAME_LENGTH.
+	if left.value == center.value or right.value == center.value:
+		if c == ConstraintType.SAME_ANGLE_AND_LENGTH:
+			left.value = center.value
+			right.value = center.value
+		return
+	
+	# First step: update waypoints to obey angle rule
+	if c == ConstraintType.SAME_ANGLE or c == ConstraintType.SAME_ANGLE_AND_LENGTH:
+		var dir1 = left.value - center.value
+		var dir2 = right.value - center.value
+		
+		# Compare the flipped vectors because they should point in opposite
+		# directions
+		var angle_dif = dir1.angle_to(-dir2)
+		
+		dir1 = dir1.rotated(angle_dif * 0.5)
+		dir2 = dir2.length() * dir1.normalized() * -1
+		
+		left.value = center.value + dir1
+		right.value = center.value + dir2
+
+	# Second step: update to obey length rule
+	if c == ConstraintType.SAME_ANGLE_AND_LENGTH:
+		var dir1 = left.value - center.value
+		var dir2 = right.value - center.value
+
+		var avg_length = (dir1.length() + dir2.length()) * 0.5
+		
+		dir1 = dir1.normalized() * avg_length
+		dir2 = dir2.normalized() * avg_length
+		
+		left.value = center.value + dir1
+		right.value = center.value + dir2
+		
+		
 # Gets the associated Skeleton2D from the 'skeleton' NodePath variable, OR
 # returns null if the path is either null or invalid. This is because
 # get_node_or_null unfortunately does not like it when the NodePath is null.
@@ -334,6 +390,11 @@ func _process(delta):
 		# Always collect waypoints while being edited.
 		collect_children()
 	queue_redraw()
+	
+	# First step: re-compute constraints. Maybe we should have a flag
+	# to disable this.
+	for i in range(0, center_waypoint_count()):
+		compute_constraint_on_value_lossy(i)
 	
 	# Cache used to speed up bone computations
 	var transform_cache = {}

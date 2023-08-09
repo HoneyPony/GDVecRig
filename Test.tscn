@@ -67,7 +67,7 @@ skeleton = NodePath("../Skeleton2D")
 
 [node name="VecWaypoint" type="Node" parent="OLD/VecDrawing"]
 script = ExtResource("2_ukuny")
-value = Vector2(114.066, 24.4291)
+value = Vector2(114.068, 24.2821)
 weights = {
 0: 1.0
 }
@@ -81,7 +81,7 @@ weights = {
 
 [node name="VecWaypoint3" type="Node" parent="OLD/VecDrawing"]
 script = ExtResource("2_ukuny")
-value = Vector2(49.6154, 23.6847)
+value = Vector2(49.6172, 23.4999)
 weights = {
 0: 1.0,
 1: 0.0
@@ -89,7 +89,7 @@ weights = {
 
 [node name="VecWaypoint13" type="Node" parent="OLD/VecDrawing"]
 script = ExtResource("2_ukuny")
-value = Vector2(37.0112, 23.6966)
+value = Vector2(37.0168, 24.104)
 weights = {
 0: 0.0,
 1: 1.0
@@ -105,7 +105,7 @@ weights = {
 
 [node name="VecWaypoint15" type="Node" parent="OLD/VecDrawing"]
 script = ExtResource("2_ukuny")
-value = Vector2(-21.9343, 23.8395)
+value = Vector2(-21.9391, 24.4192)
 weights = {
 0: 0.0,
 1: 1.0
@@ -113,7 +113,7 @@ weights = {
 
 [node name="VecWaypoint4" type="Node" parent="OLD/VecDrawing"]
 script = ExtResource("2_ukuny")
-value = Vector2(-38.5371, 27.6881)
+value = Vector2(-39.0198, 27.6659)
 weights = {
 1: 0.0,
 2: 1.0
@@ -129,7 +129,7 @@ weights = {
 
 [node name="VecWaypoint6" type="Node" parent="OLD/VecDrawing"]
 script = ExtResource("2_ukuny")
-value = Vector2(-36.0588, -14.599)
+value = Vector2(-36.5741, -14.6349)
 weights = {
 1: 0.0,
 2: 1.0
@@ -137,7 +137,7 @@ weights = {
 
 [node name="VecWaypoint7" type="Node" parent="OLD/VecDrawing"]
 script = ExtResource("2_ukuny")
-value = Vector2(-23.8047, -16.2794)
+value = Vector2(-23.8049, -16.3941)
 weights = {
 0: 0.0,
 1: 1.0
@@ -153,7 +153,7 @@ weights = {
 
 [node name="VecWaypoint9" type="Node" parent="OLD/VecDrawing"]
 script = ExtResource("2_ukuny")
-value = Vector2(38.8038, -16.2549)
+value = Vector2(38.8041, -16.3733)
 weights = {
 0: 0.0,
 1: 1.0
@@ -161,7 +161,7 @@ weights = {
 
 [node name="VecWaypoint10" type="Node" parent="OLD/VecDrawing"]
 script = ExtResource("2_ukuny")
-value = Vector2(49.717, -16.6456)
+value = Vector2(49.7139, -18.3162)
 weights = {
 0: 1.0,
 1: 0.0
@@ -176,7 +176,7 @@ weights = {
 
 [node name="VecWaypoint12" type="Node" parent="OLD/VecDrawing"]
 script = ExtResource("2_ukuny")
-value = Vector2(119.719, -15.2587)
+value = Vector2(119.789, -16.8277)
 weights = {
 0: 1.0
 }
@@ -194,7 +194,7 @@ always_show_points = true
 
 [node name="@Node@21576" type="Node" parent="VecDrawing"]
 script = ExtResource("2_ukuny")
-value = Vector2(32.685, -5.782)
+value = Vector2(29.4956, -1.88258)
 
 [node name="@Node@21577" type="Node" parent="VecDrawing"]
 script = ExtResource("2_ukuny")
@@ -202,11 +202,11 @@ value = Vector2(24.1343, -9.5217)
 
 [node name="@Node@21578" type="Node" parent="VecDrawing"]
 script = ExtResource("2_ukuny")
-value = Vector2(18.5844, -14.415)
+value = Vector2(17.7035, -18.6849)
 
 [node name="@Node@21579" type="Node" parent="VecDrawing"]
 script = ExtResource("2_ukuny")
-value = Vector2(-4.47397, -29.4761)
+value = Vector2(-4.44684, -31.5025)
 
 [node name="@Node@21580" type="Node" parent="VecDrawing"]
 script = ExtResource("2_ukuny")
@@ -214,7 +214,7 @@ value = Vector2(-8.13651, -17.8089)
 
 [node name="@Node@21581" type="Node" parent="VecDrawing"]
 script = ExtResource("2_ukuny")
-value = Vector2(-12.7763, -3.02861)
+value = Vector2(-12.1669, -2.85092)
 
 [node name="@Node@21582" type="Node" parent="VecDrawing"]
 script = ExtResource("2_ukuny")

@@ -267,7 +267,7 @@ skeleton = NodePath("ConstraintExampleSkel")
 
 [node name="@Node@21576" type="Node" parent="VecDrawing"]
 script = ExtResource("2_ukuny")
-value = Vector2(108.699, -7.17274)
+value = Vector2(107.648, -7.59318)
 weights = {
 0: 1.0
 }
@@ -281,7 +281,7 @@ weights = {
 
 [node name="@Node@21578" type="Node" parent="VecDrawing"]
 script = ExtResource("2_ukuny")
-value = Vector2(58.4358, -7.2425)
+value = Vector2(58.4391, -6.79816)
 weights = {
 0: 0.0,
 1: 1.0
@@ -289,14 +289,14 @@ weights = {
 
 [node name="@Node@21579" type="Node" parent="VecDrawing"]
 script = ExtResource("2_ukuny")
-value = Vector2(39.6976, -7.19393)
+value = Vector2(39.9782, -9.43885)
 weights = {
 1: 1.0
 }
 
 [node name="@Node@21580" type="Node" parent="VecDrawing"]
 script = ExtResource("2_ukuny")
-value = Vector2(23.9357, -6.93995)
+value = Vector2(24.2163, -9.18487)
 weights = {
 1: 1.0,
 2: 0.0
@@ -304,7 +304,7 @@ weights = {
 
 [node name="@Node@21581" type="Node" parent="VecDrawing"]
 script = ExtResource("2_ukuny")
-value = Vector2(8.17386, -6.68598)
+value = Vector2(8.45448, -8.9309)
 weights = {
 2: 1.0
 }
@@ -410,7 +410,6 @@ rest = Transform2D(1, 0, 0, 1, -58, 0)
 [node name="B" type="Bone2D" parent="VecDrawing/ConstraintExampleSkel/Root/A"]
 position = Vector2(-51, -1)
 rotation = -3.56602
-scale = Vector2(1, 1)
 rest = Transform2D(-0.999263, 0.0383877, -0.0383877, -0.999263, -51, -1)
 auto_calculate_length_and_angle = false
 length = 16.0

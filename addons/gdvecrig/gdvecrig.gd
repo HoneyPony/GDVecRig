@@ -48,8 +48,6 @@ func _on_bone_list_selected(index: int):
 	weight_painting_bone = index
 
 func _handles(node):
-	print("HANDLES: ", node)
-	
 	# We will ALWAYS handle a VecDrawing if it is currently selected.
 	if node is VecDrawing:
 		return true
@@ -93,37 +91,16 @@ func _edit(object):
 		#current_vecdrawing = null
 	return
 	
-# Reference for this code:
+# Reference for the future:
 # https://cookiebadger.itch.io/assetplacer/devlog/537327/godot-plugins-what-nobody-tells-you
-# This is a very useful post!
-#func get_2d_viewports():
-#	var main_screen = get_editor_interface().get_editor_main_screen()
-#	var vcs = main_screen.find_children(".*")
-#	print(vcs)
 		
 func _forward_canvas_gui_input(event: InputEvent) -> bool:
-	pass
-	return false
-#	if not wants_to_edit_the_object():
-#		return false
-#
-#	if is_instance_valid(current_vecdrawing):
-#		return current_vecdrawing.edit_input(self, event)
-#	return false
-	
-func _input(event: InputEvent) -> void:
-	return
-	#get_2d_viewports()
-	
 	if not wants_to_edit_the_object():
-		return
-	
+		return false
+
 	if is_instance_valid(current_vecdrawing):
-		var handled = current_vecdrawing.edit_input(self, event)
-		if handled:
-			get_viewport().set_input_as_handled()
-		
-	return
+		return current_vecdrawing.edit_input(self, event)
+	return false
 	
 func _make_visible(visible):
 	pass
@@ -170,6 +147,13 @@ func setup_button(source_node: Node, path, group: ButtonGroup) -> Button:
 	var node: Button = source_node.get_node(path)
 	node.button_group = group
 	return node
+	
+# A hack that does not work.	
+#func _process(delta):
+#	if get_editor_interface().get_selection().get_selected_nodes().is_empty():
+#		if dock.get_parent().get_current_tab_control() == dock:
+#			if current_vecdrawing != null:
+#				get_editor_interface().edit_node(current_vecdrawing)
 
 func _enter_tree():
 	Engine.register_singleton("GDVecRig", self)

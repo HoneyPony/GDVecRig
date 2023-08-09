@@ -510,29 +510,33 @@ func draw_editor_handle(radius, left, mid, right, ls, ms, rs):
 	#draw_circle(mid, radius, Color.BLUE if ms else Color.GRAY)
 	draw_circle(right, radius * 0.9, Color.BLUE if rs else Color.WHITE)
 	
-func draw_editor_center_handle(radius, mid, ms, constraint):
-	var color = Color.BLUE if ms else Color.GRAY
-	
+func draw_some_center_handle_with_color(radius, where, color, constraint):
 	if constraint == ConstraintType.SAME_ANGLE_AND_LENGTH:
-		draw_circle(mid, radius, color)
+		draw_circle(where, radius, color)
 	elif constraint == ConstraintType.SAME_ANGLE:
 		var r = Vector2(radius, radius)
-		draw_rect(Rect2(mid - r, r * 2), color)
+		draw_rect(Rect2(where - r, r * 2), color)
 	elif constraint == ConstraintType.NONE:
 		var points = PackedVector2Array()
 		radius *= 1.1
-		points.push_back(mid + Vector2(0, radius))
-		points.push_back(mid + Vector2(-radius, 0))
-		points.push_back(mid + Vector2(0, -radius))
-		points.push_back(mid + Vector2(radius, 0))
+		points.push_back(where + Vector2(0, radius))
+		points.push_back(where + Vector2(-radius, 0))
+		points.push_back(where + Vector2(0, -radius))
+		points.push_back(where + Vector2(radius, 0))
 		draw_polygon(points, PackedColorArray([color, color, color, color]))
 	
-func draw_editor_weights(radius, left, mid, right, ls, ms, rs):
+func draw_editor_center_handle(radius, mid, ms, constraint):
+	var color = Color.BLUE if ms else Color.GRAY
+	draw_some_center_handle_with_color(radius, mid, color, constraint)
+	
+	
+func draw_editor_weights(radius, left, mid, right, ls, ms, rs, constraint):
 	draw_line(left, mid, Color.WHITE)
 	draw_line(mid, right, Color.WHITE)
 	
 	draw_circle(left, radius * 0.9, Color(ls, ls, ls))
-	draw_circle(mid, radius, Color(ms, ms, ms))
+	#draw_circle(mid, radius, Color(ms, ms, ms))
+	draw_some_center_handle_with_color(radius, mid, Color(ms, ms, ms), constraint)
 	draw_circle(right, radius * 0.9, Color(rs, rs, rs))
 	
 func draw_line_width(points: PackedVector2Array, width: PackedVector2Array):
@@ -595,7 +599,7 @@ func _draw():
 					var p1s = get_waypoint(i + 1).get_weight(plugin.weight_painting_bone)
 					var p2 = get_waypoint_place(i + 2)
 					var p2s = get_waypoint(i + 2).get_weight(plugin.weight_painting_bone)
-					draw_editor_weights(radius, p0, p1, p2, p0s, p1s, p2s)
+					draw_editor_weights(radius, p0, p1, p2, p0s, p1s, p2s, constraints[i / 3])
 					
 					i += 3
 			else:

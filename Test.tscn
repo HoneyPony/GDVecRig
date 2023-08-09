@@ -210,7 +210,7 @@ weights = {
 
 [node name="@Node@21578" type="Node" parent="VecDrawing"]
 script = ExtResource("2_ukuny")
-value = Vector2(56.7135, -7.77195)
+value = Vector2(56.3167, -7.77195)
 weights = {
 0: 0.0,
 1: 1.0

@@ -520,10 +520,12 @@ func draw_editor_center_handle(radius, mid, ms, constraint):
 		draw_rect(Rect2(mid - r, r * 2), color)
 	elif constraint == ConstraintType.NONE:
 		var points = PackedVector2Array()
-		points.push_back(Vector2(0, radius))
-		points.push_back(Vector2(radius, 0))
-		points.push_back(Vector2(0, -radius))
-		points.push_back(Vector2(-radius, 0))
+		radius *= 1.1
+		points.push_back(mid + Vector2(0, radius))
+		points.push_back(mid + Vector2(-radius, 0))
+		points.push_back(mid + Vector2(0, -radius))
+		points.push_back(mid + Vector2(radius, 0))
+		draw_polygon(points, PackedColorArray([color, color, color, color]))
 	
 func draw_editor_weights(radius, left, mid, right, ls, ms, rs):
 	draw_line(left, mid, Color.WHITE)

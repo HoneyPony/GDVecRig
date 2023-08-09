@@ -156,6 +156,7 @@ func _forward_canvas_gui_input(event: InputEvent) -> bool:
 # - _unhandled_input does not seem to ever be called.
 # - _input is called, but there doesn't seem to be a good way to avoid eating
 #   the input when we're not actually supposed to eat it.
+
 #func _my_forward_input(event: InputEvent) -> bool:
 #	if not wants_to_edit_the_object():
 #		return false
@@ -221,11 +222,12 @@ func setup_button(source_node: Node, path, group: ButtonGroup) -> Button:
 	return node
 	
 # A hack that does not work.	
-#func _process(delta):
-#	if get_editor_interface().get_selection().get_selected_nodes().is_empty():
-#		if dock.get_parent().get_current_tab_control() == dock:
-#			if current_vecdrawing != null:
-#				get_editor_interface().edit_node(current_vecdrawing)
+func _process(delta):
+	if get_editor_interface().get_selection().get_selected_nodes().is_empty():
+		if dock.get_parent().get_current_tab_control() == dock:
+			if current_vecdrawing != null:
+				get_editor_interface().get_selection().add_node(current_vecdrawing)
+				#get_editor_interface().edit_node(current_vecdrawing)
 
 func _enter_tree():
 	Engine.register_singleton("GDVecRig", self)

@@ -142,7 +142,7 @@ func _enter_tree():
 	weight_paint_value_box = dock.get_node("%WeightPaintValBox")
 	weight_paint_strength_box = dock.get_node("%WeightPaintStrengthBox")
 	
-	var wp_tool = dock.get_node("TabContainer/Weight Painting/VBox/ToolSelector")
+	var wp_tool = dock_tabs.get_node("Weight Painting/VBox/ToolSelector")
 	weight_paint_tool_group = ButtonGroup.new()
 	weight_paint_tool_add = setup_button(wp_tool, "Add", weight_paint_tool_group)
 	weight_paint_tool_sub = setup_button(wp_tool, "Subtract", weight_paint_tool_group)

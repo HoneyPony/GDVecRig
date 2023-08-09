@@ -186,6 +186,59 @@ func compute_constraint_on_value_lossy(index: int):
 		left.value = center.value + dir1
 		right.value = center.value + dir2
 		
+# This function behaves exactly the same as compute_constraint_on_value_lossy,
+# but it applies to computed_value instead -- so it is used to force constraints
+# to apply to rigged drawings.
+func compute_constraint_on_computed_value_lossy(index: int):
+	var c = constraints[index]
+	if c == ConstraintType.NONE:
+		return
+	
+	var left_index = index * 3
+	var center_index = index * 3 + 1
+	var right_index = index * 3 + 2
+	
+	var left = waypoints[left_index]
+	var center = waypoints[center_index]
+	var right = waypoints[right_index]
+	
+	# Weird case where one point is on the same spot as the center.
+	# In that case, all we can do is clamp both that way, if
+	# we need SAME_LENGTH.
+	if left.computed_value == center.computed_value or right.computed_value == center.computed_value:
+		if c == ConstraintType.SAME_ANGLE_AND_LENGTH:
+			left.computed_value = center.computed_value
+			right.computed_value = center.computed_value
+		return
+	
+	# First step: update waypoints to obey angle rule
+	if c == ConstraintType.SAME_ANGLE or c == ConstraintType.SAME_ANGLE_AND_LENGTH:
+		var dir1 = left.computed_value - center.computed_value
+		var dir2 = right.computed_value - center.computed_value
+		
+		# Compare the flipped vectors because they should point in opposite
+		# directions
+		var angle_dif = dir1.angle_to(-dir2)
+		
+		dir1 = dir1.rotated(angle_dif * 0.5)
+		dir2 = dir2.length() * dir1.normalized() * -1
+		
+		left.computed_value = center.computed_value + dir1
+		right.computed_value = center.computed_value + dir2
+
+	# Second step: update to obey length rule
+	if c == ConstraintType.SAME_ANGLE_AND_LENGTH:
+		var dir1 = left.computed_value - center.computed_value
+		var dir2 = right.computed_value - center.computed_value
+
+		var avg_length = (dir1.length() + dir2.length()) * 0.5
+		
+		dir1 = dir1.normalized() * avg_length
+		dir2 = dir2.normalized() * avg_length
+		
+		left.computed_value = center.computed_value + dir1
+		right.computed_value = center.computed_value + dir2
+		
 		
 # Gets the associated Skeleton2D from the 'skeleton' NodePath variable, OR
 # returns null if the path is either null or invalid. This is because
@@ -398,11 +451,26 @@ func _process(delta):
 	
 	# Cache used to speed up bone computations
 	var transform_cache = {}
+	
+	# Second step: compute armature transform
 	for i in range(0, waypoint_count()):
 		var s = skeleton_node
 		if Engine.is_editor_hint() and skeleton != null:
 			s = get_node_or_null(skeleton)
 		get_waypoint(i).compute_value(s, transform_cache)
+	
+	# Extremely strange behavior:
+	# If this condition is 'skeleton != null', the constraints work
+	# in-editor.
+	# If this condition is 'skeleton_node != null', the constraints DO NOT
+	# work in editor, but the 'print' statement below does go off...?
+	if skeleton != null:
+		#print("I am computing the values.")
+		# Final step: compute the constraints on all the computed values.
+		# This is somewhat powerful, it means that armatures can be forced
+		# to obey extra constraints.
+		for i in range(0, center_waypoint_count()):
+			compute_constraint_on_computed_value_lossy(i)
 	
 #	if Engine.is_editor_hint():
 #		print("e")

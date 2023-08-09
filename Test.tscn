@@ -105,7 +105,7 @@ weights = {
 
 [node name="VecWaypoint15" type="Node" parent="OLD/VecDrawing"]
 script = ExtResource("2_ukuny")
-value = Vector2(-21.9391, 24.4192)
+value = Vector2(-21.975, 24.4194)
 weights = {
 0: 0.0,
 1: 1.0
@@ -190,40 +190,153 @@ script = ExtResource("3_2kylr")
 
 [node name="VecDrawing" type="Node2D" parent="."]
 script = ExtResource("1_cjag6")
+fill = Color(0.0156863, 0.32549, 1, 1)
+show_rest = false
 always_show_points = true
+skeleton = NodePath("ConstraintExampleSkel")
 
 [node name="@Node@21576" type="Node" parent="VecDrawing"]
 script = ExtResource("2_ukuny")
-value = Vector2(29.4956, -1.88258)
+value = Vector2(101.305, -8.08345)
+weights = {
+0: 1.0
+}
 
 [node name="@Node@21577" type="Node" parent="VecDrawing"]
 script = ExtResource("2_ukuny")
-value = Vector2(24.1343, -9.5217)
+value = Vector2(81.0712, -8.11862)
+weights = {
+0: 1.0
+}
 
 [node name="@Node@21578" type="Node" parent="VecDrawing"]
 script = ExtResource("2_ukuny")
-value = Vector2(17.7035, -18.6849)
+value = Vector2(61.1776, -8.15321)
+weights = {
+0: 0.0,
+1: 1.0
+}
 
 [node name="@Node@21579" type="Node" parent="VecDrawing"]
 script = ExtResource("2_ukuny")
-value = Vector2(-4.44684, -31.5025)
+value = Vector2(38.8727, -8.19618)
+weights = {
+1: 1.0
+}
 
 [node name="@Node@21580" type="Node" parent="VecDrawing"]
 script = ExtResource("2_ukuny")
-value = Vector2(-8.13651, -17.8089)
+value = Vector2(25.3614, -8.25279)
+weights = {
+1: 1.0
+}
 
 [node name="@Node@21581" type="Node" parent="VecDrawing"]
 script = ExtResource("2_ukuny")
-value = Vector2(-12.1669, -2.85092)
+value = Vector2(9.87008, -8.31769)
+weights = {
+2: 1.0
+}
 
 [node name="@Node@21582" type="Node" parent="VecDrawing"]
 script = ExtResource("2_ukuny")
-value = Vector2(1.46096, 18.3518)
+value = Vector2(-9.1353, -13.8094)
+weights = {
+2: 1.0
+}
 
 [node name="@Node@21583" type="Node" parent="VecDrawing"]
 script = ExtResource("2_ukuny")
-value = Vector2(17.1435, 22.6829)
+value = Vector2(-22.7039, -0.8888)
+weights = {
+2: 1.0
+}
 
 [node name="@Node@21584" type="Node" parent="VecDrawing"]
 script = ExtResource("2_ukuny")
-value = Vector2(32.0294, 26.794)
+value = Vector2(-28.901, 5.01231)
+weights = {
+2: 1.0
+}
+
+[node name="@Node@23946" type="Node" parent="VecDrawing"]
+script = ExtResource("2_ukuny")
+value = Vector2(-28.1196, 13.8694)
+weights = {
+2: 1.0
+}
+
+[node name="@Node@23947" type="Node" parent="VecDrawing"]
+script = ExtResource("2_ukuny")
+value = Vector2(-22.5763, 18.5615)
+weights = {
+2: 1.0
+}
+
+[node name="@Node@23948" type="Node" parent="VecDrawing"]
+script = ExtResource("2_ukuny")
+value = Vector2(-6.66824, 32.0271)
+weights = {
+2: 1.0
+}
+
+[node name="@Node@23949" type="Node" parent="VecDrawing"]
+script = ExtResource("2_ukuny")
+value = Vector2(8.23569, 25.7183)
+weights = {
+2: 1.0
+}
+
+[node name="@Node@23950" type="Node" parent="VecDrawing"]
+script = ExtResource("2_ukuny")
+value = Vector2(24.9689, 25.5173)
+weights = {
+1: 1.0
+}
+
+[node name="@Node@23951" type="Node" parent="VecDrawing"]
+script = ExtResource("2_ukuny")
+value = Vector2(44.7388, 25.2799)
+weights = {
+1: 1.0
+}
+
+[node name="@Node@23952" type="Node" parent="VecDrawing"]
+script = ExtResource("2_ukuny")
+value = Vector2(58.9606, 25.6603)
+weights = {
+0: 0.0,
+1: 1.0
+}
+
+[node name="@Node@23953" type="Node" parent="VecDrawing"]
+script = ExtResource("2_ukuny")
+value = Vector2(82.0026, 25.5099)
+weights = {
+0: 1.0
+}
+
+[node name="@Node@23954" type="Node" parent="VecDrawing"]
+script = ExtResource("2_ukuny")
+value = Vector2(101.048, 25.3855)
+weights = {
+0: 1.0
+}
+
+[node name="ConstraintExampleSkel" type="Skeleton2D" parent="VecDrawing"]
+
+[node name="Root" type="Bone2D" parent="VecDrawing/ConstraintExampleSkel"]
+position = Vector2(81, 10)
+rotation = 0.533448
+rest = Transform2D(1, 0, 0, 1, 81, 10)
+
+[node name="A" type="Bone2D" parent="VecDrawing/ConstraintExampleSkel/Root"]
+position = Vector2(-58, 0)
+rotation = -0.439447
+rest = Transform2D(1, 0, 0, 1, -58, 0)
+
+[node name="B" type="Bone2D" parent="VecDrawing/ConstraintExampleSkel/Root/A"]
+position = Vector2(-51, -1)
+rotation = 2.98517
+scale = Vector2(1, 1)
+rest = Transform2D(-0.999263, 0.0383877, -0.0383877, -0.999263, -51, -1)

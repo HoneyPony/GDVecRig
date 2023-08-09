@@ -263,26 +263,26 @@ script = ExtResource("3_2kylr")
 [node name="VecDrawing" type="Node2D" parent="."]
 script = ExtResource("1_cjag6")
 fill = Color(0.0156863, 0.32549, 1, 1)
-show_rest = false
+steps = 20
 skeleton = NodePath("ConstraintExampleSkel")
 
 [node name="@Node@21576" type="Node" parent="VecDrawing"]
 script = ExtResource("2_ukuny")
-value = Vector2(107.812, -10.8659)
+value = Vector2(124.988, -18.4433)
 weights = {
 0: 1.0
 }
 
 [node name="@Node@21577" type="Node" parent="VecDrawing"]
 script = ExtResource("2_ukuny")
-value = Vector2(83.9297, -10.48)
+value = Vector2(98.6208, -17.7482)
 weights = {
 0: 1.0
 }
 
 [node name="@Node@21578" type="Node" parent="VecDrawing"]
 script = ExtResource("2_ukuny")
-value = Vector2(58.6031, -10.0709)
+value = Vector2(76.0312, -17.1527)
 weights = {
 0: 0.0,
 1: 1.0
@@ -290,14 +290,14 @@ weights = {
 
 [node name="@Node@21579" type="Node" parent="VecDrawing"]
 script = ExtResource("2_ukuny")
-value = Vector2(40.5728, -8.84425)
+value = Vector2(52.3324, -19.0204)
 weights = {
 1: 1.0
 }
 
 [node name="@Node@21580" type="Node" parent="VecDrawing"]
 script = ExtResource("2_ukuny")
-value = Vector2(24.8109, -8.59027)
+value = Vector2(33.7597, -19.1252)
 weights = {
 1: 1.0,
 2: 0.0
@@ -305,77 +305,77 @@ weights = {
 
 [node name="@Node@21581" type="Node" parent="VecDrawing"]
 script = ExtResource("2_ukuny")
-value = Vector2(9.04909, -8.33629)
+value = Vector2(15.187, -19.23)
 weights = {
 2: 1.0
 }
 
 [node name="@Node@21582" type="Node" parent="VecDrawing"]
 script = ExtResource("2_ukuny")
-value = Vector2(-12.821, -10.2997)
+value = Vector2(-3.43293, -17.3213)
 weights = {
 2: 1.0
 }
 
 [node name="@Node@21583" type="Node" parent="VecDrawing"]
 script = ExtResource("2_ukuny")
-value = Vector2(-22.7039, -0.8888)
+value = Vector2(-14.0589, -8.75826)
 weights = {
 2: 1.0
 }
 
 [node name="@Node@21584" type="Node" parent="VecDrawing"]
 script = ExtResource("2_ukuny")
-value = Vector2(-32.5868, 8.52209)
+value = Vector2(-21.8737, -2.46061)
 weights = {
 2: 1.0
 }
 
 [node name="@Node@23946" type="Node" parent="VecDrawing"]
 script = ExtResource("2_ukuny")
-value = Vector2(-33.302, 9.48271)
+value = Vector2(-25.9004, 0.395367)
 weights = {
 2: 1.0
 }
 
 [node name="@Node@23947" type="Node" parent="VecDrawing"]
 script = ExtResource("2_ukuny")
-value = Vector2(-22.5763, 18.5615)
+value = Vector2(-15.3471, 7.15251)
 weights = {
 2: 1.0
 }
 
 [node name="@Node@23948" type="Node" parent="VecDrawing"]
 script = ExtResource("2_ukuny")
-value = Vector2(-11.8506, 27.6403)
+value = Vector2(-3.51287, 14.7298)
 weights = {
 2: 1.0
 }
 
 [node name="@Node@23949" type="Node" parent="VecDrawing"]
 script = ExtResource("2_ukuny")
-value = Vector2(6.71735, 25.7365)
+value = Vector2(12.8771, 16.0971)
 weights = {
 2: 1.0
 }
 
 [node name="@Node@23950" type="Node" parent="VecDrawing"]
 script = ExtResource("2_ukuny")
-value = Vector2(24.9689, 25.5173)
+value = Vector2(33.9384, 16.2342)
 weights = {
 1: 1.0
 }
 
 [node name="@Node@23951" type="Node" parent="VecDrawing"]
 script = ExtResource("2_ukuny")
-value = Vector2(43.2205, 25.2981)
+value = Vector2(54.9998, 16.3713)
 weights = {
 1: 1.0
 }
 
 [node name="@Node@23952" type="Node" parent="VecDrawing"]
 script = ExtResource("2_ukuny")
-value = Vector2(64.679, 23.697)
+value = Vector2(81.5938, 14.3985)
 weights = {
 0: 0.0,
 1: 1.0
@@ -383,14 +383,14 @@ weights = {
 
 [node name="@Node@23953" type="Node" parent="VecDrawing"]
 script = ExtResource("2_ukuny")
-value = Vector2(85.7226, 23.5595)
+value = Vector2(100.623, 14.3063)
 weights = {
 0: 1.0
 }
 
 [node name="@Node@23954" type="Node" parent="VecDrawing"]
 script = ExtResource("2_ukuny")
-value = Vector2(106.766, 23.422)
+value = Vector2(121.855, 14.2034)
 weights = {
 0: 1.0
 }
@@ -409,8 +409,7 @@ rest = Transform2D(1, 0, 0, 1, -58, 0)
 
 [node name="B" type="Bone2D" parent="VecDrawing/ConstraintExampleSkel/Root/A"]
 position = Vector2(-51, -1)
-rotation = 2.71717
-scale = Vector2(1, 1)
+rotation = -3.56602
 rest = Transform2D(-0.999263, 0.0383877, -0.0383877, -0.999263, -51, -1)
 auto_calculate_length_and_angle = false
 length = 16.0

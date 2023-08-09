@@ -397,12 +397,12 @@ func handle_editing_mouse_button(plugin: GDVecRig, event: InputEventMouseButton)
 			
 			if event.get_modifiers_mask() & KEY_MASK_SHIFT:
 				var selected = add_to_select_from_target(plugin, get_local_mouse_position())
-				if not selected:
+				if not selected and plugin.may_start_lasso():
 					plugin.lasso_started = true
 				return true
 			else:
 				var editing = try_starting_editing(plugin)
-				if not editing:
+				if not editing and plugin.may_start_lasso():
 					plugin.lasso_started = true
 					
 				return true

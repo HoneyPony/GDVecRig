@@ -24,6 +24,17 @@ func in_mode_weightpaint():
 func add_end_point():
 	return drawing_tool_new.button_pressed
 	
+# Determines whether we can start a lasso.
+# 
+# We're only allowed to start a lasso if the Editor's selection
+# consists ONLY of the current_vecdrawing... I guess.
+func may_start_lasso():
+	var select = get_editor_interface().get_selection()
+	var select_nodes = select.get_selected_nodes()
+	if select_nodes.size() > 1 or select_nodes.is_empty():
+		return false
+	return select_nodes[0] == current_vecdrawing
+	
 # Vector graphics editing is a little special in that, we want to be able to
 # continuously edit our current_vecdrawing, even if it's not selected, IF
 # the Vector Editing tab is open.
@@ -75,11 +86,14 @@ func load_bones(drawing: VecDrawing):
 	
 func _edit(object):
 	if object is VecDrawing:
+		if object != current_vecdrawing:
+			point_selection = []
+		
 		current_vecdrawing = object
 		current_vecdrawing_is_selected_in_tree = true
 		cur_drawing_display.text = current_vecdrawing.name
 		point_highlight = 0
-		point_selection = []
+		
 		point_edited = false
 		lasso_started = false
 		lasso_points.clear()
@@ -221,13 +235,38 @@ func setup_button(source_node: Node, path, group: ButtonGroup) -> Button:
 	node.button_group = group
 	return node
 	
-# A hack that does not work.	
 func _process(delta):
+	# This is a hack so that we always have something selected,
+	# so that _forward_canvas_gui_input will work.
 	if get_editor_interface().get_selection().get_selected_nodes().is_empty():
 		if dock.get_parent().get_current_tab_control() == dock:
 			if current_vecdrawing != null:
 				get_editor_interface().get_selection().add_node(current_vecdrawing)
 				#get_editor_interface().edit_node(current_vecdrawing)
+
+
+	# When the current tab control is NOT Vector Editing, the only
+	# real meaningful mode is to select.
+	#
+	# We could at some point also add, like, a toolbar to the top of
+	# the 2D view, but for now we'll just do this.
+	if dock.get_parent().get_current_tab_control() != dock:
+		dock_tabs.current_tab = dock_tabs.get_tab_idx_from_control(tab_drawing)
+		drawing_tool_edit.button_pressed = true
+
+func _dock_tab_changed(idx: int):
+	if dock_tabs.get_current_tab_control() == tab_drawing:
+		# Automatically reselect the drawing so that lasso will work,
+		# IF select mode is on.
+		if drawing_tool_edit.button_pressed and current_vecdrawing != null:
+			get_editor_interface().get_selection().clear()
+			get_editor_interface().get_selection().add_node(current_vecdrawing)
+
+func _drawing_tool_edit_pressed():
+	if current_vecdrawing != null:
+		# Reset the selection to the current drawing when the edit button is pressed.
+		get_editor_interface().get_selection().clear()
+		get_editor_interface().get_selection().add_node(current_vecdrawing)
 
 func _enter_tree():
 	Engine.register_singleton("GDVecRig", self)
@@ -243,6 +282,8 @@ func _enter_tree():
 	tab_drawing = dock_tabs.get_node("Drawing")
 	tab_weightpaint = dock_tabs.get_node("Weight Painting")
 	
+	dock_tabs.tab_changed.connect(_dock_tab_changed)
+	
 	# SETUP DRAWING UI
 	var d_tool = dock_tabs.get_node("Drawing/ToolSelector")
 	drawing_tool_group = ButtonGroup.new()
@@ -251,6 +292,8 @@ func _enter_tree():
 	drawing_tool_knife = setup_button(d_tool, "ToolKnife", drawing_tool_group)
 	drawing_tool_toggle_constraint = setup_button(d_tool, "ToolToggleConstraint", drawing_tool_group)
 	drawing_tool_edit.button_pressed = true
+	
+	drawing_tool_edit.pressed.connect(_drawing_tool_edit_pressed)
 	
 	# SETUP WEIGHT PAINTING UI
 	bone_list = dock.get_node("%BoneList")

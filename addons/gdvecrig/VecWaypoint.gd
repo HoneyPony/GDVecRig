@@ -77,7 +77,8 @@ func compute_bone_transform(bone: Bone2D, cache: Dictionary) -> Transform2D:
 	# computed transform).
 	#
 	# get_skeleton_rest() seems to get the correct pivot point.
-	result = Transform2D(0, bone.get_skeleton_rest().origin) * result * Transform2D(0, -bone.get_skeleton_rest().origin)
+	var pivot = compute_bone_overall_rest(bone).origin
+	result = Transform2D(0, pivot) * result * Transform2D(0, -pivot)
 		#result = Transform2D(0, -bone.rest.origin) * result * Transform2D(0, bone.rest.origin)
 	
 	# Finally, apply the parent transform.

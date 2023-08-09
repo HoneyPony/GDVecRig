@@ -16,6 +16,9 @@ var strokes = [VecStroke]
 @export_node_path("Skeleton2D") var skeleton
 @onready var skeleton_node = get_skeleton_from_tree()
 
+# Gets the associated Skeleton2D from the 'skeleton' NodePath variable, OR
+# returns null if the path is either null or invalid. This is because
+# get_node_or_null unfortunately does not like it when the NodePath is null.
 func get_skeleton_from_tree() -> Skeleton2D:
 	return null if skeleton == null else get_node_or_null(skeleton)
 

@@ -4,10 +4,6 @@
 [ext_resource type="Script" path="res://addons/gdvecrig/VecWaypoint.gd" id="2_ukuny"]
 [ext_resource type="Script" path="res://addons/gdvecrig/VecStroke.gd" id="3_2kylr"]
 
-[sub_resource type="Curve" id="Curve_syim4"]
-_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.676218, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
-point_count = 3
-
 [sub_resource type="Animation" id="Animation_2c1uf"]
 length = 0.001
 
@@ -21,160 +17,11 @@ _data = {
 "Test": SubResource("Animation_aa01w")
 }
 
+[sub_resource type="Curve" id="Curve_syim4"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.676218, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
 [node name="Test" type="Node2D"]
-
-[node name="Skeleton2D" type="Skeleton2D" parent="."]
-
-[node name="Root" type="Bone2D" parent="Skeleton2D"]
-position = Vector2(84, 5)
-rotation = 0.00226352
-scale = Vector2(1, 1)
-rest = Transform2D(0.999997, 0.00226352, -0.00226352, 0.999997, 84, 5)
-
-[node name="Face" type="Bone2D" parent="Skeleton2D/Root"]
-position = Vector2(-39.0022, -0.91172)
-rest = Transform2D(1, 0, 0, 1, -39.0022, -0.91172)
-auto_calculate_length_and_angle = false
-length = 39.39
-bone_angle = -180.0
-
-[node name="Nose" type="Bone2D" parent="Skeleton2D/Root/Face"]
-position = Vector2(-48, -1)
-rest = Transform2D(1, 0, 0, 1, -48, -1)
-auto_calculate_length_and_angle = false
-length = 39.39
-bone_angle = -180.0
-
-[node name="VecDrawing" type="Node2D" parent="."]
-script = ExtResource("1_cjag6")
-fill = Color(0, 0.207843, 0.00392157, 1)
-steps = 32
-show_rest = false
-always_show_points = true
-skeleton = NodePath("../Skeleton2D")
-
-[node name="VecWaypoint" type="Node" parent="VecDrawing"]
-script = ExtResource("2_ukuny")
-value = Vector2(114.066, 24.4291)
-weights = {
-0: 1.0
-}
-
-[node name="VecWaypoint2" type="Node" parent="VecDrawing"]
-script = ExtResource("2_ukuny")
-value = Vector2(85.5159, 23.9356)
-weights = {
-0: 1.0
-}
-
-[node name="VecWaypoint3" type="Node" parent="VecDrawing"]
-script = ExtResource("2_ukuny")
-value = Vector2(49.6154, 23.6847)
-weights = {
-0: 1.0,
-1: 0.0
-}
-
-[node name="VecWaypoint13" type="Node" parent="VecDrawing"]
-script = ExtResource("2_ukuny")
-value = Vector2(37.0112, 23.6966)
-weights = {
-0: 0.0,
-1: 1.0
-}
-
-[node name="VecWaypoint14" type="Node" parent="VecDrawing"]
-script = ExtResource("2_ukuny")
-value = Vector2(12.6823, 24.2341)
-weights = {
-0: 0.0,
-1: 1.0
-}
-
-[node name="VecWaypoint15" type="Node" parent="VecDrawing"]
-script = ExtResource("2_ukuny")
-value = Vector2(-21.9343, 23.8395)
-weights = {
-0: 0.0,
-1: 1.0
-}
-
-[node name="VecWaypoint4" type="Node" parent="VecDrawing"]
-script = ExtResource("2_ukuny")
-value = Vector2(-38.5371, 27.6881)
-weights = {
-1: 0.0,
-2: 1.0
-}
-
-[node name="VecWaypoint5" type="Node" parent="VecDrawing"]
-script = ExtResource("2_ukuny")
-value = Vector2(-37.8377, 7.22061)
-weights = {
-1: 0.0,
-2: 1.0
-}
-
-[node name="VecWaypoint6" type="Node" parent="VecDrawing"]
-script = ExtResource("2_ukuny")
-value = Vector2(-36.0588, -14.599)
-weights = {
-1: 0.0,
-2: 1.0
-}
-
-[node name="VecWaypoint7" type="Node" parent="VecDrawing"]
-script = ExtResource("2_ukuny")
-value = Vector2(-23.8047, -16.2794)
-weights = {
-0: 0.0,
-1: 1.0
-}
-
-[node name="VecWaypoint8" type="Node" parent="VecDrawing"]
-script = ExtResource("2_ukuny")
-value = Vector2(7.0028, -16.3839)
-weights = {
-0: 0.0,
-1: 1.0
-}
-
-[node name="VecWaypoint9" type="Node" parent="VecDrawing"]
-script = ExtResource("2_ukuny")
-value = Vector2(38.8038, -16.2549)
-weights = {
-0: 0.0,
-1: 1.0
-}
-
-[node name="VecWaypoint10" type="Node" parent="VecDrawing"]
-script = ExtResource("2_ukuny")
-value = Vector2(49.717, -16.6456)
-weights = {
-0: 1.0,
-1: 0.0
-}
-
-[node name="VecWaypoint11" type="Node" parent="VecDrawing"]
-script = ExtResource("2_ukuny")
-value = Vector2(85.8327, -17.549)
-weights = {
-0: 1.0
-}
-
-[node name="VecWaypoint12" type="Node" parent="VecDrawing"]
-script = ExtResource("2_ukuny")
-value = Vector2(119.719, -15.2587)
-weights = {
-0: 1.0
-}
-
-[node name="VecStroke" type="Line2D" parent="VecDrawing"]
-visible = false
-points = PackedVector2Array(85.5159, 23.9356, 82.1132, 23.9121, 78.8489, 23.8904, 75.716, 23.8704, 72.7073, 23.8522, 69.8159, 23.8358, 67.0346, 23.8214, 64.3565, 23.8089, 61.7745, 23.7984, 59.2815, 23.79, 56.8704, 23.7837, 54.5343, 23.7795, 52.2661, 23.7776, 50.0586, 23.778, 47.9049, 23.7807, 45.7979, 23.7857, 43.7306, 23.7933, 41.6959, 23.8033, 39.6867, 23.8158, 37.6959, 23.8309, 35.7167, 23.8487, 33.7418, 23.8692, 31.7642, 23.8924, 29.777, 23.9185, 27.7729, 23.9474, 25.745, 23.9792, 23.6863, 24.0139, 21.5896, 24.0517, 19.4479, 24.0926, 17.2541, 24.1366, 15.0013, 24.1837, 12.6823, 24.2341, 12.6823, 24.2341, 9.38852, 24.2082, 6.20706, 24.203, 3.13779, 24.2129, 0.18055, 24.2319, -2.66479, 24.2545, -5.39838, 24.2748, -8.02036, 24.287, -10.5309, 24.2855, -12.9301, 24.2645, -15.2181, 24.2182, -17.395, 24.1409, -19.4611, 24.0268, -21.4165, 23.8701, -23.2612, 23.6652, -24.9954, 23.4062, -26.6194, 23.0875, -28.1332, 22.7032, -29.5369, 22.2476, -30.8307, 21.715, -32.0148, 21.0996, -33.0893, 20.3956, -34.0544, 19.5974, -34.9101, 18.6991, -35.6567, 17.695, -36.2942, 16.5793, -36.8228, 15.3463, -37.2427, 13.9903, -37.554, 12.5055, -37.7568, 10.8861, -37.8513, 9.12639, -37.8377, 7.22061, -37.8377, 7.22061, -37.6326, 5.17128, -37.3604, 3.24395, -37.0196, 1.43489, -36.6085, -0.259658, -36.1255, -1.84342, -35.569, -3.32013, -34.9373, -4.69354, -34.2288, -5.96738, -33.4419, -7.14539, -32.5749, -8.2313, -31.6263, -9.22887, -30.5944, -10.1418, -29.4775, -10.9739, -28.2741, -11.7288, -26.9825, -12.4104, -25.6012, -13.0223, -24.1283, -13.5682, -22.5624, -14.052, -20.9019, -14.4774, -19.145, -14.848, -17.2902, -15.1677, -15.3358, -15.4401, -13.2802, -15.6691, -11.1218, -15.8583, -8.85891, -16.0115, -6.48997, -16.1325, -4.01333, -16.2249, -1.42736, -16.2925, 1.26957, -16.339, 4.07908, -16.3682, 7.0028, -16.3839, 7.0028, -16.3839, 10.0167, -16.373, 12.9094, -16.3654, 15.6903, -16.361, 18.3686, -16.3599, 20.9536, -16.362, 23.4546, -16.3674, 25.881, -16.3759, 28.2418, -16.3877, 30.5466, -16.4028, 32.8044, -16.4211, 35.0247, -16.4426, 37.2167, -16.4673, 39.3896, -16.4953, 41.5529, -16.5265, 43.7156, -16.5609, 45.8872, -16.5985, 48.0769, -16.6394, 50.294, -16.6835, 52.5478, -16.7308, 54.8475, -16.7813, 57.2025, -16.835, 59.622, -16.892, 62.1153, -16.9521, 64.6917, -17.0155, 67.3604, -17.0821, 70.1309, -17.1519, 73.0122, -17.2249, 76.0138, -17.3011, 79.1449, -17.3806, 82.4148, -17.4632, 85.8327, -17.549)
-width = 2.321
-width_curve = SubResource("Curve_syim4")
-script = ExtResource("3_2kylr")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(36, 3)
@@ -185,3 +32,162 @@ autoplay = "Test"
 libraries = {
 "": SubResource("AnimationLibrary_weu04")
 }
+
+[node name="OLD" type="Node2D" parent="."]
+visible = false
+
+[node name="Skeleton2D" type="Skeleton2D" parent="OLD"]
+
+[node name="Root" type="Bone2D" parent="OLD/Skeleton2D"]
+position = Vector2(84, 5)
+rotation = 0.00226352
+scale = Vector2(1, 1)
+rest = Transform2D(0.999997, 0.00226352, -0.00226352, 0.999997, 84, 5)
+
+[node name="Face" type="Bone2D" parent="OLD/Skeleton2D/Root"]
+position = Vector2(-39.0022, -0.91172)
+rest = Transform2D(1, 0, 0, 1, -39.0022, -0.91172)
+auto_calculate_length_and_angle = false
+length = 39.39
+bone_angle = -180.0
+
+[node name="Nose" type="Bone2D" parent="OLD/Skeleton2D/Root/Face"]
+position = Vector2(-48, -1)
+rest = Transform2D(1, 0, 0, 1, -48, -1)
+auto_calculate_length_and_angle = false
+length = 39.39
+bone_angle = -180.0
+
+[node name="VecDrawing" type="Node2D" parent="OLD"]
+script = ExtResource("1_cjag6")
+fill = Color(0, 0.207843, 0.00392157, 1)
+steps = 32
+show_rest = false
+always_show_points = true
+skeleton = NodePath("../Skeleton2D")
+
+[node name="VecWaypoint" type="Node" parent="OLD/VecDrawing"]
+script = ExtResource("2_ukuny")
+value = Vector2(114.066, 24.4291)
+weights = {
+0: 1.0
+}
+
+[node name="VecWaypoint2" type="Node" parent="OLD/VecDrawing"]
+script = ExtResource("2_ukuny")
+value = Vector2(85.5159, 23.9356)
+weights = {
+0: 1.0
+}
+
+[node name="VecWaypoint3" type="Node" parent="OLD/VecDrawing"]
+script = ExtResource("2_ukuny")
+value = Vector2(49.6154, 23.6847)
+weights = {
+0: 1.0,
+1: 0.0
+}
+
+[node name="VecWaypoint13" type="Node" parent="OLD/VecDrawing"]
+script = ExtResource("2_ukuny")
+value = Vector2(37.0112, 23.6966)
+weights = {
+0: 0.0,
+1: 1.0
+}
+
+[node name="VecWaypoint14" type="Node" parent="OLD/VecDrawing"]
+script = ExtResource("2_ukuny")
+value = Vector2(12.6823, 24.2341)
+weights = {
+0: 0.0,
+1: 1.0
+}
+
+[node name="VecWaypoint15" type="Node" parent="OLD/VecDrawing"]
+script = ExtResource("2_ukuny")
+value = Vector2(-21.9343, 23.8395)
+weights = {
+0: 0.0,
+1: 1.0
+}
+
+[node name="VecWaypoint4" type="Node" parent="OLD/VecDrawing"]
+script = ExtResource("2_ukuny")
+value = Vector2(-38.5371, 27.6881)
+weights = {
+1: 0.0,
+2: 1.0
+}
+
+[node name="VecWaypoint5" type="Node" parent="OLD/VecDrawing"]
+script = ExtResource("2_ukuny")
+value = Vector2(-37.8377, 7.22061)
+weights = {
+1: 0.0,
+2: 1.0
+}
+
+[node name="VecWaypoint6" type="Node" parent="OLD/VecDrawing"]
+script = ExtResource("2_ukuny")
+value = Vector2(-36.0588, -14.599)
+weights = {
+1: 0.0,
+2: 1.0
+}
+
+[node name="VecWaypoint7" type="Node" parent="OLD/VecDrawing"]
+script = ExtResource("2_ukuny")
+value = Vector2(-23.8047, -16.2794)
+weights = {
+0: 0.0,
+1: 1.0
+}
+
+[node name="VecWaypoint8" type="Node" parent="OLD/VecDrawing"]
+script = ExtResource("2_ukuny")
+value = Vector2(7.0028, -16.3839)
+weights = {
+0: 0.0,
+1: 1.0
+}
+
+[node name="VecWaypoint9" type="Node" parent="OLD/VecDrawing"]
+script = ExtResource("2_ukuny")
+value = Vector2(38.8038, -16.2549)
+weights = {
+0: 0.0,
+1: 1.0
+}
+
+[node name="VecWaypoint10" type="Node" parent="OLD/VecDrawing"]
+script = ExtResource("2_ukuny")
+value = Vector2(49.717, -16.6456)
+weights = {
+0: 1.0,
+1: 0.0
+}
+
+[node name="VecWaypoint11" type="Node" parent="OLD/VecDrawing"]
+script = ExtResource("2_ukuny")
+value = Vector2(85.8327, -17.549)
+weights = {
+0: 1.0
+}
+
+[node name="VecWaypoint12" type="Node" parent="OLD/VecDrawing"]
+script = ExtResource("2_ukuny")
+value = Vector2(119.719, -15.2587)
+weights = {
+0: 1.0
+}
+
+[node name="VecStroke" type="Line2D" parent="OLD/VecDrawing"]
+visible = false
+points = PackedVector2Array(85.5159, 23.9356, 82.1132, 23.9121, 78.8489, 23.8904, 75.716, 23.8704, 72.7073, 23.8522, 69.8159, 23.8358, 67.0346, 23.8214, 64.3565, 23.8089, 61.7745, 23.7984, 59.2815, 23.79, 56.8704, 23.7837, 54.5343, 23.7795, 52.2661, 23.7776, 50.0586, 23.778, 47.9049, 23.7807, 45.7979, 23.7857, 43.7306, 23.7933, 41.6959, 23.8033, 39.6867, 23.8158, 37.6959, 23.8309, 35.7167, 23.8487, 33.7418, 23.8692, 31.7642, 23.8924, 29.777, 23.9185, 27.7729, 23.9474, 25.745, 23.9792, 23.6863, 24.0139, 21.5896, 24.0517, 19.4479, 24.0926, 17.2541, 24.1366, 15.0013, 24.1837, 12.6823, 24.2341, 12.6823, 24.2341, 9.38852, 24.2082, 6.20706, 24.203, 3.13779, 24.2129, 0.18055, 24.2319, -2.66479, 24.2545, -5.39838, 24.2748, -8.02036, 24.287, -10.5309, 24.2855, -12.9301, 24.2645, -15.2181, 24.2182, -17.395, 24.1409, -19.4611, 24.0268, -21.4165, 23.8701, -23.2612, 23.6652, -24.9954, 23.4062, -26.6194, 23.0875, -28.1332, 22.7032, -29.5369, 22.2476, -30.8307, 21.715, -32.0148, 21.0996, -33.0893, 20.3956, -34.0544, 19.5974, -34.9101, 18.6991, -35.6567, 17.695, -36.2942, 16.5793, -36.8228, 15.3463, -37.2427, 13.9903, -37.554, 12.5055, -37.7568, 10.8861, -37.8513, 9.12639, -37.8377, 7.22061, -37.8377, 7.22061, -37.6326, 5.17128, -37.3604, 3.24395, -37.0196, 1.43489, -36.6085, -0.259658, -36.1255, -1.84342, -35.569, -3.32013, -34.9373, -4.69354, -34.2288, -5.96738, -33.4419, -7.14539, -32.5749, -8.2313, -31.6263, -9.22887, -30.5944, -10.1418, -29.4775, -10.9739, -28.2741, -11.7288, -26.9825, -12.4104, -25.6012, -13.0223, -24.1283, -13.5682, -22.5624, -14.052, -20.9019, -14.4774, -19.145, -14.848, -17.2902, -15.1677, -15.3358, -15.4401, -13.2802, -15.6691, -11.1218, -15.8583, -8.85891, -16.0115, -6.48997, -16.1325, -4.01333, -16.2249, -1.42736, -16.2925, 1.26957, -16.339, 4.07908, -16.3682, 7.0028, -16.3839, 7.0028, -16.3839, 10.0167, -16.373, 12.9094, -16.3654, 15.6903, -16.361, 18.3686, -16.3599, 20.9536, -16.362, 23.4546, -16.3674, 25.881, -16.3759, 28.2418, -16.3877, 30.5466, -16.4028, 32.8044, -16.4211, 35.0247, -16.4426, 37.2167, -16.4673, 39.3896, -16.4953, 41.5529, -16.5265, 43.7156, -16.5609, 45.8872, -16.5985, 48.0769, -16.6394, 50.294, -16.6835, 52.5478, -16.7308, 54.8475, -16.7813, 57.2025, -16.835, 59.622, -16.892, 62.1153, -16.9521, 64.6917, -17.0155, 67.3604, -17.0821, 70.1309, -17.1519, 73.0122, -17.2249, 76.0138, -17.3011, 79.1449, -17.3806, 82.4148, -17.4632, 85.8327, -17.549)
+width = 2.321
+width_curve = SubResource("Curve_syim4")
+script = ExtResource("3_2kylr")
+
+[node name="VecDrawing" type="Node2D" parent="."]
+script = ExtResource("1_cjag6")

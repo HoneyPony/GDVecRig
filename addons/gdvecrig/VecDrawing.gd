@@ -14,7 +14,10 @@ var waypoints = [VecWaypoint]
 var strokes = [VecStroke]
 
 @export_node_path("Skeleton2D") var skeleton
-@onready var skeleton_node = get_node(skeleton)
+@onready var skeleton_node = get_skeleton_from_tree()
+
+func get_skeleton_from_tree() -> Skeleton2D:
+	return null if skeleton == null else get_node_or_null(skeleton)
 
 func collect_children():
 	waypoints.clear()
@@ -124,6 +127,13 @@ func handle_editing_mouse_motion(plugin: GDVecRig, event: InputEventMouseMotion)
 func handle_editing_mouse_button(plugin: GDVecRig, event: InputEventMouseButton):
 	if event.button_index == MOUSE_BUTTON_LEFT:
 		if event.pressed:
+			if plugin.add_end_point():
+				for i in range(0, 3):
+					var waypoint = VecWaypoint.new()
+					waypoint.value = get_local_mouse_position()
+					add_child(waypoint)
+				return true
+			
 			if event.get_modifiers_mask() & KEY_MASK_SHIFT:
 				var selected = add_to_select_from_target(plugin, get_local_mouse_position())
 				if not selected:
@@ -195,8 +205,8 @@ func _process(delta):
 	var transform_cache = {}
 	for i in range(0, waypoint_count()):
 		var s = skeleton_node
-		if Engine.is_editor_hint():
-			s = get_node(skeleton)
+		if Engine.is_editor_hint() and skeleton != null:
+			s = get_node_or_null(skeleton)
 		get_waypoint(i).compute_value(s, transform_cache)
 	
 #	if Engine.is_editor_hint():
@@ -266,8 +276,9 @@ func _draw():
 			for j in range(0, steps):
 				var t = j / float(steps - 1)
 				computed_points.push_back(compute(p0, p1, p2, p3, t))
-			
-	draw_colored_polygon(computed_points, fill)
+		
+	if computed_points.size() >= 3:	
+		draw_colored_polygon(computed_points, fill)
 	for stroke in strokes:
 		stroke.points = computed_points
 	

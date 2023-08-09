@@ -69,7 +69,7 @@ func compute_bone_transform(bone: Bone2D, cache: Dictionary) -> Transform2D:
 	return result
 
 func compute_value(skeleton: Skeleton2D, transform_cache: Dictionary):
-	if weights.is_empty():
+	if weights.is_empty() or skeleton == null:
 		computed_value = value
 		return
 	computed_value = Vector2.ZERO

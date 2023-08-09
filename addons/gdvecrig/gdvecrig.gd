@@ -19,6 +19,9 @@ func in_mode_drawing():
 
 func in_mode_weightpaint():
 	return dock_tabs.get_current_tab_control() == tab_weightpaint
+	
+func add_end_point():
+	return drawing_tool_new.pressed
 
 func _on_bone_list_selected(index: int):
 	weight_painting_bone = index
@@ -31,7 +34,7 @@ func _handles(node):
 func load_bones(drawing: VecDrawing):
 	bone_list.clear()
 	
-	var skeleton: Skeleton2D = drawing.get_node_or_null(drawing.skeleton)
+	var skeleton: Skeleton2D = drawing.get_skeleton_from_tree()
 	if skeleton == null:
 		return
 	

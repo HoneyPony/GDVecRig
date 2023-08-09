@@ -21,7 +21,7 @@ func in_mode_weightpaint():
 	return dock_tabs.get_current_tab_control() == tab_weightpaint
 	
 func add_end_point():
-	return drawing_tool_new.pressed
+	return drawing_tool_new.button_pressed
 
 func _on_bone_list_selected(index: int):
 	weight_painting_bone = index

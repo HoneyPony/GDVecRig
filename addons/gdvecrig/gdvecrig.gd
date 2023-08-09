@@ -91,8 +91,56 @@ func _edit(object):
 		#current_vecdrawing = null
 	return
 	
-# Reference for the future:
+# These commented-out functions are used to find where the 2d viewports are
+# in the interface, so that we can manually implmeent the _input functions.
+#func the_search(node, index: int) -> bool:
+#	var child = node.get_child(index)
+#	if child is SubViewport:
+#		print(index, " <- ")
+#		return true
+#
+#	for i in child.get_child_count():
+#		if the_search(child, i):
+#			print(index, " <- ")
+#			return true
+#
+#	return false
+#
+#func search_for_viewports():
+#	var m = get_editor_interface().get_editor_main_screen()
+#
+#	print("---start search---")
+#	for x in m.get_child_count():
+#		print("child--")
+#		the_search(m, x)
+#		print("end--")
+#	print("---end search---")
+	
+# Reference:
 # https://cookiebadger.itch.io/assetplacer/devlog/537327/godot-plugins-what-nobody-tells-you
+func get_2d_viewports():
+	var main_screen = get_editor_interface().get_editor_main_screen()
+	var viewports_place = main_screen \
+		.get_child(0) \
+		.get_child(1) \
+		.get_child(0) \
+		.get_child(0).get_children()
+	var viewports = []
+	for v in viewports_place:
+		viewports.append(v.get_child(0).get_child(0) as SubViewport)
+	return viewports
+	
+func get_focused_2d_viewport():
+	var viewports = get_2d_viewports()
+	for sub_view in viewports:
+		if is_editor_viewport_focused(sub_view):
+			return sub_view
+	return null
+	
+func is_editor_viewport_focused(viewport: Viewport) -> bool:
+	var editor_viewport: Control = viewport.get_parent().get_parent()
+	var viewport_control = editor_viewport.get_child(1) as Control
+	return editor_viewport.visible and (viewport_control != null and viewport_control.has_focus())
 		
 func _forward_canvas_gui_input(event: InputEvent) -> bool:
 	if not wants_to_edit_the_object():
@@ -101,6 +149,30 @@ func _forward_canvas_gui_input(event: InputEvent) -> bool:
 	if is_instance_valid(current_vecdrawing):
 		return current_vecdrawing.edit_input(self, event)
 	return false
+
+
+# The following code is meant to workaround the no-calls-to _forward_canvas_gui_input
+# problem, but it doesn't really work.
+# - _unhandled_input does not seem to ever be called.
+# - _input is called, but there doesn't seem to be a good way to avoid eating
+#   the input when we're not actually supposed to eat it.
+#func _my_forward_input(event: InputEvent) -> bool:
+#	if not wants_to_edit_the_object():
+#		return false
+#
+#	if is_instance_valid(current_vecdrawing):
+#		return current_vecdrawing.edit_input(self, event)
+#	return false
+	
+#func _input(event: InputEvent):
+#	if not Engine.is_editor_hint():
+#		return
+#
+#	var viewport = get_focused_2d_viewport()
+#	if viewport != null:
+#		var input_handled = _my_forward_input(event)
+#		#if input_handled:
+			#viewport.set_input_as_handled()
 	
 func _make_visible(visible):
 	pass

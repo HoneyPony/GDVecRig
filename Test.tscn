@@ -304,7 +304,7 @@ weights = {
 
 [node name="@Node@21581" type="Node" parent="VecDrawing"]
 script = ExtResource("2_ukuny")
-value = Vector2(8.45448, -8.9309)
+value = Vector2(8.45448, -8.93089)
 weights = {
 2: 1.0
 }
@@ -410,6 +410,7 @@ rest = Transform2D(1, 0, 0, 1, -58, 0)
 [node name="B" type="Bone2D" parent="VecDrawing/ConstraintExampleSkel/Root/A"]
 position = Vector2(-51, -1)
 rotation = -3.56602
+scale = Vector2(1, 1)
 rest = Transform2D(-0.999263, 0.0383877, -0.0383877, -0.999263, -51, -1)
 auto_calculate_length_and_angle = false
 length = 16.0

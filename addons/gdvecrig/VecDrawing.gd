@@ -45,14 +45,18 @@ func constrain_waypoint_in_editing(target: VecWaypoint, effector: VecWaypoint, c
 		target.value = center.value - vec2
 		return
 
-func update_edit_constraint(index, plugin: GDVecRig):
-	var left = waypoints[index * 3]
-	var center = waypoints[index * 3 + 1]
-	var right = waypoints[index * 3 + 2]
+func update_edit_constraint(index, plugin: GDVecRig, cache: Dictionary):
+	var left_index = index * 3
+	var center_index = index * 3 + 1
+	var right_index = index * 3 + 2
 	
-	var left_edited = (index * 3) in plugin.point_selection
-	#var center_edited = (index * 3 + 1) in plugin.point_selection
-	var right_edited = (index * 3 + 2) in plugin.point_selection
+	var left = waypoints[left_index]
+	var center = waypoints[center_index]
+	var right = waypoints[right_index]
+	
+	var left_edited = (left_index) in plugin.point_selection
+	var center_edited = (center_index) in plugin.point_selection
+	var right_edited = (right_index) in plugin.point_selection
 	
 	# If both sides are edited, our transformations should *generally*
 	# preserve constraints. TODO: Maybe add a second pass to even
@@ -60,14 +64,73 @@ func update_edit_constraint(index, plugin: GDVecRig):
 	#
 	# Also, it doesn't seem like whether the center is edited can really
 	# matter.
-	if left_edited and right_edited:
-		return
-			
-	if left_edited:
-		constrain_waypoint_in_editing(right, left, center, constraints[index])
+	if center_edited:
+		if left_edited and right_edited:
+			return
+				
+		if left_edited:
+			constrain_waypoint_in_editing(right, left, center, constraints[index])
+			return
+		
+		if right_edited:
+			constrain_waypoint_in_editing(left, right, center, constraints[index])
+			return
 	
-	if right_edited:
-		constrain_waypoint_in_editing(left, right, center, constraints[index])
+		# If no points but the center are edited, then we must re-center the old
+		# points onto the new center.
+		var edit_vec = center.value - cache[center_index]
+		left.value += edit_vec
+		right.value += edit_vec
+	else:
+		# If just one waypoint is edited, we must simply update the other
+		# one to match.
+		#
+		# If both waypoints are edited, and we have any constraint
+		# at all, then we must move the center by the edit-vec.
+		if left_edited and right_edited:
+			if constraints[index] == ConstraintType.NONE:
+				# No change needed. The user may be trying to make a point
+				# (literally).
+				return
+			if constraints[index] == ConstraintType.SAME_ANGLE_AND_LENGTH:
+				# In this case, the center is simply the literal center.
+				center.value = (left.value + right.value) / 2
+				return
+			if constraints[index] == ConstraintType.SAME_ANGLE:
+				# In this case, we'll re-interpolate along the left->right line,
+				# this should make this work even if we eventually implement
+				# rotation/scaling edits.
+				var line = right.value - left.value
+				var old_line = cache[right_index] - cache[left_index]
+				
+				# Note on caching: by definition the center isn't edited,
+				# so it won't be in the edit cache. As such, we just use
+				# 'center.value' for old center value
+				var old_center_value = center.value # instead of cache[center_value]
+				
+				var old_center_dist = old_center_value - cache[left_index]
+				var t = old_center_dist.length() / old_line.length()
+				
+				# We don't need to normalize the line because the t value represents
+				# distance *along* this line.
+				var new_offset = line * t
+				
+				center.value = left.value + new_offset
+				return
+			# Unimplemented... TODO!
+			print("warning: unimplemented ConstraintType!")
+			return
+			
+		# Okay, now we can handle the easy single-handle cases.
+		if left_edited:
+			constrain_waypoint_in_editing(right, left, center, constraints[index])
+			return
+		
+		if right_edited:
+			constrain_waypoint_in_editing(left, right, center, constraints[index])
+			return
+
+
 # Gets the associated Skeleton2D from the 'skeleton' NodePath variable, OR
 # returns null if the path is either null or invalid. This is because
 # get_node_or_null unfortunately does not like it when the NodePath is null.
@@ -167,11 +230,15 @@ func handle_editing_mouse_motion(plugin: GDVecRig, event: InputEventMouseMotion)
 	if plugin.lasso_started:
 		plugin.lasso_points.push_back(get_local_mouse_position())
 	elif plugin.point_edited:
+		# Store the old value of the points for computing constraints.
+		# ALSO: maybe undo support one day..?
+		var point_edit_cache = {}
 		for point in plugin.point_selection:
 		#print(event.relative / zoom())
+			point_edit_cache[point] = waypoints[point].value
 			edit_point(point, event.relative / zoom())
 		for i in range(0, center_waypoint_count()):
-			update_edit_constraint(i, plugin)
+			update_edit_constraint(i, plugin, point_edit_cache)
 		#queue_redraw()
 		return true
 	else:

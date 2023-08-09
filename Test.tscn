@@ -190,39 +190,40 @@ script = ExtResource("3_2kylr")
 
 [node name="VecDrawing" type="Node2D" parent="."]
 script = ExtResource("1_cjag6")
+always_show_points = true
 
 [node name="@Node@21576" type="Node" parent="VecDrawing"]
 script = ExtResource("2_ukuny")
-value = Vector2(12.9121, -4.15529)
+value = Vector2(32.685, -5.782)
 
 [node name="@Node@21577" type="Node" parent="VecDrawing"]
 script = ExtResource("2_ukuny")
-value = Vector2(7.6651, -6.54532)
+value = Vector2(24.1343, -9.5217)
 
 [node name="@Node@21578" type="Node" parent="VecDrawing"]
 script = ExtResource("2_ukuny")
-value = Vector2(2.46069, -8.70011)
+value = Vector2(18.5844, -14.415)
 
 [node name="@Node@21579" type="Node" parent="VecDrawing"]
 script = ExtResource("2_ukuny")
-value = Vector2(-6.31558, -0.812765)
+value = Vector2(-4.47397, -29.4761)
 
 [node name="@Node@21580" type="Node" parent="VecDrawing"]
 script = ExtResource("2_ukuny")
-value = Vector2(-5.4926, 5.28871)
+value = Vector2(-8.13651, -17.8089)
 
 [node name="@Node@21581" type="Node" parent="VecDrawing"]
 script = ExtResource("2_ukuny")
-value = Vector2(-4.57489, 9.12635)
+value = Vector2(-12.7763, -3.02861)
 
 [node name="@Node@21582" type="Node" parent="VecDrawing"]
 script = ExtResource("2_ukuny")
-value = Vector2(9.60773, 14.0486)
+value = Vector2(1.46096, 18.3518)
 
 [node name="@Node@21583" type="Node" parent="VecDrawing"]
 script = ExtResource("2_ukuny")
-value = Vector2(12.0271, 13.3811)
+value = Vector2(17.1435, 22.6829)
 
 [node name="@Node@21584" type="Node" parent="VecDrawing"]
 script = ExtResource("2_ukuny")
-value = Vector2(14.2797, 12.4634)
+value = Vector2(32.0294, 26.794)

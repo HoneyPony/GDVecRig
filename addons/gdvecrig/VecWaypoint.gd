@@ -35,6 +35,16 @@ func add_weight(index, weight):
 	w = clamp(w, 0.0, 1.0)
 	weights[index] = w
 	
+func compute_bone_overall_rest(bone: Bone2D) -> Transform2D:
+	var p: Node = bone.get_parent()
+	var p_bone: Bone2D = p as Bone2D
+	
+	if p_bone != null:
+		return compute_bone_overall_rest(p_bone) * bone.rest
+	if p != null:
+		return p.global_transform * bone.rest
+	return bone.rest
+	
 func compute_bone_transform(bone: Bone2D, cache: Dictionary) -> Transform2D:
 	var existing = cache.get(bone)
 	if existing != null:
@@ -52,15 +62,23 @@ func compute_bone_transform(bone: Bone2D, cache: Dictionary) -> Transform2D:
 	#	p_transform = Transform2D.IDENTITY	
 		
 	# The basic transform is just the transform, but relative to the rest pose.
-	var result: Transform2D = bone.rest.affine_inverse() * bone.transform
+	var result: Transform2D = bone.transform
+	result = bone.rest.affine_inverse() * result
 	
-	# Root bones have the special property that their origin IS the origin
-	# that the skeleton must rotate around. As such, we must manually
-	# create that behavior by moving the rotation pivot.
-	if p_bone == null:
-		result = Transform2D(0, bone.rest.origin) * result * Transform2D(0, -bone.rest.origin)
-	else:
-		result = Transform2D(0, -bone.rest.origin) * result * Transform2D(0, bone.rest.origin)
+	# ~~Root bones have the special property that their origin IS the origin~~
+	# ~~that the skeleton must rotate around. As such, we must manually~~
+	# ~~create that behavior by moving the rotation pivot.~~
+	##if p_bone == null:
+	#	result = Transform2D(0, bone.rest.origin) * result * Transform2D(0, -bone.rest.origin)
+	#else:
+	
+	# Bones must be rotated around their pivot point. This accomplishes this,
+	# by changing the pivot point of the transform space (of the previously
+	# computed transform).
+	#
+	# get_skeleton_rest() seems to get the correct pivot point.
+	result = Transform2D(0, bone.get_skeleton_rest().origin) * result * Transform2D(0, -bone.get_skeleton_rest().origin)
+		#result = Transform2D(0, -bone.rest.origin) * result * Transform2D(0, bone.rest.origin)
 	
 	# Finally, apply the parent transform.
 	result = p_transform * result
@@ -81,6 +99,8 @@ func compute_value(skeleton: Skeleton2D, transform_cache: Dictionary):
 		if i == -1:
 			continue
 		var weight = weights[i]
+		if weight == 0:
+			continue
 		var bone = skeleton.get_bone(i)
 		
 		#var tformed = bone.rest.affine_inverse() * bone.transform * value

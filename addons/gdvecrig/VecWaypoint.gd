@@ -5,21 +5,10 @@ class_name VecWaypoint
 @export var value: Vector2
 var computed_value: Vector2 = Vector2.ZERO
 
+# TODO: Consider using a more efficient data structure than a dictionary for
+# this. E.g., maybe a PackedFloat32Array that is the size of the skeleton.
 @export var weights = {}
 
-#	if not bone.is_empty():
-#		#var test: Bone2D = get_node(bone)
-#		var bone2d: Bone2D = get_node(bone)
-#
-#		# TODO: Godot does not currently cache affine_inverse,
-#		# we probably want to do it ourselves.
-#		computed_value = bone2d.rest.affine_inverse() * bone2d.transform * value
-#	else:
-#		computed_value = value
-
-#@export var bones: Array[VecBone]
-#@export var weights: PackedFloat32Array
-#
 func get_weight(index):
 	return weights.get(index, 0)
 	
@@ -34,16 +23,6 @@ func add_weight(index, weight):
 	w += weight
 	w = clamp(w, 0.0, 1.0)
 	weights[index] = w
-	
-func compute_bone_overall_rest(bone: Bone2D) -> Transform2D:
-	var p: Node = bone.get_parent()
-	var p_bone: Bone2D = p as Bone2D
-	
-	if p_bone != null:
-		return compute_bone_overall_rest(p_bone) * bone.rest
-	if p != null:
-		return p.global_transform * bone.rest
-	return bone.rest
 	
 func compute_bone_transform(bone: Bone2D, cache: Dictionary) -> Transform2D:
 	var existing = cache.get(bone)
@@ -65,19 +44,19 @@ func compute_bone_transform(bone: Bone2D, cache: Dictionary) -> Transform2D:
 	var result: Transform2D = bone.transform
 	result = bone.rest.affine_inverse() * result
 	
-	# ~~Root bones have the special property that their origin IS the origin~~
-	# ~~that the skeleton must rotate around. As such, we must manually~~
-	# ~~create that behavior by moving the rotation pivot.~~
-	##if p_bone == null:
-	#	result = Transform2D(0, bone.rest.origin) * result * Transform2D(0, -bone.rest.origin)
-	#else:
-	
 	# Bones must be rotated around their pivot point. This accomplishes this,
 	# by changing the pivot point of the transform space (of the previously
 	# computed transform).
 	#
 	# get_skeleton_rest() seems to get the correct pivot point.
-	var pivot = compute_bone_overall_rest(bone).origin
+	#
+	# Note on get_skeleton_rest(): Perusing the Godot source code, this method
+	# is not the most efficient... it walks all the way up the skeleton
+	# heirarchy. BUT... we only have to call it once per bone, and it might
+	# overall be faster than our own method... if we need to repalce it,
+	# we can, using the compute_bone_overall_rest function from commit 672cfa9
+	# and just add a second dictionary cache.
+	var pivot = bone.get_skeleton_rest().origin
 	result = Transform2D(0, pivot) * result * Transform2D(0, -pivot)
 		#result = Transform2D(0, -bone.rest.origin) * result * Transform2D(0, bone.rest.origin)
 	
@@ -104,7 +83,8 @@ func compute_value(skeleton: Skeleton2D, transform_cache: Dictionary):
 			continue
 		var bone = skeleton.get_bone(i)
 		
-		#var tformed = bone.rest.affine_inverse() * bone.transform * value
+		# Compute the associated bone transform times each value, for every
+		# bone with a non-zero weight.
 		var tformed = compute_bone_transform(bone, transform_cache) * value
 		computed_value += weight * tformed
 		
@@ -114,6 +94,3 @@ func compute_value(skeleton: Skeleton2D, transform_cache: Dictionary):
 		computed_value = value
 		return
 	computed_value /= total_weight
-#
-#func _process(delta):
-#	compute_value()

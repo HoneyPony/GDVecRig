@@ -135,6 +135,7 @@ func handle_editing_mouse_button(plugin: GDVecRig, event: InputEventMouseButton)
 					var waypoint = VecWaypoint.new()
 					waypoint.value = get_local_mouse_position()
 					add_child(waypoint)
+					waypoint.owner = owner
 				return true
 			
 			if event.get_modifiers_mask() & KEY_MASK_SHIFT:

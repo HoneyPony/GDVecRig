@@ -41,7 +41,6 @@ visible = false
 [node name="Root" type="Bone2D" parent="OLD/Skeleton2D"]
 position = Vector2(84, 5)
 rotation = 0.00226352
-scale = Vector2(1, 1)
 rest = Transform2D(0.999997, 0.00226352, -0.00226352, 0.999997, 84, 5)
 
 [node name="Face" type="Bone2D" parent="OLD/Skeleton2D/Root"]
@@ -191,3 +190,39 @@ script = ExtResource("3_2kylr")
 
 [node name="VecDrawing" type="Node2D" parent="."]
 script = ExtResource("1_cjag6")
+
+[node name="@Node@21576" type="Node" parent="VecDrawing"]
+script = ExtResource("2_ukuny")
+value = Vector2(19.3687, 1.36762)
+
+[node name="@Node@21577" type="Node" parent="VecDrawing"]
+script = ExtResource("2_ukuny")
+value = Vector2(15.1139, -3.3043)
+
+[node name="@Node@21578" type="Node" parent="VecDrawing"]
+script = ExtResource("2_ukuny")
+value = Vector2(10.6089, -5.80711)
+
+[node name="@Node@21579" type="Node" parent="VecDrawing"]
+script = ExtResource("2_ukuny")
+value = Vector2(-6.91086, -0.217489)
+
+[node name="@Node@21580" type="Node" parent="VecDrawing"]
+script = ExtResource("2_ukuny")
+value = Vector2(-5.4926, 5.28871)
+
+[node name="@Node@21581" type="Node" parent="VecDrawing"]
+script = ExtResource("2_ukuny")
+value = Vector2(-4.57489, 9.12635)
+
+[node name="@Node@21582" type="Node" parent="VecDrawing"]
+script = ExtResource("2_ukuny")
+value = Vector2(9.60773, 14.0486)
+
+[node name="@Node@21583" type="Node" parent="VecDrawing"]
+script = ExtResource("2_ukuny")
+value = Vector2(12.0271, 13.3811)
+
+[node name="@Node@21584" type="Node" parent="VecDrawing"]
+script = ExtResource("2_ukuny")
+value = Vector2(14.2797, 12.4634)

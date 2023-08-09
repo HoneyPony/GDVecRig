@@ -23,6 +23,9 @@ func in_mode_weightpaint():
 func add_end_point():
 	return drawing_tool_new.button_pressed
 
+func is_in_toggle_constraint():
+	return drawing_tool_toggle_constraint.button_pressed
+
 func _on_bone_list_selected(index: int):
 	weight_painting_bone = index
 
@@ -46,6 +49,7 @@ func load_bones(drawing: VecDrawing):
 func _edit(object):
 	if object is VecDrawing:
 		current_vecdrawing = object
+		cur_drawing_display.text = current_vecdrawing.name
 		point_highlight = 0
 		point_selection = []
 		point_edited = false
@@ -68,6 +72,7 @@ func _make_visible(visible):
 var dock
 
 var dock_tabs: TabContainer
+var cur_drawing_display: Label
 
 var tab_drawing: Control
 var tab_weightpaint: Control
@@ -76,6 +81,7 @@ var tab_weightpaint: Control
 var drawing_tool_edit: Button
 var drawing_tool_new: Button
 var drawing_tool_knife: Button
+var drawing_tool_toggle_constraint: Button
 var drawing_tool_group: ButtonGroup
 
 # --- WEIGHT PAINT TOOLS ---
@@ -115,7 +121,8 @@ func _enter_tree():
 	# Add the loaded scene to the docks.
 	add_control_to_dock(DOCK_SLOT_LEFT_UL, dock)
 
-	dock_tabs = dock.get_node("TabContainer")
+	dock_tabs = dock.get_node("TopVLayout/TabContainer")
+	cur_drawing_display = dock.get_node("TopVLayout/CurrentDrawingUI/CurrentDrawingDisplay")
 	tab_drawing = dock_tabs.get_node("Drawing")
 	tab_weightpaint = dock_tabs.get_node("Weight Painting")
 	
@@ -125,6 +132,7 @@ func _enter_tree():
 	drawing_tool_edit = setup_button(d_tool, "ToolSelect", drawing_tool_group)
 	drawing_tool_new = setup_button(d_tool, "ToolNewPoint", drawing_tool_group)
 	drawing_tool_knife = setup_button(d_tool, "ToolKnife", drawing_tool_group)
+	drawing_tool_toggle_constraint = setup_button(d_tool, "ToolToggleConstraint", drawing_tool_group)
 	drawing_tool_edit.button_pressed = true
 	
 	# SETUP WEIGHT PAINTING UI

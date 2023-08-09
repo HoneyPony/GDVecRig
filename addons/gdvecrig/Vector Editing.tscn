@@ -8,7 +8,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="TabContainer" type="TabContainer" parent="."]
+[node name="TopVLayout" type="VBoxContainer" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -16,34 +16,54 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Drawing" type="Control" parent="TabContainer"]
+[node name="CurrentDrawingUI" type="HBoxContainer" parent="TopVLayout"]
 layout_mode = 2
 
-[node name="ToolSelector" type="HBoxContainer" parent="TabContainer/Drawing"]
+[node name="ExplanatoryLabel" type="Label" parent="TopVLayout/CurrentDrawingUI"]
+layout_mode = 2
+text = "Currently edited drawing: "
+
+[node name="CurrentDrawingDisplay" type="Label" parent="TopVLayout/CurrentDrawingUI"]
+layout_mode = 2
+text = "<none>"
+
+[node name="TabContainer" type="TabContainer" parent="TopVLayout"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Drawing" type="Control" parent="TopVLayout/TabContainer"]
+layout_mode = 2
+
+[node name="ToolSelector" type="HBoxContainer" parent="TopVLayout/TabContainer/Drawing"]
 layout_mode = 0
 offset_right = 227.0
 offset_bottom = 31.0
 
-[node name="ToolSelect" type="Button" parent="TabContainer/Drawing/ToolSelector"]
+[node name="ToolSelect" type="Button" parent="TopVLayout/TabContainer/Drawing/ToolSelector"]
 layout_mode = 2
 toggle_mode = true
 text = "Select"
 
-[node name="ToolNewPoint" type="Button" parent="TabContainer/Drawing/ToolSelector"]
+[node name="ToolNewPoint" type="Button" parent="TopVLayout/TabContainer/Drawing/ToolSelector"]
 layout_mode = 2
 toggle_mode = true
 text = "Add End Point"
 
-[node name="ToolKnife" type="Button" parent="TabContainer/Drawing/ToolSelector"]
+[node name="ToolKnife" type="Button" parent="TopVLayout/TabContainer/Drawing/ToolSelector"]
 layout_mode = 2
 toggle_mode = true
 text = "Knife"
 
-[node name="Weight Painting" type="Control" parent="TabContainer"]
+[node name="ToolToggleConstraint" type="Button" parent="TopVLayout/TabContainer/Drawing/ToolSelector"]
+layout_mode = 2
+toggle_mode = true
+text = "Toggle Constraint"
+
+[node name="Weight Painting" type="Control" parent="TopVLayout/TabContainer"]
 visible = false
 layout_mode = 2
 
-[node name="VBox" type="VBoxContainer" parent="TabContainer/Weight Painting"]
+[node name="VBox" type="VBoxContainer" parent="TopVLayout/TabContainer/Weight Painting"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -51,53 +71,53 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="ToolSelector" type="HBoxContainer" parent="TabContainer/Weight Painting/VBox"]
+[node name="ToolSelector" type="HBoxContainer" parent="TopVLayout/TabContainer/Weight Painting/VBox"]
 layout_mode = 2
 
-[node name="Add" type="Button" parent="TabContainer/Weight Painting/VBox/ToolSelector"]
+[node name="Add" type="Button" parent="TopVLayout/TabContainer/Weight Painting/VBox/ToolSelector"]
 layout_mode = 2
 toggle_mode = true
 text = "Add
 "
 
-[node name="Subtract" type="Button" parent="TabContainer/Weight Painting/VBox/ToolSelector"]
+[node name="Subtract" type="Button" parent="TopVLayout/TabContainer/Weight Painting/VBox/ToolSelector"]
 layout_mode = 2
 toggle_mode = true
 text = "Subtract
 "
 
-[node name="Mix" type="Button" parent="TabContainer/Weight Painting/VBox/ToolSelector"]
+[node name="Mix" type="Button" parent="TopVLayout/TabContainer/Weight Painting/VBox/ToolSelector"]
 layout_mode = 2
 toggle_mode = true
 text = "Mix
 "
 
-[node name="Settings" type="HBoxContainer" parent="TabContainer/Weight Painting/VBox"]
+[node name="Settings" type="HBoxContainer" parent="TopVLayout/TabContainer/Weight Painting/VBox"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="TabContainer/Weight Painting/VBox/Settings"]
+[node name="Label" type="Label" parent="TopVLayout/TabContainer/Weight Painting/VBox/Settings"]
 layout_mode = 2
 text = "Value:"
 
-[node name="WeightPaintValBox" type="SpinBox" parent="TabContainer/Weight Painting/VBox/Settings"]
+[node name="WeightPaintValBox" type="SpinBox" parent="TopVLayout/TabContainer/Weight Painting/VBox/Settings"]
 unique_name_in_owner = true
 layout_mode = 2
 max_value = 1.0
 step = 0.001
 value = 1.0
 
-[node name="Strength" type="Label" parent="TabContainer/Weight Painting/VBox/Settings"]
+[node name="Strength" type="Label" parent="TopVLayout/TabContainer/Weight Painting/VBox/Settings"]
 layout_mode = 2
 text = "Strength:"
 
-[node name="WeightPaintStrengthBox" type="SpinBox" parent="TabContainer/Weight Painting/VBox/Settings"]
+[node name="WeightPaintStrengthBox" type="SpinBox" parent="TopVLayout/TabContainer/Weight Painting/VBox/Settings"]
 unique_name_in_owner = true
 layout_mode = 2
 max_value = 1.0
 step = 0.001
 value = 0.5
 
-[node name="BoneList" type="ItemList" parent="TabContainer/Weight Painting/VBox"]
+[node name="BoneList" type="ItemList" parent="TopVLayout/TabContainer/Weight Painting/VBox"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3

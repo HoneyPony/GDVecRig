@@ -307,6 +307,15 @@ func add_to_select(plugin: GDVecRig, point: int):
 	if not plugin.point_selection.has(point):
 		plugin.point_selection.push_back(point)
 	
+func find_point_index_at_target(radius_factor: int, plugin: GDVecRig, target: Vector2):
+	var radius = radius_factor / zoom()
+	
+	for i in range(0, waypoint_count()):
+		var center = get_waypoint_place(i)
+		if (target - center).length_squared() <= (radius * radius):
+			return i
+	return -1
+	
 func add_to_select_from_target(plugin: GDVecRig, target: Vector2):
 	var radius = 5 / zoom()
 	
@@ -376,6 +385,15 @@ func handle_editing_mouse_button(plugin: GDVecRig, event: InputEventMouseButton)
 					add_child(waypoint)
 					waypoint.owner = owner
 				return true
+				
+			if plugin.is_in_toggle_constraint():
+				var index = find_point_index_at_target(10, plugin, get_local_mouse_position())
+				if index >= 0 and index % 3 == 1:
+					var c: ConstraintType = constraints[index / 3]
+					c = (c + 1) % 3
+					constraints[index / 3] = c
+				return true
+					
 			
 			if event.get_modifiers_mask() & KEY_MASK_SHIFT:
 				var selected = add_to_select_from_target(plugin, get_local_mouse_position())
@@ -489,8 +507,23 @@ func draw_editor_handle(radius, left, mid, right, ls, ms, rs):
 	draw_line(mid, right, Color.WHITE)
 	
 	draw_circle(left, radius * 0.9, Color.BLUE if ls else Color.WHITE)
-	draw_circle(mid, radius, Color.BLUE if ms else Color.GRAY)
+	#draw_circle(mid, radius, Color.BLUE if ms else Color.GRAY)
 	draw_circle(right, radius * 0.9, Color.BLUE if rs else Color.WHITE)
+	
+func draw_editor_center_handle(radius, mid, ms, constraint):
+	var color = Color.BLUE if ms else Color.GRAY
+	
+	if constraint == ConstraintType.SAME_ANGLE_AND_LENGTH:
+		draw_circle(mid, radius, color)
+	elif constraint == ConstraintType.SAME_ANGLE:
+		var r = Vector2(radius, radius)
+		draw_rect(Rect2(mid - r, r * 2), color)
+	elif constraint == ConstraintType.NONE:
+		var points = PackedVector2Array()
+		points.push_back(Vector2(0, radius))
+		points.push_back(Vector2(radius, 0))
+		points.push_back(Vector2(0, -radius))
+		points.push_back(Vector2(-radius, 0))
 	
 func draw_editor_weights(radius, left, mid, right, ls, ms, rs):
 	draw_line(left, mid, Color.WHITE)
@@ -573,6 +606,7 @@ func _draw():
 					var p2 = get_waypoint_place(i + 2)
 					var p2s = is_selected(i + 2)
 					draw_editor_handle(radius, p0, p1, p2, p0s, p1s, p2s)
+					draw_editor_center_handle(radius, p1, p1s, constraints[i / 3])
 					
 					i += 3
 		

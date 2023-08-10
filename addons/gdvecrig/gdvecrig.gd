@@ -118,6 +118,7 @@ func _edit(object):
 						bone_list.select(i, true)
 						# The signal will not be fired by the list, do it ourselves.
 						_on_bone_list_selected(i)
+						break
 						
 		#current_vecdrawing = null
 	return

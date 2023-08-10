@@ -101,7 +101,24 @@ func _edit(object):
 		load_bones(object)
 	else:
 		current_vecdrawing_is_selected_in_tree = false
-		pass
+		
+		# If we're editing a Bone2D, and it's one of the bones in the current
+		# armature, we want to select it in the weight painting list.
+		if object is Bone2D:
+			var bone: Bone2D = object
+			if current_vecdrawing != null:
+				var skeleton: Skeleton2D = current_vecdrawing.get_skeleton_from_tree()
+				
+				# Try to find the bone in the skeleton
+				for i in range(0, skeleton.get_bone_count()):
+					var test = skeleton.get_bone(i)
+					if test == bone:
+						# If we found the bone, select it in the weight painting
+						# list.
+						bone_list.select(i, true)
+						# The signal will not be fired by the list, do it ourselves.
+						_on_bone_list_selected(i)
+						
 		#current_vecdrawing = null
 	return
 	

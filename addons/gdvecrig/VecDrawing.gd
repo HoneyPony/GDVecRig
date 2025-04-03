@@ -406,7 +406,8 @@ func delete_entire_points(group_idx: int, plugin: GDVecRig) -> void:
 	
 	
 func reset_curve_point(idx: int) -> void:
-	pass
+	var base := idx / 3
+	waypoints[idx].value = waypoints[(base * 3) + 1].value 
 
 func handle_editing_mouse_button(plugin: GDVecRig, event: InputEventMouseButton) -> bool:
 	if event.button_index == MOUSE_BUTTON_LEFT:
@@ -431,7 +432,6 @@ func handle_editing_mouse_button(plugin: GDVecRig, event: InputEventMouseButton)
 				var index = find_point_index_at_target(10, plugin, get_local_mouse_position())
 				if index >= 0:
 					if index % 3 == 1:
-						print("delete -!")
 						delete_entire_points(index / 3, plugin)
 					else:
 						reset_curve_point(index)

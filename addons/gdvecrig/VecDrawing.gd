@@ -293,6 +293,7 @@ func try_starting_editing(plugin: GDVecRig):
 	if plugin.point_highlight >= 0:
 		plugin.point_edited = true
 		if not plugin.point_selection.has(plugin.point_highlight):
+			print("select point -> ", plugin.point_highlight)
 			# Clear the selection we we're selecitng a new point
 			plugin.point_selection.clear()
 			add_to_select(plugin, plugin.point_highlight)
@@ -306,6 +307,19 @@ func stop_editing(plugin: GDVecRig):
 func add_to_select(plugin: GDVecRig, point: int):
 	if not plugin.point_selection.has(point):
 		plugin.point_selection.push_back(point)
+
+func get_idx_ordered_centerlast(idx: int) -> int:
+	var base: int = idx / 3
+	var offset := idx - (base * 3)
+	match offset:
+		0:
+			offset = 0
+		1:
+			offset = 2 
+		2:
+			offset = 1
+	return (base * 3) + offset
+
 	
 func find_point_index_at_target(radius_factor: int, plugin: GDVecRig, target: Vector2):
 	var radius = radius_factor / zoom()
@@ -365,7 +379,8 @@ func handle_editing_mouse_motion(plugin: GDVecRig, event: InputEventMouseMotion)
 		var radius = 7 / zoom()
 		plugin.point_highlight = -1
 		
-		for i in range(0, waypoint_count()):
+		for _i in range(0, waypoint_count()):
+			var i = get_idx_ordered_centerlast(_i)
 			var center = get_waypoint_place(i)
 			if (get_local_mouse_position() - center).length_squared() <= (radius * radius):
 				plugin.point_highlight = i

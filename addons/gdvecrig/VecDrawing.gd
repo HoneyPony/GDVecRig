@@ -45,7 +45,7 @@ func constrain_waypoint_in_editing(target: VecWaypoint, effector: VecWaypoint, c
 		target.value = center.value - vec2
 		return
 
-func update_edit_constraint(index, plugin: GDVecRig, cache: Dictionary):
+func update_edit_constraint(index, plugin: GDVecRig, cache: Dictionary, force_equal_radius: bool):
 	var left_index = index * 3
 	var center_index = index * 3 + 1
 	var right_index = index * 3 + 2
@@ -58,6 +58,10 @@ func update_edit_constraint(index, plugin: GDVecRig, cache: Dictionary):
 	var center_edited = (center_index) in plugin.point_selection
 	var right_edited = (right_index) in plugin.point_selection
 	
+	var current_contraint = constraints[index]
+	if force_equal_radius:
+		current_contraint = ConstraintType.SAME_ANGLE_AND_LENGTH
+	
 	# If both sides are edited, our transformations should *generally*
 	# preserve constraints. TODO: Maybe add a second pass to even
 	# correct those that don't work..?
@@ -67,13 +71,13 @@ func update_edit_constraint(index, plugin: GDVecRig, cache: Dictionary):
 	if center_edited:
 		if left_edited and right_edited:
 			return
-				
+			
 		if left_edited:
-			constrain_waypoint_in_editing(right, left, center, constraints[index])
+			constrain_waypoint_in_editing(right, left, center, current_contraint)
 			return
 		
 		if right_edited:
-			constrain_waypoint_in_editing(left, right, center, constraints[index])
+			constrain_waypoint_in_editing(left, right, center, current_contraint)
 			return
 	
 		# If no points but the center are edited, then we must re-center the old
@@ -88,15 +92,15 @@ func update_edit_constraint(index, plugin: GDVecRig, cache: Dictionary):
 		# If both waypoints are edited, and we have any constraint
 		# at all, then we must move the center by the edit-vec.
 		if left_edited and right_edited:
-			if constraints[index] == ConstraintType.NONE:
+			if current_contraint == ConstraintType.NONE:
 				# No change needed. The user may be trying to make a point
 				# (literally).
 				return
-			if constraints[index] == ConstraintType.SAME_ANGLE_AND_LENGTH:
+			if current_contraint == ConstraintType.SAME_ANGLE_AND_LENGTH:
 				# In this case, the center is simply the literal center.
 				center.value = (left.value + right.value) / 2
 				return
-			if constraints[index] == ConstraintType.SAME_ANGLE:
+			if current_contraint == ConstraintType.SAME_ANGLE:
 				# In this case, we'll re-interpolate along the left->right line,
 				# this should make this work even if we eventually implement
 				# rotation/scaling edits.
@@ -123,11 +127,11 @@ func update_edit_constraint(index, plugin: GDVecRig, cache: Dictionary):
 			
 		# Okay, now we can handle the easy single-handle cases.
 		if left_edited:
-			constrain_waypoint_in_editing(right, left, center, constraints[index])
+			constrain_waypoint_in_editing(right, left, center, current_contraint)
 			return
 		
 		if right_edited:
-			constrain_waypoint_in_editing(left, right, center, constraints[index])
+			constrain_waypoint_in_editing(left, right, center, current_contraint)
 			return
 
 
@@ -370,7 +374,7 @@ func handle_editing_mouse_motion(plugin: GDVecRig, event: InputEventMouseMotion)
 			point_edit_cache[point] = waypoints[point].value
 			edit_point(point, event.relative / zoom())
 		for i in range(0, center_waypoint_count()):
-			update_edit_constraint(i, plugin, point_edit_cache)
+			update_edit_constraint(i, plugin, point_edit_cache, event.shift_pressed)
 		#queue_redraw()
 		return true
 	else:

@@ -461,7 +461,7 @@ metadata/_custom_type_script = "uid://bodn4jw8tyemx"
 
 [node name="@Node@24403" type="Node" parent="VecDrawing2"]
 script = ExtResource("2_ukuny")
-value = Vector2(-51.2888, -31.3985)
+value = Vector2(-40.3555, -36.5581)
 
 [node name="@Node@24404" type="Node" parent="VecDrawing2"]
 script = ExtResource("2_ukuny")
@@ -469,11 +469,11 @@ value = Vector2(-33.2305, -15.1828)
 
 [node name="@Node@24405" type="Node" parent="VecDrawing2"]
 script = ExtResource("2_ukuny")
-value = Vector2(-33.2305, -15.1828)
+value = Vector2(-26.1054, 6.19245)
 
 [node name="@Node@23783" type="Node" parent="VecDrawing2"]
 script = ExtResource("2_ukuny")
-value = Vector2(18.2296, -21.5946)
+value = Vector2(16.0906, -2.34782)
 
 [node name="@Node@23784" type="Node" parent="VecDrawing2"]
 script = ExtResource("2_ukuny")
@@ -481,11 +481,11 @@ value = Vector2(18.2296, -21.5946)
 
 [node name="@Node@23785" type="Node" parent="VecDrawing2"]
 script = ExtResource("2_ukuny")
-value = Vector2(18.2296, -21.5946)
+value = Vector2(20.3738, -40.8874)
 
 [node name="@Node@23786" type="Node" parent="VecDrawing2"]
 script = ExtResource("2_ukuny")
-value = Vector2(7.02299, -45.1118)
+value = Vector2(13.9625, -43.1967)
 
 [node name="@Node@23787" type="Node" parent="VecDrawing2"]
 script = ExtResource("2_ukuny")
@@ -493,4 +493,4 @@ value = Vector2(-1.8169, -45.2344)
 
 [node name="@Node@23788" type="Node" parent="VecDrawing2"]
 script = ExtResource("2_ukuny")
-value = Vector2(-15.8764, -45.4295)
+value = Vector2(-17.5962, -47.2722)

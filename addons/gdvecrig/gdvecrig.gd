@@ -90,6 +90,7 @@ func _edit(object):
 			point_selection = []
 		
 		current_vecdrawing = object
+		print("Select vecdrawing: ", current_vecdrawing)
 		current_vecdrawing_is_selected_in_tree = true
 		cur_drawing_display.text = current_vecdrawing.name
 		point_highlight = 0

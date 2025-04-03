@@ -1,8 +1,8 @@
-[gd_scene load_steps=8 format=3 uid="uid://bcuh5ccdr1cqc"]
+[gd_scene load_steps=9 format=3 uid="uid://bcuh5ccdr1cqc"]
 
-[ext_resource type="Script" path="res://addons/gdvecrig/VecDrawing.gd" id="1_cjag6"]
-[ext_resource type="Script" path="res://addons/gdvecrig/VecWaypoint.gd" id="2_ukuny"]
-[ext_resource type="Script" path="res://addons/gdvecrig/VecStroke.gd" id="3_2kylr"]
+[ext_resource type="Script" uid="uid://bodn4jw8tyemx" path="res://addons/gdvecrig/VecDrawing.gd" id="1_cjag6"]
+[ext_resource type="Script" uid="uid://druaxt2ugybtj" path="res://addons/gdvecrig/VecWaypoint.gd" id="2_ukuny"]
+[ext_resource type="Script" uid="uid://csgt88iv3c4ke" path="res://addons/gdvecrig/VecStroke.gd" id="3_2kylr"]
 
 [sub_resource type="Animation" id="Animation_2c1uf"]
 length = 0.001
@@ -85,12 +85,16 @@ tracks/2/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_weu04"]
 _data = {
-"RESET": SubResource("Animation_2c1uf"),
-"Test": SubResource("Animation_aa01w")
+&"RESET": SubResource("Animation_2c1uf"),
+&"Test": SubResource("Animation_aa01w")
 }
 
 [sub_resource type="Curve" id="Curve_syim4"]
 _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.676218, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="Curve" id="Curve_2au82"]
+_data = [Vector2(0, 0), 0.0, 3.32834, 0, 0, Vector2(0.530275, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -5.48569, 0.0, 0, 0]
 point_count = 3
 
 [node name="Test" type="Node2D"]
@@ -100,10 +104,10 @@ position = Vector2(36, 3)
 zoom = Vector2(4.136, 4.136)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-autoplay = "Test"
 libraries = {
-"": SubResource("AnimationLibrary_weu04")
+&"": SubResource("AnimationLibrary_weu04")
 }
+autoplay = "Test"
 
 [node name="OLD" type="Node2D" parent="."]
 visible = false
@@ -134,12 +138,11 @@ script = ExtResource("1_cjag6")
 fill = Color(0, 0.207843, 0.00392157, 1)
 steps = 32
 show_rest = false
-always_show_points = true
 skeleton = NodePath("../Skeleton2D")
 
 [node name="VecWaypoint" type="Node" parent="OLD/VecDrawing"]
 script = ExtResource("2_ukuny")
-value = Vector2(114.068, 24.2821)
+value = Vector2(111.758, 24.2684)
 weights = {
 0: 1.0
 }
@@ -153,7 +156,7 @@ weights = {
 
 [node name="VecWaypoint3" type="Node" parent="OLD/VecDrawing"]
 script = ExtResource("2_ukuny")
-value = Vector2(49.6172, 23.4999)
+value = Vector2(49.6174, 23.4803)
 weights = {
 0: 1.0,
 1: 0.0
@@ -260,10 +263,35 @@ width = 2.321
 width_curve = SubResource("Curve_syim4")
 script = ExtResource("3_2kylr")
 
+[node name="@Node@22520" type="Node" parent="OLD/VecDrawing"]
+script = ExtResource("2_ukuny")
+value = Vector2(181.029, 28.1224)
+
+[node name="@Node@22521" type="Node" parent="OLD/VecDrawing"]
+script = ExtResource("2_ukuny")
+value = Vector2(181.029, 28.1224)
+
+[node name="@Node@22522" type="Node" parent="OLD/VecDrawing"]
+script = ExtResource("2_ukuny")
+value = Vector2(181.029, 28.1224)
+
+[node name="@Node@22523" type="Node" parent="OLD/VecDrawing"]
+script = ExtResource("2_ukuny")
+value = Vector2(150.541, -2.47034)
+
+[node name="@Node@22524" type="Node" parent="OLD/VecDrawing"]
+script = ExtResource("2_ukuny")
+value = Vector2(150.541, -2.47034)
+
+[node name="@Node@22525" type="Node" parent="OLD/VecDrawing"]
+script = ExtResource("2_ukuny")
+value = Vector2(150.541, -2.47034)
+
 [node name="VecDrawing" type="Node2D" parent="."]
 script = ExtResource("1_cjag6")
-fill = Color(0.0156863, 0.32549, 1, 1)
+fill = Color(0.367624, 0.294815, 1, 1)
 steps = 20
+show_rest = false
 skeleton = NodePath("ConstraintExampleSkel")
 
 [node name="@Node@21576" type="Node" parent="VecDrawing"]
@@ -284,20 +312,20 @@ weights = {
 script = ExtResource("2_ukuny")
 value = Vector2(72.476, -19.503)
 weights = {
-0: 0.0,
-1: 1.0
+0: 0.3,
+1: 0.3
 }
 
 [node name="@Node@21579" type="Node" parent="VecDrawing"]
 script = ExtResource("2_ukuny")
-value = Vector2(55.0021, -19.3541)
+value = Vector2(54.8222, -20.9728)
 weights = {
 1: 1.0
 }
 
 [node name="@Node@21580" type="Node" parent="VecDrawing"]
 script = ExtResource("2_ukuny")
-value = Vector2(36.4294, -19.4589)
+value = Vector2(33.192, -20.1783)
 weights = {
 1: 1.0,
 2: 0.0
@@ -305,7 +333,7 @@ weights = {
 
 [node name="@Node@21581" type="Node" parent="VecDrawing"]
 script = ExtResource("2_ukuny")
-value = Vector2(17.8567, -19.5637)
+value = Vector2(14.6314, -19.4966)
 weights = {
 2: 1.0
 }
@@ -333,7 +361,7 @@ weights = {
 
 [node name="@Node@23946" type="Node" parent="VecDrawing"]
 script = ExtResource("2_ukuny")
-value = Vector2(-26.5409, -0.0147061)
+value = Vector2(-26.5409, -0.0147057)
 weights = {
 2: 1.0
 }
@@ -349,6 +377,7 @@ weights = {
 script = ExtResource("2_ukuny")
 value = Vector2(-4.15334, 14.3197)
 weights = {
+1: 0.3,
 2: 1.0
 }
 
@@ -375,10 +404,10 @@ weights = {
 
 [node name="@Node@23952" type="Node" parent="VecDrawing"]
 script = ExtResource("2_ukuny")
-value = Vector2(78.8239, 15.0713)
+value = Vector2(78.8239, 15.0712)
 weights = {
-0: 0.0,
-1: 1.0
+0: 0.3,
+1: 0.3
 }
 
 [node name="@Node@23953" type="Node" parent="VecDrawing"]
@@ -398,9 +427,9 @@ weights = {
 [node name="ConstraintExampleSkel" type="Skeleton2D" parent="VecDrawing"]
 
 [node name="Root" type="Bone2D" parent="VecDrawing/ConstraintExampleSkel"]
-position = Vector2(81, 10)
+position = Vector2(99, -1)
 rotation = 0.615827
-rest = Transform2D(1, 0, 0, 1, 81, 10)
+rest = Transform2D(1, 0, 0, 1, 99, -1)
 
 [node name="A" type="Bone2D" parent="VecDrawing/ConstraintExampleSkel/Root"]
 position = Vector2(-58, 0)
@@ -410,8 +439,15 @@ rest = Transform2D(1, 0, 0, 1, -58, 0)
 [node name="B" type="Bone2D" parent="VecDrawing/ConstraintExampleSkel/Root/A"]
 position = Vector2(-51, -1)
 rotation = -3.56602
-scale = Vector2(1, 1)
 rest = Transform2D(-0.999263, 0.0383877, -0.0383877, -0.999263, -51, -1)
 auto_calculate_length_and_angle = false
 length = 16.0
 bone_angle = 177.8
+
+[node name="VecStroke" type="Line2D" parent="VecDrawing"]
+rotation = -0.000579591
+points = PackedVector2Array(99.3714, -20.2728, 95.5714, -20.9744, 91.8506, -21.8, 88.2036, -22.724, 84.6248, -23.7206, 81.1088, -24.7644, 77.6502, -25.8298, 74.2434, -26.891, 70.8831, -27.9227, 67.5637, -28.899, 64.2798, -29.7946, 61.026, -30.5836, 57.7967, -31.2406, 54.5865, -31.7399, 51.39, -32.056, 48.2016, -32.1632, 45.016, -32.036, 41.8276, -31.6487, 38.6311, -30.9758, 35.4208, -29.9915, 35.4208, -29.9915, 32.6049, -29.0375, 29.8443, -28.1987, 27.1386, -27.4662, 24.4875, -26.8313, 21.8905, -26.2851, 19.3473, -25.819, 16.8576, -25.424, 14.4209, -25.0914, 12.0368, -24.8124, 9.7051, -24.5783, 7.4253, -24.3802, 5.19707, -24.2093, 3.02002, -24.0568, 0.89378, -23.914, -1.18202, -23.7721, -3.20775, -23.6223, -5.18379, -23.4557, -7.11051, -23.2636, -8.98827, -23.0372, -8.98827, -23.0372, -10.7784, -22.8033, -12.4401, -22.5869, -13.9705, -22.3761, -15.367, -22.159, -16.6266, -21.9239, -17.7468, -21.6589, -18.7247, -21.3521, -19.5575, -20.9918, -20.2425, -20.566, -20.7768, -20.0631, -21.1578, -19.4711, -21.3827, -18.7782, -21.4487, -17.9726, -21.353, -17.0424, -21.0928, -15.9759, -20.6654, -14.7612, -20.0681, -13.3864, -19.298, -11.8398, -18.3524, -10.1094, -18.3524, -10.1094, -17.2066, -8.21923, -15.9633, -6.43911, -14.6089, -4.76972, -13.1295, -3.21168, -11.5115, -1.76561, -9.74109, -0.432143, -7.80454, 0.788098, -5.68812, 1.89449, -3.37808, 2.88641, -0.860693, 3.76323, 1.87778, 4.52433, 4.85108, 5.16908, 8.07294, 5.69686, 11.5571, 6.10704, 15.3173, 6.399, 19.3673, 6.57212, 23.7208, 6.62577, 28.3916, 6.55932, 33.3933, 6.37216, 33.3933, 6.37216, 36.7287, 6.26642, 40.0882, 6.26261, 43.4672, 6.35346, 46.861, 6.53171, 50.2651, 6.79012, 53.6749, 7.12143, 57.0855, 7.51838, 60.4925, 7.97372, 63.8912, 8.48019, 67.2769, 9.03053, 70.645, 9.61749, 73.991, 10.2338, 77.31, 10.8723, 80.5976, 11.5256, 83.849, 12.1864, 87.0597, 12.8477, 90.225, 13.502, 93.3402, 14.1421, 96.4008, 14.7609)
+width_curve = SubResource("Curve_2au82")
+default_color = Color(0.728693, 0.000371281, 0.72016, 1)
+script = ExtResource("3_2kylr")
+metadata/_custom_type_script = "uid://csgt88iv3c4ke"

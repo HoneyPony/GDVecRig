@@ -30,9 +30,11 @@ text = "<none>"
 [node name="TabContainer" type="TabContainer" parent="TopVLayout"]
 layout_mode = 2
 size_flags_vertical = 3
+current_tab = 0
 
 [node name="Drawing" type="Control" parent="TopVLayout/TabContainer"]
 layout_mode = 2
+metadata/_tab_index = 0
 
 [node name="ToolSelector" type="HBoxContainer" parent="TopVLayout/TabContainer/Drawing"]
 layout_mode = 0
@@ -59,9 +61,16 @@ layout_mode = 2
 toggle_mode = true
 text = "Toggle Constraint"
 
+[node name="ToolDelete" type="Button" parent="TopVLayout/TabContainer/Drawing/ToolSelector"]
+layout_mode = 2
+toggle_mode = true
+text = "Delete
+"
+
 [node name="Weight Painting" type="Control" parent="TopVLayout/TabContainer"]
 visible = false
 layout_mode = 2
+metadata/_tab_index = 1
 
 [node name="VBox" type="VBoxContainer" parent="TopVLayout/TabContainer/Weight Painting"]
 layout_mode = 1

@@ -54,6 +54,8 @@ func wants_to_edit_the_object():
 
 func is_in_toggle_constraint():
 	return drawing_tool_toggle_constraint.button_pressed
+func is_in_delete():
+	return drawing_tool_delete.button_pressed
 
 func _on_bone_list_selected(index: int):
 	weight_painting_bone = index
@@ -224,6 +226,7 @@ var drawing_tool_edit: Button
 var drawing_tool_new: Button
 var drawing_tool_knife: Button
 var drawing_tool_toggle_constraint: Button
+var drawing_tool_delete: Button
 var drawing_tool_group: ButtonGroup
 
 # --- WEIGHT PAINT TOOLS ---
@@ -310,6 +313,7 @@ func _enter_tree():
 	drawing_tool_new = setup_button(d_tool, "ToolNewPoint", drawing_tool_group)
 	drawing_tool_knife = setup_button(d_tool, "ToolKnife", drawing_tool_group)
 	drawing_tool_toggle_constraint = setup_button(d_tool, "ToolToggleConstraint", drawing_tool_group)
+	drawing_tool_delete = setup_button(d_tool, "ToolDelete", drawing_tool_group)
 	drawing_tool_edit.button_pressed = true
 	
 	drawing_tool_edit.pressed.connect(_drawing_tool_edit_pressed)

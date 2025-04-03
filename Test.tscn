@@ -455,40 +455,41 @@ metadata/_custom_type_script = "uid://csgt88iv3c4ke"
 
 [node name="VecDrawing2" type="Node2D" parent="."]
 script = ExtResource("1_cjag6")
+steps = 20
 metadata/_custom_type_script = "uid://bodn4jw8tyemx"
 
 [node name="@Node@24403" type="Node" parent="VecDrawing2"]
 script = ExtResource("2_ukuny")
-value = Vector2(-33.497, 0.109284)
+value = Vector2(-40.4408, -36.1916)
 
 [node name="@Node@24404" type="Node" parent="VecDrawing2"]
 script = ExtResource("2_ukuny")
-value = Vector2(-22.002, -18.0982)
+value = Vector2(-33.2305, -15.1828)
 
 [node name="@Node@24405" type="Node" parent="VecDrawing2"]
 script = ExtResource("2_ukuny")
-value = Vector2(-22.002, -18.0982)
+value = Vector2(-27.9273, 0.268914)
 
-[node name="@Node@24406" type="Node" parent="VecDrawing2"]
+[node name="@Node@23783" type="Node" parent="VecDrawing2"]
 script = ExtResource("2_ukuny")
-value = Vector2(-15.5721, 15.8795)
+value = Vector2(15.8354, -12.2479)
 
-[node name="@Node@24407" type="Node" parent="VecDrawing2"]
+[node name="@Node@23784" type="Node" parent="VecDrawing2"]
 script = ExtResource("2_ukuny")
-value = Vector2(3.71475, 13.5454)
+value = Vector2(18.2296, -21.5946)
 
-[node name="@Node@24408" type="Node" parent="VecDrawing2"]
+[node name="@Node@23785" type="Node" parent="VecDrawing2"]
 script = ExtResource("2_ukuny")
-value = Vector2(3.71475, 13.5454)
+value = Vector2(21.5077, -34.3916)
 
-[node name="@Node@24409" type="Node" parent="VecDrawing2"]
+[node name="@Node@23786" type="Node" parent="VecDrawing2"]
 script = ExtResource("2_ukuny")
-value = Vector2(18.5289, -4.49391)
+value = Vector2(7.02299, -45.1118)
 
-[node name="@Node@24410" type="Node" parent="VecDrawing2"]
+[node name="@Node@23787" type="Node" parent="VecDrawing2"]
 script = ExtResource("2_ukuny")
-value = Vector2(14.0417, -14.5705)
+value = Vector2(-1.8169, -45.2344)
 
-[node name="@Node@24411" type="Node" parent="VecDrawing2"]
+[node name="@Node@23788" type="Node" parent="VecDrawing2"]
 script = ExtResource("2_ukuny")
-value = Vector2(9.55457, -24.6471)
+value = Vector2(-15.8764, -45.4295)

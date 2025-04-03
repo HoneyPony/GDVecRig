@@ -389,8 +389,26 @@ func handle_editing_mouse_motion(plugin: GDVecRig, event: InputEventMouseMotion)
 		if previous_highlight != plugin.point_highlight:
 			pass
 	return false
+	
+func delete_entire_points(group_idx: int, plugin: GDVecRig) -> void:
+	# We don't want to mess up the selection.
+	plugin.point_selection.clear()
+	
+	var new_points: Array[VecWaypoint] = []
+	var idx = 0
+	for point in waypoints:
+		if idx / 3 != group_idx:
+			new_points.append(point)
+		else:
+			point.free()
+		idx += 1
+	waypoints = new_points
+	
+	
+func reset_curve_point(idx: int) -> void:
+	pass
 
-func handle_editing_mouse_button(plugin: GDVecRig, event: InputEventMouseButton):
+func handle_editing_mouse_button(plugin: GDVecRig, event: InputEventMouseButton) -> bool:
 	if event.button_index == MOUSE_BUTTON_LEFT:
 		if event.pressed:
 			if plugin.add_end_point():
@@ -408,7 +426,16 @@ func handle_editing_mouse_button(plugin: GDVecRig, event: InputEventMouseButton)
 					c = (c + 1) % 3
 					constraints[index / 3] = c
 				return true
-					
+			
+			if plugin.is_in_delete():
+				var index = find_point_index_at_target(10, plugin, get_local_mouse_position())
+				if index >= 0:
+					if index % 3 == 1:
+						print("delete -!")
+						delete_entire_points(index / 3, plugin)
+					else:
+						reset_curve_point(index)
+				return true
 			
 			if event.get_modifiers_mask() & KEY_MASK_SHIFT:
 				var selected = add_to_select_from_target(plugin, get_local_mouse_position())

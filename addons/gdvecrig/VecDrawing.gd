@@ -608,8 +608,10 @@ func draw_editor_handle(radius, left, mid, right, ls, ms, rs):
 	draw_line(left, mid, Color.WHITE)
 	draw_line(mid, right, Color.WHITE)
 	
+	draw_circle(left, radius * 1.1, Color.BLACK)
 	draw_circle(left, radius * 0.9, Color.BLUE if ls else Color.WHITE)
 	#draw_circle(mid, radius, Color.BLUE if ms else Color.GRAY)
+	draw_circle(right, radius * 1.1, Color.BLACK)
 	draw_circle(right, radius * 0.9, Color.BLUE if rs else Color.WHITE)
 	
 func draw_some_center_handle_with_color(radius, where, color, constraint):
@@ -629,7 +631,9 @@ func draw_some_center_handle_with_color(radius, where, color, constraint):
 	
 func draw_editor_center_handle(radius, mid, ms, constraint):
 	var color = Color.BLUE if ms else Color.GRAY
+	draw_some_center_handle_with_color(radius * 1.2, mid, Color.BLACK, constraint)
 	draw_some_center_handle_with_color(radius, mid, color, constraint)
+	
 	
 	
 func draw_editor_weights(radius, left, mid, right, ls, ms, rs, constraint):

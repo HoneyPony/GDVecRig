@@ -362,6 +362,12 @@ func paint_from_target(plugin: GDVecRig, target: Vector2):
 		if (target - center).length_squared() <= (radius * radius):
 			get_waypoint(i).edit_weight(plugin.weight_painting_bone, plugin)
 
+func compute_pivot_point(plugin: GDVecRig):
+	var point: Vector2 = Vector2.ZERO
+	for wp in plugin.point_selection:
+		point += waypoints[wp].value
+	return point / plugin.point_selection.size()
+
 func handle_editing_mouse_motion(plugin: GDVecRig, event: InputEventMouseMotion):
 	if plugin.lasso_started:
 		plugin.lasso_points.push_back(get_local_mouse_position())
@@ -369,10 +375,30 @@ func handle_editing_mouse_motion(plugin: GDVecRig, event: InputEventMouseMotion)
 		# Store the old value of the points for computing constraints.
 		# ALSO: maybe undo support one day..?
 		var point_edit_cache = {}
+		
+		var motion_grab: Vector2 = event.relative / zoom()
+		var pivot_point: Vector2 = Vector2.ZERO
+		var rotation_amount: float = 0
+		
+		if event.alt_pressed:
+			pivot_point = compute_pivot_point(plugin)
+			var cur_delta = get_global_mouse_position() - pivot_point
+			var prev_delta = (get_global_mouse_position() - event.relative / zoom()) - pivot_point
+			# This should work..?
+			rotation_amount = prev_delta.angle_to(cur_delta)
+			print("rotate by " , rotation_amount, " radians")
+		
 		for point in plugin.point_selection:
 		#print(event.relative / zoom())
 			point_edit_cache[point] = waypoints[point].value
-			edit_point(point, event.relative / zoom())
+			var motion: Vector2 = motion_grab
+			if event.alt_pressed:
+				var v: Vector2 = waypoints[point].value
+				v -= pivot_point
+				v = v.rotated(rotation_amount)
+				v += pivot_point
+				motion = v - waypoints[point].value
+			edit_point(point, motion)
 		for i in range(0, center_waypoint_count()):
 			update_edit_constraint(i, plugin, point_edit_cache, event.shift_pressed)
 		#queue_redraw()

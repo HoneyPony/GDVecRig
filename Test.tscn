@@ -455,42 +455,41 @@ metadata/_custom_type_script = "uid://csgt88iv3c4ke"
 
 [node name="VecDrawing2" type="Node2D" parent="."]
 script = ExtResource("1_cjag6")
-cyclic = true
 steps = 20
 metadata/_custom_type_script = "uid://bodn4jw8tyemx"
 
 [node name="@Node@24403" type="Node" parent="VecDrawing2"]
 script = ExtResource("2_ukuny")
-value = Vector2(-40.3555, -36.5581)
+value = Vector2(-42.0276, -43.0343)
 
 [node name="@Node@24404" type="Node" parent="VecDrawing2"]
 script = ExtResource("2_ukuny")
-value = Vector2(-33.2305, -15.1828)
+value = Vector2(-42.4991, -20.5077)
 
 [node name="@Node@24405" type="Node" parent="VecDrawing2"]
 script = ExtResource("2_ukuny")
-value = Vector2(-26.1054, 6.19245)
+value = Vector2(-42.9707, 2.01883)
 
 [node name="@Node@23783" type="Node" parent="VecDrawing2"]
 script = ExtResource("2_ukuny")
-value = Vector2(16.0906, -2.34782)
+value = Vector2(-1.96255, -4.20237)
 
 [node name="@Node@23784" type="Node" parent="VecDrawing2"]
 script = ExtResource("2_ukuny")
-value = Vector2(18.2296, -21.5946)
+value = Vector2(3.06385, -14.8766)
 
 [node name="@Node@23785" type="Node" parent="VecDrawing2"]
 script = ExtResource("2_ukuny")
-value = Vector2(20.3738, -40.8874)
+value = Vector2(9.53185, -28.6123)
 
 [node name="@Node@23786" type="Node" parent="VecDrawing2"]
 script = ExtResource("2_ukuny")
-value = Vector2(13.9625, -43.1967)
+value = Vector2(-0.77211, -65.541)
 
 [node name="@Node@23787" type="Node" parent="VecDrawing2"]
 script = ExtResource("2_ukuny")
-value = Vector2(-1.8169, -45.2344)
+value = Vector2(-16.3013, -62.0787)
 
 [node name="@Node@23788" type="Node" parent="VecDrawing2"]
 script = ExtResource("2_ukuny")
-value = Vector2(-17.5962, -47.2722)
+value = Vector2(-31.8305, -58.6165)

@@ -9,6 +9,8 @@ var point_highlight = 0
 var point_selection = []
 var point_edited = false
 
+var brand_new_point: int = -1
+
 var lasso_started = false
 var lasso_points: PackedVector2Array = PackedVector2Array()
 

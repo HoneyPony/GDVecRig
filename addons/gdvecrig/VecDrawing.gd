@@ -418,6 +418,11 @@ func handle_editing_mouse_motion(plugin: GDVecRig, event: InputEventMouseMotion)
 			update_edit_constraint(i, plugin, point_edit_cache, event.shift_pressed)
 		#queue_redraw()
 		return true
+	elif plugin.brand_new_point > 0:
+		var center = waypoints[plugin.brand_new_point].value
+		var delta = get_global_mouse_position() - center
+		waypoints[plugin.brand_new_point - 1].value = center - delta
+		waypoints[plugin.brand_new_point + 1].value = center + delta
 	else:
 		var previous_highlight = plugin.point_highlight
 		
@@ -463,6 +468,9 @@ func handle_editing_mouse_button(plugin: GDVecRig, event: InputEventMouseButton)
 					waypoint.value = get_local_mouse_position()
 					add_child(waypoint)
 					waypoint.owner = owner
+				
+				collect_children()
+				plugin.brand_new_point = waypoints.size() - 2
 				return true
 				
 			if plugin.is_in_toggle_constraint():
@@ -475,11 +483,14 @@ func handle_editing_mouse_button(plugin: GDVecRig, event: InputEventMouseButton)
 			
 			if plugin.is_in_delete():
 				var index = find_point_index_at_target(10, plugin, get_local_mouse_position())
-				if index >= 0:
-					if index % 3 == 1:
-						delete_entire_points(index / 3, plugin)
-					else:
-						reset_curve_point(index)
+				# TODO: Prioritize center waypoints for this. For now, just delete
+				# the curve segment no matter which one we hit.
+				delete_entire_points(index / 3, plugin)
+				#if index >= 0:
+					#if index % 3 == 1:
+						#delete_entire_points(index / 3, plugin)
+					#else:
+						#reset_curve_point(index)
 				return true
 			
 			if event.get_modifiers_mask() & KEY_MASK_SHIFT:
@@ -530,6 +541,10 @@ func edit_input(plugin: GDVecRig, event: InputEvent) -> bool:
 			return handle_editing_mouse_motion(plugin, event)
 				
 	if event is InputEventMouseButton:
+		if not event.pressed:
+			# Always reset brand new point on new mouse motion.
+			plugin.brand_new_point = -1
+		
 		if plugin.in_mode_weightpaint():
 			return handle_weight_paint_mouse_button(plugin, event)
 		else:

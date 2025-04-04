@@ -460,36 +460,186 @@ metadata/_custom_type_script = "uid://bodn4jw8tyemx"
 
 [node name="@Node@24403" type="Node" parent="VecDrawing2"]
 script = ExtResource("2_ukuny")
-value = Vector2(-42.0276, -43.0343)
+value = Vector2(-65.3646, -37.2372)
 
 [node name="@Node@24404" type="Node" parent="VecDrawing2"]
 script = ExtResource("2_ukuny")
-value = Vector2(-42.4991, -20.5077)
+value = Vector2(-65.8361, -14.7106)
 
 [node name="@Node@24405" type="Node" parent="VecDrawing2"]
 script = ExtResource("2_ukuny")
-value = Vector2(-42.9707, 2.01883)
+value = Vector2(-66.3077, 7.81592)
 
 [node name="@Node@23783" type="Node" parent="VecDrawing2"]
 script = ExtResource("2_ukuny")
-value = Vector2(0.961759, -4.57022)
+value = Vector2(-8.27599, -1.86413)
 
 [node name="@Node@23784" type="Node" parent="VecDrawing2"]
 script = ExtResource("2_ukuny")
-value = Vector2(9.58278, -11.2106)
+value = Vector2(3.5741, -6.60236)
 
 [node name="@Node@23785" type="Node" parent="VecDrawing2"]
 script = ExtResource("2_ukuny")
-value = Vector2(20.6764, -19.7555)
+value = Vector2(18.8228, -12.6995)
 
 [node name="@Node@23786" type="Node" parent="VecDrawing2"]
 script = ExtResource("2_ukuny")
-value = Vector2(11.3774, -47.7793)
+value = Vector2(13.2476, -45.7486)
 
 [node name="@Node@23787" type="Node" parent="VecDrawing2"]
 script = ExtResource("2_ukuny")
-value = Vector2(-3.06185, -52.9321)
+value = Vector2(2.63812, -57.7223)
 
 [node name="@Node@23788" type="Node" parent="VecDrawing2"]
 script = ExtResource("2_ukuny")
-value = Vector2(-17.5009, -58.0849)
+value = Vector2(-9.28591, -71.1795)
+
+[node name="@Node@25003" type="Node" parent="VecDrawing2"]
+script = ExtResource("2_ukuny")
+value = Vector2(-20.2303, -73.9616)
+
+[node name="@Node@25004" type="Node" parent="VecDrawing2"]
+script = ExtResource("2_ukuny")
+value = Vector2(-43.1214, -73.813)
+
+[node name="@Node@25005" type="Node" parent="VecDrawing2"]
+script = ExtResource("2_ukuny")
+value = Vector2(-66.0125, -73.6643)
+
+[node name="@Node@25006" type="Node" parent="VecDrawing2"]
+script = ExtResource("2_ukuny")
+value = Vector2(-62.5937, -81.8397)
+
+[node name="@Node@25007" type="Node" parent="VecDrawing2"]
+script = ExtResource("2_ukuny")
+value = Vector2(-76.5662, -71.732)
+
+[node name="@Node@25008" type="Node" parent="VecDrawing2"]
+script = ExtResource("2_ukuny")
+value = Vector2(-90.5387, -61.6242)
+
+[node name="@Node@25009" type="Node" parent="VecDrawing2"]
+script = ExtResource("2_ukuny")
+value = Vector2(-92.0252, -59.2459)
+
+[node name="@Node@25010" type="Node" parent="VecDrawing2"]
+script = ExtResource("2_ukuny")
+value = Vector2(-89.6469, -46.0166)
+
+[node name="@Node@25011" type="Node" parent="VecDrawing2"]
+script = ExtResource("2_ukuny")
+value = Vector2(-87.2686, -32.7874)
+
+[node name="@Node@25012" type="Node" parent="VecDrawing2"]
+script = ExtResource("2_ukuny")
+value = Vector2(-90.9847, -14.5042)
+
+[node name="@Node@25013" type="Node" parent="VecDrawing2"]
+script = ExtResource("2_ukuny")
+value = Vector2(-83.1066, -8.11253)
+
+[node name="@Node@25014" type="Node" parent="VecDrawing2"]
+script = ExtResource("2_ukuny")
+value = Vector2(-75.2284, -1.72085)
+
+[node name="VecDrawing3" type="Node2D" parent="."]
+script = ExtResource("1_cjag6")
+cyclic = true
+fill = Color(0.442911, 0.442911, 0.442911, 1)
+metadata/_custom_type_script = "uid://bodn4jw8tyemx"
+
+[node name="@Node@25476" type="Node" parent="VecDrawing3"]
+script = ExtResource("2_ukuny")
+value = Vector2(-12.5724, 31.139)
+
+[node name="@Node@25477" type="Node" parent="VecDrawing3"]
+script = ExtResource("2_ukuny")
+value = Vector2(5.0537, 39.5924)
+
+[node name="@Node@25478" type="Node" parent="VecDrawing3"]
+script = ExtResource("2_ukuny")
+value = Vector2(21.1415, 47.308)
+
+[node name="@Node@25479" type="Node" parent="VecDrawing3"]
+script = ExtResource("2_ukuny")
+value = Vector2(33.6512, 41.9305)
+
+[node name="@Node@25480" type="Node" parent="VecDrawing3"]
+script = ExtResource("2_ukuny")
+value = Vector2(49.299, 47.5062)
+
+[node name="@Node@25481" type="Node" parent="VecDrawing3"]
+script = ExtResource("2_ukuny")
+value = Vector2(64.9467, 53.0818)
+
+[node name="@Node@25482" type="Node" parent="VecDrawing3"]
+script = ExtResource("2_ukuny")
+value = Vector2(69.8028, 61.715)
+
+[node name="@Node@25483" type="Node" parent="VecDrawing3"]
+script = ExtResource("2_ukuny")
+value = Vector2(75.1986, 75.9238)
+
+[node name="@Node@25484" type="Node" parent="VecDrawing3"]
+script = ExtResource("2_ukuny")
+value = Vector2(80.5944, 90.1327)
+
+[node name="@Node@25485" type="Node" parent="VecDrawing3"]
+script = ExtResource("2_ukuny")
+value = Vector2(58.2919, 115.493)
+
+[node name="@Node@25486" type="Node" parent="VecDrawing3"]
+script = ExtResource("2_ukuny")
+value = Vector2(44.2629, 129.702)
+
+[node name="@Node@25487" type="Node" parent="VecDrawing3"]
+script = ExtResource("2_ukuny")
+value = Vector2(30.2339, 143.91)
+
+[node name="@Node@25488" type="Node" parent="VecDrawing3"]
+script = ExtResource("2_ukuny")
+value = Vector2(22.6799, 140.313)
+
+[node name="@Node@25489" type="Node" parent="VecDrawing3"]
+script = ExtResource("2_ukuny")
+value = Vector2(0.377372, 137.436)
+
+[node name="@Node@25490" type="Node" parent="VecDrawing3"]
+script = ExtResource("2_ukuny")
+value = Vector2(-21.9251, 134.558)
+
+[node name="@Node@25491" type="Node" parent="VecDrawing3"]
+script = ExtResource("2_ukuny")
+value = Vector2(-42.0693, 119.09)
+
+[node name="@Node@25492" type="Node" parent="VecDrawing3"]
+script = ExtResource("2_ukuny")
+value = Vector2(-48.9039, 107.039)
+
+[node name="@Node@25493" type="Node" parent="VecDrawing3"]
+script = ExtResource("2_ukuny")
+value = Vector2(-55.7385, 94.9889)
+
+[node name="@Node@25494" type="Node" parent="VecDrawing3"]
+script = ExtResource("2_ukuny")
+value = Vector2(-59.5156, 90.8521)
+
+[node name="@Node@25495" type="Node" parent="VecDrawing3"]
+script = ExtResource("2_ukuny")
+value = Vector2(-51.6018, 68.01)
+
+[node name="@Node@25496" type="Node" parent="VecDrawing3"]
+script = ExtResource("2_ukuny")
+value = Vector2(-43.688, 45.168)
+
+[node name="@Node@25497" type="Node" parent="VecDrawing3"]
+script = ExtResource("2_ukuny")
+value = Vector2(-55.0191, 39.0528)
+
+[node name="@Node@25498" type="Node" parent="VecDrawing3"]
+script = ExtResource("2_ukuny")
+value = Vector2(-38.8318, 34.916)
+
+[node name="@Node@25499" type="Node" parent="VecDrawing3"]
+script = ExtResource("2_ukuny")
+value = Vector2(-22.6445, 30.7793)

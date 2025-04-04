@@ -472,55 +472,55 @@ value = Vector2(-67.216, 7.77843)
 
 [node name="@Node@23783" type="Node" parent="VecDrawing2"]
 script = ExtResource("2_ukuny")
-value = Vector2(-8.27599, -1.86413)
+value = Vector2(-6.68125, 4.38408)
 
 [node name="@Node@23784" type="Node" parent="VecDrawing2"]
 script = ExtResource("2_ukuny")
-value = Vector2(3.5741, -6.60236)
+value = Vector2(2.87501, -4.92351)
 
 [node name="@Node@23785" type="Node" parent="VecDrawing2"]
 script = ExtResource("2_ukuny")
-value = Vector2(18.8228, -12.6995)
+value = Vector2(12.4313, -14.2311)
 
 [node name="@Node@23786" type="Node" parent="VecDrawing2"]
 script = ExtResource("2_ukuny")
-value = Vector2(13.2476, -45.7486)
+value = Vector2(8.47595, -31.7458)
 
 [node name="@Node@23787" type="Node" parent="VecDrawing2"]
 script = ExtResource("2_ukuny")
-value = Vector2(2.63812, -57.7223)
+value = Vector2(2.11316, -47.233)
 
 [node name="@Node@23788" type="Node" parent="VecDrawing2"]
 script = ExtResource("2_ukuny")
-value = Vector2(-9.28591, -71.1795)
+value = Vector2(-4.89917, -64.3013)
 
 [node name="@Node@25003" type="Node" parent="VecDrawing2"]
 script = ExtResource("2_ukuny")
-value = Vector2(-20.2303, -73.9616)
+value = Vector2(-11.4789, -68.1478)
 
 [node name="@Node@25004" type="Node" parent="VecDrawing2"]
 script = ExtResource("2_ukuny")
-value = Vector2(-43.1214, -73.813)
+value = Vector2(-23.5745, -76.4794)
 
 [node name="@Node@25005" type="Node" parent="VecDrawing2"]
 script = ExtResource("2_ukuny")
-value = Vector2(-66.0125, -73.6643)
+value = Vector2(-34.3451, -83.8983)
 
 [node name="@Node@25006" type="Node" parent="VecDrawing2"]
 script = ExtResource("2_ukuny")
-value = Vector2(-62.5937, -81.8397)
+value = Vector2(-51.4966, -85.5325)
 
 [node name="@Node@25007" type="Node" parent="VecDrawing2"]
 script = ExtResource("2_ukuny")
-value = Vector2(-76.5662, -71.732)
+value = Vector2(-69.0278, -73.7422)
 
 [node name="@Node@25008" type="Node" parent="VecDrawing2"]
 script = ExtResource("2_ukuny")
-value = Vector2(-90.5387, -61.6242)
+value = Vector2(-86.5591, -61.9518)
 
 [node name="@Node@25009" type="Node" parent="VecDrawing2"]
 script = ExtResource("2_ukuny")
-value = Vector2(-92.0252, -59.2459)
+value = Vector2(-88.4791, -59.1019)
 
 [node name="@Node@25010" type="Node" parent="VecDrawing2"]
 script = ExtResource("2_ukuny")
@@ -528,7 +528,7 @@ value = Vector2(-89.6469, -46.0166)
 
 [node name="@Node@25011" type="Node" parent="VecDrawing2"]
 script = ExtResource("2_ukuny")
-value = Vector2(-87.2686, -32.7874)
+value = Vector2(-90.8417, -32.6284)
 
 [node name="@Node@25012" type="Node" parent="VecDrawing2"]
 script = ExtResource("2_ukuny")

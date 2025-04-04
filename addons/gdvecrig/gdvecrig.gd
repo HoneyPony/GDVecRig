@@ -277,6 +277,11 @@ func _process(delta):
 	if dock.get_parent().get_current_tab_control() != dock:
 		dock_tabs.current_tab = dock_tabs.get_tab_idx_from_control(tab_drawing)
 		drawing_tool_edit.button_pressed = true
+		
+	if current_vecdrawing != null:
+		if not current_vecdrawing.is_inside_tree():
+			current_vecdrawing = null
+			cur_drawing_display.text = "<none>"
 
 func _dock_tab_changed(idx: int):
 	if dock_tabs.get_current_tab_control() == tab_drawing:

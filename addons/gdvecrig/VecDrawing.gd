@@ -379,23 +379,38 @@ func handle_editing_mouse_motion(plugin: GDVecRig, event: InputEventMouseMotion)
 		var motion_grab: Vector2 = event.relative / zoom()
 		var pivot_point: Vector2 = Vector2.ZERO
 		var rotation_amount: float = 0
+		var scale_amount: float = 1.0
+		
+		var do_rotation: bool = false
+		var do_scale: bool = false
 		
 		if event.alt_pressed:
+			do_rotation = true
+			do_scale = true
+		if event.ctrl_pressed:
+			do_rotation = true
+		
+		if do_rotation or do_scale:
 			pivot_point = compute_pivot_point(plugin)
 			var cur_delta = get_global_mouse_position() - pivot_point
 			var prev_delta = (get_global_mouse_position() - event.relative / zoom()) - pivot_point
 			# This should work..?
-			rotation_amount = prev_delta.angle_to(cur_delta)
-			print("rotate by " , rotation_amount, " radians")
+			if do_rotation:
+				rotation_amount = prev_delta.angle_to(cur_delta)
+			if do_scale:
+				scale_amount = cur_delta.length() / prev_delta.length()
 		
 		for point in plugin.point_selection:
 		#print(event.relative / zoom())
 			point_edit_cache[point] = waypoints[point].value
 			var motion: Vector2 = motion_grab
-			if event.alt_pressed:
+			if do_rotation or do_scale:
 				var v: Vector2 = waypoints[point].value
 				v -= pivot_point
-				v = v.rotated(rotation_amount)
+				if do_rotation:
+					v = v.rotated(rotation_amount)
+				# Skip do_scale check because multiplying by 1.0 should not matter
+				v *= scale_amount
 				v += pivot_point
 				motion = v - waypoints[point].value
 			edit_point(point, motion)
